@@ -5,22 +5,20 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Language {
+public enum Languages {
 
-	ENGLISH(0, "ENGLISH"),
-
-	CHINESE(1, "CHINESE");
+	ENGLISH(1, "ENGLISH"), CHINESE(2, "CHINESE");
 
 	private Integer code;
 
 	private String description;
 
-	public static Language toEnum(Integer cod) {
+	public static Languages toEnum(Integer cod) {
 		if (cod == null) {
 			return null;
 		}
 
-		for (Language ct : Language.values()) {
+		for (Languages ct : Languages.values()) {
 			if (cod.equals(ct.getCode())) {
 				return ct;
 			}

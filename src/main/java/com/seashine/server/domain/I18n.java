@@ -1,12 +1,7 @@
 package com.seashine.server.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,7 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.seashine.server.domain.enums.Profile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class User implements Serializable {
+public class I18n implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -34,24 +28,12 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	private String name;
+	private String keyValue;
 
-	private String email;
-
-	private String login;
-
-	private String password;
+	private String textValue;
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "LANGUAGEID")
 	private Language language;
-
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "PROFILE")
-	private Set<Integer> profiles = new HashSet<Integer>();
-
-	public Set<Profile> getProfilesObject() {
-		return this.profiles.stream().map(profile -> Profile.toEnum(profile)).collect(Collectors.toSet());
-	}
 }
