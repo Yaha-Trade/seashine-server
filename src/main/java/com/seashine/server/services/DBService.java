@@ -1,8 +1,10 @@
 package com.seashine.server.services;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,21 +51,43 @@ public class DBService {
 		User doctor = new User(null, "Doutor Estranho", null, "doctor", pe.bCryptPasswordEncoder().encode("789"),
 				english, profiles);
 
-		I18n addresse = new I18n(null, "address", "Address", english);
-		I18n addressc = new I18n(null, "address", "地址", chinese);
+		List<I18n> i18nList = new ArrayList<I18n>();
 
-		I18n addbaterye = new I18n(null, "addbatery", "Add battery", english);
-		I18n addbateryc = new I18n(null, "addbatery", "加電池", chinese);
+		i18nList.add(new I18n(null, "yahatrade", "Yaha Trade", english));
+		i18nList.add(new I18n(null, "yahatrade", "Yaha Trade", chinese));
 
-		I18n addnewe = new I18n(null, "addnew", "Add new", english);
-		I18n addnewc = new I18n(null, "addnew", "添新", chinese);
+		i18nList.add(new I18n(null, "copyright", "Copyright ©", english));
+		i18nList.add(new I18n(null, "copyright", "版權所有©", chinese));
 
-		I18n batterytypee = new I18n(null, "batterytype", "Battery type", english);
-		I18n batterytypec = new I18n(null, "batterytype", "電池類型", chinese);
+		i18nList.add(new I18n(null, "seashine", "Seashine", english));
+		i18nList.add(new I18n(null, "seashine", "Seashine", chinese));
+
+		i18nList.add(new I18n(null, "user", "User", english));
+		i18nList.add(new I18n(null, "user", "用戶", chinese));
+
+		i18nList.add(new I18n(null, "password", "Password", english));
+		i18nList.add(new I18n(null, "password", "密碼", chinese));
+
+		i18nList.add(new I18n(null, "login", "Login", english));
+		i18nList.add(new I18n(null, "login", "登錄", chinese));
+
+		i18nList.add(new I18n(null, "forgotpassword", "Forgot password?", english));
+		i18nList.add(new I18n(null, "forgotpassword", "忘記密碼？", chinese));
+
+		i18nList.add(new I18n(null, "error", "Error", english));
+		i18nList.add(new I18n(null, "error", "錯誤", chinese));
+
+		i18nList.add(new I18n(null, "loginerror", "Username or password is invalid!", english));
+		i18nList.add(new I18n(null, "loginerror", "用戶名或密碼無效！", chinese));
+
+		i18nList.add(new I18n(null, "english", "English", english));
+		i18nList.add(new I18n(null, "english", "英語", chinese));
+
+		i18nList.add(new I18n(null, "chinese", "Chinese", english));
+		i18nList.add(new I18n(null, "chinese", "中文", chinese));
 
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
-		i18nRepository.saveAll(Arrays.asList(addresse, addressc, addbaterye, addbateryc, addnewe, addnewc, batterytypee,
-				batterytypec));
+		i18nRepository.saveAll(i18nList);
 	}
 }
