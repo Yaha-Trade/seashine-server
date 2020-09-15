@@ -86,6 +86,12 @@ public class DBService {
 		i18nList.add(new I18n(null, "chinese", "Chinese", english));
 		i18nList.add(new I18n(null, "chinese", "中文", chinese));
 
+		i18nList.add(new I18n(null, "close", "Close", english));
+		i18nList.add(new I18n(null, "close", "關", chinese));
+
+		i18nList.add(new I18n(null, "disconnected", "Your user has been disconnected. Please log in again!", english));
+		i18nList.add(new I18n(null, "disconnected", "您的用戶已斷開連接。請再次登錄！", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
