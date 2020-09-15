@@ -92,6 +92,27 @@ public class DBService {
 		i18nList.add(new I18n(null, "disconnected", "Your user has been disconnected. Please log in again!", english));
 		i18nList.add(new I18n(null, "disconnected", "您的用戶已斷開連接。請再次登錄！", chinese));
 
+		i18nList.add(new I18n(null, "newpassworddirection", "Enter your email to generate a new password", english));
+		i18nList.add(new I18n(null, "newpassworddirection", "輸入您的電子郵件以生成新密碼", chinese));
+
+		i18nList.add(new I18n(null, "email", "E-mail", english));
+		i18nList.add(new I18n(null, "email", "電子郵件", chinese));
+
+		i18nList.add(new I18n(null, "submit", "Submit", english));
+		i18nList.add(new I18n(null, "submit", "提交", chinese));
+
+		i18nList.add(new I18n(null, "backlogin", "Back to login", english));
+		i18nList.add(new I18n(null, "backlogin", "回到登入", chinese));
+
+		i18nList.add(new I18n(null, "emailnotfound", "E-mail not found", english));
+		i18nList.add(new I18n(null, "emailnotfound", "電子郵件沒有找到", chinese));
+
+		i18nList.add(new I18n(null, "success", "Success", english));
+		i18nList.add(new I18n(null, "success", "成功", chinese));
+
+		i18nList.add(new I18n(null, "emailsuccess", "E-mail successfully sent", english));
+		i18nList.add(new I18n(null, "emailsuccess", "電子郵件發送成功", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
