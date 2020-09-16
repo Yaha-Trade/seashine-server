@@ -113,6 +113,24 @@ public class DBService {
 		i18nList.add(new I18n(null, "emailsuccess", "E-mail successfully sent", english));
 		i18nList.add(new I18n(null, "emailsuccess", "電子郵件發送成功", chinese));
 
+		i18nList.add(new I18n(null, "userprofile", "Profile", english));
+		i18nList.add(new I18n(null, "userprofile", "個人資料", chinese));
+
+		i18nList.add(new I18n(null, "logout", "Logout", english));
+		i18nList.add(new I18n(null, "logout", "登出", chinese));
+
+		i18nList.add(new I18n(null, "home", "Home", english));
+		i18nList.add(new I18n(null, "home", "主頁", chinese));
+
+		i18nList.add(new I18n(null, "register", "Register", english));
+		i18nList.add(new I18n(null, "register", "寄存器", chinese));
+
+		i18nList.add(new I18n(null, "factory", "Factory", english));
+		i18nList.add(new I18n(null, "factory", "廠", chinese));
+
+		i18nList.add(new I18n(null, "customer", "Customer", english));
+		i18nList.add(new I18n(null, "customer", "顧客", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
