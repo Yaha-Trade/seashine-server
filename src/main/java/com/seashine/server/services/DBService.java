@@ -5,17 +5,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.seashine.server.config.SecurityConfig;
+import com.seashine.server.domain.Factory;
 import com.seashine.server.domain.I18n;
 import com.seashine.server.domain.Language;
 import com.seashine.server.domain.User;
 import com.seashine.server.domain.enums.Languages;
 import com.seashine.server.domain.enums.Profile;
+import com.seashine.server.repositories.FactoryRepository;
 import com.seashine.server.repositories.I18nRepository;
 import com.seashine.server.repositories.LanguageRepository;
 import com.seashine.server.repositories.UserRepository;
@@ -35,6 +38,9 @@ public class DBService {
 	@Autowired
 	private LanguageRepository languageRepository;
 
+	@Autowired
+	private FactoryRepository factoryRepository;
+
 	public void instantiateTestDataBase() throws ParseException {
 		Set<Integer> profiles = new HashSet<Integer>();
 		profiles.add(Profile.ADMINISTRADOR.getCode());
@@ -50,6 +56,45 @@ public class DBService {
 
 		User doctor = new User(null, "Doutor Estranho", null, "doctor", pe.bCryptPasswordEncoder().encode("789"),
 				english, profiles);
+
+		Set<String> telephones = new HashSet<String>();
+		Set<String> mobilePhones = new HashSet<String>();
+		Set<String> qqNumbers = new HashSet<String>();
+
+		telephones.add("123");
+		telephones.add("456");
+		telephones.add("789");
+
+		mobilePhones.add("101112");
+		mobilePhones.add("131415");
+		mobilePhones.add("161718");
+
+		qqNumbers.add("192021");
+		qqNumbers.add("222324");
+		qqNumbers.add("252627");
+
+		List<Factory> factoryList = new ArrayList<Factory>();
+		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVXYWZ";
+		Random r = new Random();
+
+		int i = 1;
+		for (i = 0; i < 85; i++) {
+			factoryList.add(new Factory(null, Character.toString(alphabet.charAt(r.nextInt(alphabet.length()))),
+					Character.toString(alphabet.charAt(r.nextInt(alphabet.length()))),
+					Character.toString(alphabet.charAt(r.nextInt(alphabet.length()))),
+					Character.toString(alphabet.charAt(r.nextInt(alphabet.length()))), null, null, null));
+
+			if (factoryList.size() == 100000) {
+				factoryRepository.saveAll(factoryList);
+				factoryList.clear();
+			}
+		}
+
+		if (factoryList.size() > 0) {
+			factoryRepository.saveAll(factoryList);
+		}
+
+		factoryList.clear();
 
 		List<I18n> i18nList = new ArrayList<I18n>();
 
