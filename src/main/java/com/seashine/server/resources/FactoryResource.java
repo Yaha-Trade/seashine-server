@@ -44,9 +44,14 @@ public class FactoryResource {
 	public ResponseEntity<Page<Factory>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "rowsPerPage", defaultValue = "50") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
-			@RequestParam(value = "orderByDirection", defaultValue = "ASC") String orderByDirection) {
+			@RequestParam(value = "orderByDirection", defaultValue = "ASC") String orderByDirection,
+			@RequestParam(value = "name", defaultValue = "") String name,
+			@RequestParam(value = "address", defaultValue = "") String address,
+			@RequestParam(value = "contact", defaultValue = "") String contact,
+			@RequestParam(value = "bankAccountNumber", defaultValue = "") String bankAccountNumber) {
 
-		Page<Factory> customers = factoryService.findPage(page, linesPerPage, orderBy, orderByDirection.toUpperCase());
+		Page<Factory> customers = factoryService.findPage(page, linesPerPage, orderBy, orderByDirection.toUpperCase(),
+				name, address, contact, bankAccountNumber);
 
 		return ResponseEntity.ok().body(customers);
 	}

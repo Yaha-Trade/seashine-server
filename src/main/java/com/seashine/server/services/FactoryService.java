@@ -16,6 +16,9 @@ import com.seashine.server.domain.Factory;
 import com.seashine.server.repositories.FactoryRepository;
 import com.seashine.server.services.exception.DataIntegrityException;
 import com.seashine.server.services.exception.ObjectNotFoundException;
+import com.seashine.server.specs.CustomSpecification;
+import com.seashine.server.specs.SearchCriteria;
+import com.seashine.server.specs.SearchOperation;
 
 @Service
 public class FactoryService {
@@ -34,10 +37,11 @@ public class FactoryService {
 		return factoryRepository.findAll();
 	}
 
-	public Page<Factory> findPage(Integer page, Integer linesPerPage, String orderBy, String orderByDirection) {
+	public Page<Factory> findPage(Integer page, Integer linesPerPage, String orderBy, String orderByDirection,
+			String name, String address, String contact, String bankAccountNumber) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection), orderBy);
 
-		return factoryRepository.findAll(pageRequest);
+		return factoryRepository.findAll(getFilters(name, address, contact, bankAccountNumber), pageRequest);
 	}
 
 	@Transactional
@@ -70,6 +74,29 @@ public class FactoryService {
 		factoryDB.setName(factory.getName());
 		factoryDB.setQqNumbers(factory.getQqNumbers());
 		factoryDB.setTelephones(factory.getTelephones());
+	}
+
+	private CustomSpecification<Factory> getFilters(String name, String address, String contact,
+			String bankAccountNumber) {
+		CustomSpecification<Factory> specs = new CustomSpecification<Factory>();
+
+		if (!name.equals("")) {
+			specs.add(new SearchCriteria("name", name, SearchOperation.MATCH));
+		}
+
+		if (!address.equals("")) {
+			specs.add(new SearchCriteria("address", address, SearchOperation.MATCH));
+		}
+
+		if (!contact.equals("")) {
+			specs.add(new SearchCriteria("contact", contact, SearchOperation.MATCH));
+		}
+
+		if (!bankAccountNumber.equals("")) {
+			specs.add(new SearchCriteria("bankAccountNumber", bankAccountNumber, SearchOperation.MATCH));
+		}
+
+		return specs;
 	}
 
 }

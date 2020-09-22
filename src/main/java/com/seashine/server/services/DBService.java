@@ -176,6 +176,87 @@ public class DBService {
 		i18nList.add(new I18n(null, "customer", "Customer", english));
 		i18nList.add(new I18n(null, "customer", "顧客", chinese));
 
+		i18nList.add(new I18n(null, "edit", "Edit", english));
+		i18nList.add(new I18n(null, "edit", "編輯", chinese));
+
+		i18nList.add(new I18n(null, "delete", "Delete", english));
+		i18nList.add(new I18n(null, "delete", "刪除", chinese));
+
+		i18nList.add(new I18n(null, "add", "Add", english));
+		i18nList.add(new I18n(null, "add", "加", chinese));
+
+		i18nList.add(new I18n(null, "name", "Name", english));
+		i18nList.add(new I18n(null, "name", "名稱", chinese));
+
+		i18nList.add(new I18n(null, "address", "Address", english));
+		i18nList.add(new I18n(null, "address", "地址", chinese));
+
+		i18nList.add(new I18n(null, "contact", "Contact", english));
+		i18nList.add(new I18n(null, "contact", "聯繫", chinese));
+
+		i18nList.add(new I18n(null, "bankaccount", "Bank account number", english));
+		i18nList.add(new I18n(null, "bankaccount", "銀行帳號", chinese));
+
+		i18nList.add(new I18n(null, "nextpage", "Next page", english));
+		i18nList.add(new I18n(null, "nextpage", "下一頁", chinese));
+
+		i18nList.add(new I18n(null, "noregisters", "No matching records found", english));
+		i18nList.add(new I18n(null, "noregisters", "分類", chinese));
+
+		i18nList.add(new I18n(null, "sortfor", "Sort for", english));
+		i18nList.add(new I18n(null, "sortfor", "排序為", chinese));
+
+		i18nList.add(new I18n(null, "sort", "Sort", english));
+		i18nList.add(new I18n(null, "sort", "未能找到匹配的記錄", chinese));
+
+		i18nList.add(new I18n(null, "previouspage", "Previous page", english));
+		i18nList.add(new I18n(null, "previouspage", "上一頁", chinese));
+
+		i18nList.add(new I18n(null, "rowsperpage", "Rows per page:", english));
+		i18nList.add(new I18n(null, "rowsperpage", "每頁行數：", chinese));
+
+		i18nList.add(new I18n(null, "of", "of", english));
+		i18nList.add(new I18n(null, "of", "的", chinese));
+
+		i18nList.add(new I18n(null, "search", "Search", english));
+		i18nList.add(new I18n(null, "search", "搜索", chinese));
+
+		i18nList.add(new I18n(null, "download", "Download", english));
+		i18nList.add(new I18n(null, "download", "下載", chinese));
+
+		i18nList.add(new I18n(null, "print", "Print", english));
+		i18nList.add(new I18n(null, "print", "打印", chinese));
+
+		i18nList.add(new I18n(null, "viewcolumns", "View columns", english));
+		i18nList.add(new I18n(null, "viewcolumns", "查看欄", chinese));
+
+		i18nList.add(new I18n(null, "filter", "Filter", english));
+		i18nList.add(new I18n(null, "filter", "過濾", chinese));
+
+		i18nList.add(new I18n(null, "all", "All", english));
+		i18nList.add(new I18n(null, "all", "所有", chinese));
+
+		i18nList.add(new I18n(null, "filters", "Filters", english));
+		i18nList.add(new I18n(null, "filters", "篩選器", chinese));
+
+		i18nList.add(new I18n(null, "reset", "Reset", english));
+		i18nList.add(new I18n(null, "reset", "重啟", chinese));
+
+		i18nList.add(new I18n(null, "showcolumns", "Show columns", english));
+		i18nList.add(new I18n(null, "showcolumns", "顯示列", chinese));
+
+		i18nList.add(new I18n(null, "showhidecolumns", "Show/hide columns", english));
+		i18nList.add(new I18n(null, "showhidecolumns", "顯示/隱藏列", chinese));
+
+		i18nList.add(new I18n(null, "rowselected", "row(s) selected", english));
+		i18nList.add(new I18n(null, "rowselected", "選擇的行", chinese));
+
+		i18nList.add(new I18n(null, "deleteselectedrows", "Delete selected rows", english));
+		i18nList.add(new I18n(null, "deleteselectedrows", "刪除選定的行", chinese));
+
+		i18nList.add(new I18n(null, "gotopage", "Go to page", english));
+		i18nList.add(new I18n(null, "gotopage", "轉到頁面", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
