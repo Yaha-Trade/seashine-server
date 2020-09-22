@@ -78,7 +78,7 @@ public class DBService {
 		Random r = new Random();
 
 		int i = 1;
-		for (i = 0; i < 85; i++) {
+		for (i = 0; i < 77; i++) {
 			factoryList.add(new Factory(null, Character.toString(alphabet.charAt(r.nextInt(alphabet.length()))),
 					Character.toString(alphabet.charAt(r.nextInt(alphabet.length()))),
 					Character.toString(alphabet.charAt(r.nextInt(alphabet.length()))),
@@ -256,6 +256,12 @@ public class DBService {
 
 		i18nList.add(new I18n(null, "gotopage", "Go to page", english));
 		i18nList.add(new I18n(null, "gotopage", "轉到頁面", chinese));
+
+		i18nList.add(new I18n(null, "page", "Page", english));
+		i18nList.add(new I18n(null, "page", "頁", chinese));
+
+		i18nList.add(new I18n(null, "id", "ID", english));
+		i18nList.add(new I18n(null, "id", "編號", chinese));
 
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
