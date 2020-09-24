@@ -1,17 +1,11 @@
 package com.seashine.server.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,18 +31,21 @@ public class Factory implements Serializable {
 
 	private String bankAccountNumber;
 
-	@ElementCollection
-	@CollectionTable(name = "TELEPHONE")
-	@JsonIgnore
-	private Set<String> telephones = new HashSet<>();
+	private String telephone1;
 
-	@ElementCollection
-	@CollectionTable(name = "MOBILEPHONE")
-	@JsonIgnore
-	private Set<String> mobilePhones = new HashSet<>();
+	private String telephone2;
 
-	@ElementCollection
-	@CollectionTable(name = "QQNUMBER")
-	@JsonIgnore
-	private Set<String> qqNumbers = new HashSet<>();
+	private String telephone3;
+
+	private String mobilePhone1;
+
+	private String mobilePhone2;
+
+	private String mobilePhone3;
+
+	private String qqNumber1;
+
+	private String qqNumber2;
+
+	private String qqNumber3;
 }

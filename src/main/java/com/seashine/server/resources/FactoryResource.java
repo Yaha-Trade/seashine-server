@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.seashine.server.domain.Factory;
+import com.seashine.server.dto.FactoryListDTO;
 import com.seashine.server.services.FactoryService;
 
 @RestController
@@ -41,7 +42,7 @@ public class FactoryResource {
 	}
 
 	@RequestMapping(value = "/page", method = RequestMethod.GET)
-	public ResponseEntity<Page<Factory>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
+	public ResponseEntity<Page<FactoryListDTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "rowsPerPage", defaultValue = "50") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
 			@RequestParam(value = "orderByDirection", defaultValue = "ASC") String orderByDirection,
@@ -50,10 +51,12 @@ public class FactoryResource {
 			@RequestParam(value = "contact", defaultValue = "") String contact,
 			@RequestParam(value = "bankAccountNumber", defaultValue = "") String bankAccountNumber) {
 
-		Page<Factory> customers = factoryService.findPage(page, linesPerPage, orderBy, orderByDirection.toUpperCase(),
-				name, address, contact, bankAccountNumber);
+		Page<Factory> factories = (Page<Factory>) factoryService.findPage(page, linesPerPage, orderBy,
+				orderByDirection.toUpperCase(), name, address, contact, bankAccountNumber);
 
-		return ResponseEntity.ok().body(customers);
+		Page<FactoryListDTO> factoriesListDTO = factories.map(factory -> new FactoryListDTO(factory));
+
+		return ResponseEntity.ok().body(factoriesListDTO);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

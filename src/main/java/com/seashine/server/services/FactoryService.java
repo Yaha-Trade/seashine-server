@@ -53,16 +53,16 @@ public class FactoryService {
 	}
 
 	public Factory update(Factory factory) {
-		Factory customerDB = findById(factory.getId());
-		updateData(customerDB, factory);
-		return factoryRepository.save(customerDB);
+		Factory factoryDB = findById(factory.getId());
+		updateData(factoryDB, factory);
+		return factoryRepository.save(factoryDB);
 	}
 
 	public void delete(Integer id) {
 		try {
 			factoryRepository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Customer has orders!");
+			throw new DataIntegrityException("Factory has orders and products!");
 		}
 	}
 
@@ -70,10 +70,16 @@ public class FactoryService {
 		factoryDB.setAddress(factory.getAddress());
 		factoryDB.setBankAccountNumber(factory.getBankAccountNumber());
 		factoryDB.setContact(factory.getContact());
-		factoryDB.setMobilePhones(factory.getMobilePhones());
 		factoryDB.setName(factory.getName());
-		factoryDB.setQqNumbers(factory.getQqNumbers());
-		factoryDB.setTelephones(factory.getTelephones());
+		factoryDB.setTelephone1(factory.getTelephone1());
+		factoryDB.setTelephone2(factory.getTelephone2());
+		factoryDB.setTelephone3(factory.getTelephone3());
+		factoryDB.setMobilePhone1(factory.getMobilePhone1());
+		factoryDB.setMobilePhone2(factory.getMobilePhone2());
+		factoryDB.setMobilePhone3(factory.getMobilePhone3());
+		factoryDB.setQqNumber1(factory.getQqNumber1());
+		factoryDB.setQqNumber2(factory.getQqNumber2());
+		factoryDB.setQqNumber3(factory.getQqNumber3());
 	}
 
 	private CustomSpecification<Factory> getFilters(String name, String address, String contact,

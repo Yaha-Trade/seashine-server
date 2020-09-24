@@ -57,22 +57,6 @@ public class DBService {
 		User doctor = new User(null, "Doutor Estranho", null, "doctor", pe.bCryptPasswordEncoder().encode("789"),
 				english, profiles);
 
-		Set<String> telephones = new HashSet<String>();
-		Set<String> mobilePhones = new HashSet<String>();
-		Set<String> qqNumbers = new HashSet<String>();
-
-		telephones.add("123");
-		telephones.add("456");
-		telephones.add("789");
-
-		mobilePhones.add("101112");
-		mobilePhones.add("131415");
-		mobilePhones.add("161718");
-
-		qqNumbers.add("192021");
-		qqNumbers.add("222324");
-		qqNumbers.add("252627");
-
 		List<Factory> factoryList = new ArrayList<Factory>();
 		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVXYWZ";
 		Random r = new Random();
@@ -82,7 +66,8 @@ public class DBService {
 			factoryList.add(new Factory(null, Character.toString(alphabet.charAt(r.nextInt(alphabet.length()))),
 					Character.toString(alphabet.charAt(r.nextInt(alphabet.length()))),
 					Character.toString(alphabet.charAt(r.nextInt(alphabet.length()))),
-					Character.toString(alphabet.charAt(r.nextInt(alphabet.length()))), null, null, null));
+					Character.toString(alphabet.charAt(r.nextInt(alphabet.length()))), "" + (i * 2), "" + (i * 3),
+					"" + (i * 4), "" + (i * 5), "" + (i * 6), "" + (i * 7), "" + (i * 8), "" + (i * 9), "" + (i * 10)));
 
 			if (factoryList.size() == 100000) {
 				factoryRepository.saveAll(factoryList);
@@ -262,6 +247,27 @@ public class DBService {
 
 		i18nList.add(new I18n(null, "id", "ID", english));
 		i18nList.add(new I18n(null, "id", "編號", chinese));
+
+		i18nList.add(new I18n(null, "factorydata", "Factory data", english));
+		i18nList.add(new I18n(null, "factorydata", "工廠數據", chinese));
+
+		i18nList.add(new I18n(null, "cancel", "Cancel", english));
+		i18nList.add(new I18n(null, "cancel", "取消", chinese));
+
+		i18nList.add(new I18n(null, "save", "Save", english));
+		i18nList.add(new I18n(null, "save", "保存", chinese));
+
+		i18nList.add(new I18n(null, "telephone", "Telephone", english));
+		i18nList.add(new I18n(null, "telephone", "電話", chinese));
+
+		i18nList.add(new I18n(null, "mobilephone", "Mobile phone", english));
+		i18nList.add(new I18n(null, "mobilephone", "移動電話", chinese));
+
+		i18nList.add(new I18n(null, "qqnumber", "QQ Number", english));
+		i18nList.add(new I18n(null, "qqnumber", "QQ號碼", chinese));
+
+		i18nList.add(new I18n(null, "requiredfield", "Required field", english));
+		i18nList.add(new I18n(null, "requiredfield", "必填項目", chinese));
 
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
