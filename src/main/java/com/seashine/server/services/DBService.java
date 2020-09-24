@@ -269,6 +269,9 @@ public class DBService {
 		i18nList.add(new I18n(null, "requiredfield", "Required field", english));
 		i18nList.add(new I18n(null, "requiredfield", "必填項目", chinese));
 
+		i18nList.add(new I18n(null, "customerdata", "Customer data", english));
+		i18nList.add(new I18n(null, "customerdata", "客戶資料", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
