@@ -62,7 +62,7 @@ public class PackingService {
 		try {
 			packingRepository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Packing has orders!");
+			throw new DataIntegrityException("Packing has products!");
 		}
 	}
 
