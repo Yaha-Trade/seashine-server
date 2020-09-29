@@ -2,6 +2,7 @@ package com.seashine.server.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.seashine.server.domain.Factory;
 import com.seashine.server.dto.FactoryListDTO;
+import com.seashine.server.dto.FactorySelectDTO;
 import com.seashine.server.services.FactoryService;
 
 @RestController
@@ -28,10 +30,13 @@ public class FactoryResource {
 	private FactoryService factoryService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Factory>> findAll() {
+	public ResponseEntity<List<FactorySelectDTO>> findAll() {
 		List<Factory> factories = factoryService.findAll();
 
-		return ResponseEntity.ok().body(factories);
+		List<FactorySelectDTO> factoriesDTO = factories.stream().map(factory -> new FactorySelectDTO(factory))
+				.collect(Collectors.toList());
+
+		return ResponseEntity.ok().body(factoriesDTO);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

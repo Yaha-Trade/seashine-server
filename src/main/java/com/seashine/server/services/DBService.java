@@ -293,6 +293,69 @@ public class DBService {
 		i18nList.add(new I18n(null, "productdata", "Product data", english));
 		i18nList.add(new I18n(null, "productdata", "產品資料", chinese));
 
+		i18nList.add(new I18n(null, "price", "Price", english));
+		i18nList.add(new I18n(null, "price", "價錢", chinese));
+
+		i18nList.add(new I18n(null, "quantityinner", "Inner", english));
+		i18nList.add(new I18n(null, "quantityinner", "內", chinese));
+
+		i18nList.add(new I18n(null, "quantityofpieces", "Quantity of pieces", english));
+		i18nList.add(new I18n(null, "quantityofpieces", "件數", chinese));
+
+		i18nList.add(new I18n(null, "productwidth", "Product width", english));
+		i18nList.add(new I18n(null, "productwidth", "產品寬度", chinese));
+
+		i18nList.add(new I18n(null, "productheight", "Product height", english));
+		i18nList.add(new I18n(null, "productheight", "產品高度", chinese));
+
+		i18nList.add(new I18n(null, "productlength", "Product length", english));
+		i18nList.add(new I18n(null, "productlength", "產品長度", chinese));
+
+		i18nList.add(new I18n(null, "boxwidth", "Carton width", english));
+		i18nList.add(new I18n(null, "boxwidth", "產品寬度", chinese));
+
+		i18nList.add(new I18n(null, "boxheight", "Carton height", english));
+		i18nList.add(new I18n(null, "boxheight", "紙箱高度", chinese));
+
+		i18nList.add(new I18n(null, "boxlength", "Carton length", english));
+		i18nList.add(new I18n(null, "boxlength", "紙箱長度", chinese));
+
+		i18nList.add(new I18n(null, "boxcubage", "CBM carton", english));
+		i18nList.add(new I18n(null, "boxcubage", "煤层气纸箱", chinese));
+
+		i18nList.add(new I18n(null, "boxgrossweight", "GW CARTON", english));
+		i18nList.add(new I18n(null, "boxgrossweight", "纸箱", chinese));
+
+		i18nList.add(new I18n(null, "boxnetweight", "NW CARTON", english));
+		i18nList.add(new I18n(null, "boxnetweight", "西北纸箱", chinese));
+
+		i18nList.add(new I18n(null, "packingwidth", "Packing width", english));
+		i18nList.add(new I18n(null, "packingwidth", "包裝寬度", chinese));
+
+		i18nList.add(new I18n(null, "packingheight", "Packing height", english));
+		i18nList.add(new I18n(null, "packingheight", "包裝高度", chinese));
+
+		i18nList.add(new I18n(null, "packinglength", "Packing length", english));
+		i18nList.add(new I18n(null, "packinglength", "包裝長度", chinese));
+
+		i18nList.add(new I18n(null, "quantityofboxespercontainer", "Carton quantity 40HC", english));
+		i18nList.add(new I18n(null, "quantityofboxespercontainer", "装箱数40HC", chinese));
+
+		i18nList.add(new I18n(null, "quantityofpiecespercontainer", "Pieces quantity 40HC", english));
+		i18nList.add(new I18n(null, "quantityofpiecespercontainer", "数量40HC", chinese));
+
+		i18nList.add(new I18n(null, "netweightwithpacking", "NW with packing", english));
+		i18nList.add(new I18n(null, "netweightwithpacking", "净重/包", chinese));
+
+		i18nList.add(new I18n(null, "netweightwithoutpacking", "NW without packing", english));
+		i18nList.add(new I18n(null, "netweightwithoutpacking", "不含包装", chinese));
+
+		i18nList.add(new I18n(null, "certification", "Certification", english));
+		i18nList.add(new I18n(null, "certification", "資質認證", chinese));
+
+		i18nList.add(new I18n(null, "picture", "Picture", english));
+		i18nList.add(new I18n(null, "picture", "圖片", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);

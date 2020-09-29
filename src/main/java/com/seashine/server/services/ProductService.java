@@ -26,6 +26,12 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 
+	@Autowired
+	private FactoryService factoryService;
+
+	@Autowired
+	private PackingService packingService;
+
 	public Product findById(Integer id) {
 		Optional<Product> obj = productRepository.findById(id);
 
@@ -47,6 +53,8 @@ public class ProductService {
 	@Transactional
 	public Product insert(Product product) {
 		product.setId(null);
+		product.setFactory(factoryService.findById(product.getFactory().getId()));
+		product.setPacking(packingService.findById(product.getPacking().getId()));
 		product = productRepository.save(product);
 
 		return product;

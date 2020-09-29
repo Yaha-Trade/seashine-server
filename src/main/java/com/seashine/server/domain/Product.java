@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,44 +36,46 @@ public class Product implements Serializable {
 
 	private Integer quantityOfPieces;
 
-	private Integer price;
+	private Double price;
 
-	private Long boxLength;
+	private Double boxLength;
 
-	private Long boxWidth;
+	private Double boxWidth;
 
-	private Long boxHeight;
+	private Double boxHeight;
 
-	private Long packingLength;
+	private Double packingLength;
 
-	private Long packingWidth;
+	private Double packingWidth;
 
-	private Long packingHeight;
+	private Double packingHeight;
 
-	private Long productLength;
+	private Double productLength;
 
-	private Long productWidth;
+	private Double productWidth;
 
-	private Long productHeight;
+	private Double productHeight;
 
-	private Long boxCubage;
+	private Double boxCubage;
 
-	private Long boxGrossWeight;
+	private Double boxGrossWeight;
 
-	private Long boxNetWeight;
+	private Double boxNetWeight;
 
-	private Long netWeightWithPacking;
+	private Double netWeightWithPacking;
 
-	private Long netWeightWithoutPacking;
+	private Double netWeightWithoutPacking;
 
-	private Long quantityOfBoxesPerContainer;
+	private Double quantityOfBoxesPerContainer;
 
-	private Long quantityOfPiecesPerContainer;
+	private Double quantityOfPiecesPerContainer;
 
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PACKAGEID")
 	private Packing packing;
 
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "FACTORYID")
 	private Factory factory;
