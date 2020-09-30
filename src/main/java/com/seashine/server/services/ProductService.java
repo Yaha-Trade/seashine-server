@@ -12,7 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.seashine.server.domain.Certification;
 import com.seashine.server.domain.Product;
+import com.seashine.server.repositories.CertificationRepository;
 import com.seashine.server.repositories.ProductRepository;
 import com.seashine.server.services.exception.DataIntegrityException;
 import com.seashine.server.services.exception.ObjectNotFoundException;
@@ -27,10 +29,7 @@ public class ProductService {
 	private ProductRepository productRepository;
 
 	@Autowired
-	private FactoryService factoryService;
-
-	@Autowired
-	private PackingService packingService;
+	private CertificationRepository certificationRepository;
 
 	public Product findById(Integer id) {
 		Optional<Product> obj = productRepository.findById(id);
@@ -52,9 +51,10 @@ public class ProductService {
 
 	@Transactional
 	public Product insert(Product product) {
+		Certification certification = certificationRepository.save(product.getCertification());
+
 		product.setId(null);
-		product.setFactory(factoryService.findById(product.getFactory().getId()));
-		product.setPacking(packingService.findById(product.getPacking().getId()));
+		product.setCertification(certification);
 		product = productRepository.save(product);
 
 		return product;
@@ -62,6 +62,8 @@ public class ProductService {
 
 	public Product update(Product product) {
 		Product productDB = findById(product.getId());
+		Certification certification = certificationRepository.save(product.getCertification());
+		product.setCertification(certification);
 		updateData(productDB, product);
 		return productRepository.save(productDB);
 	}
@@ -98,6 +100,7 @@ public class ProductService {
 		productDB.setQuantityOfBoxesPerContainer(product.getQuantityOfBoxesPerContainer());
 		productDB.setQuantityOfPieces(product.getQuantityOfPieces());
 		productDB.setQuantityOfPiecesPerContainer(product.getQuantityOfPiecesPerContainer());
+		productDB.setCertification(product.getCertification());
 	}
 
 	private CustomSpecification<Product> getFilters(String reference, String description) {

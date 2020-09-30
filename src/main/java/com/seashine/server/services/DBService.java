@@ -12,20 +12,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.seashine.server.config.SecurityConfig;
+import com.seashine.server.domain.BatteryType;
 import com.seashine.server.domain.Customer;
 import com.seashine.server.domain.Factory;
 import com.seashine.server.domain.I18n;
 import com.seashine.server.domain.Language;
 import com.seashine.server.domain.Packing;
 import com.seashine.server.domain.User;
+import com.seashine.server.domain.Voltage;
 import com.seashine.server.domain.enums.Languages;
 import com.seashine.server.domain.enums.Profile;
+import com.seashine.server.repositories.BatteryTypeRepository;
 import com.seashine.server.repositories.CustomerRepository;
 import com.seashine.server.repositories.FactoryRepository;
 import com.seashine.server.repositories.I18nRepository;
 import com.seashine.server.repositories.LanguageRepository;
 import com.seashine.server.repositories.PackingRepository;
 import com.seashine.server.repositories.UserRepository;
+import com.seashine.server.repositories.VoltageRepository;
 
 @Service
 public class DBService {
@@ -50,6 +54,12 @@ public class DBService {
 
 	@Autowired
 	private PackingRepository packingRepository;
+
+	@Autowired
+	private VoltageRepository voltageRepository;
+
+	@Autowired
+	private BatteryTypeRepository batteryTypeRepository;
 
 	public void instantiateTestDataBase() throws ParseException {
 		Set<Integer> profiles = new HashSet<Integer>();
@@ -103,6 +113,27 @@ public class DBService {
 		packingList.add(new Packing(null, "Blister card", "透明蛋"));
 		packingList.add(new Packing(null, "Window box", "三角开窗盒"));
 		packingList.add(new Packing(null, "Insert card", "绑版盒"));
+
+		List<Voltage> voltageList = new ArrayList<Voltage>();
+		voltageList.add(new Voltage(null, "1,5V"));
+		voltageList.add(new Voltage(null, "4,5V"));
+
+		List<BatteryType> batteryTypeList = new ArrayList<BatteryType>();
+		batteryTypeList.add(new BatteryType(null, "A"));
+		batteryTypeList.add(new BatteryType(null, "AA"));
+		batteryTypeList.add(new BatteryType(null, "AAA"));
+		batteryTypeList.add(new BatteryType(null, "C"));
+		batteryTypeList.add(new BatteryType(null, "D"));
+		batteryTypeList.add(new BatteryType(null, "F"));
+		batteryTypeList.add(new BatteryType(null, "AG13"));
+		batteryTypeList.add(new BatteryType(null, "LR41"));
+		batteryTypeList.add(new BatteryType(null, "LR54"));
+		batteryTypeList.add(new BatteryType(null, "LR44"));
+		batteryTypeList.add(new BatteryType(null, "9V"));
+		batteryTypeList.add(new BatteryType(null, "AG3"));
+		batteryTypeList.add(new BatteryType(null, "LF36"));
+		batteryTypeList.add(new BatteryType(null, "LT56"));
+		batteryTypeList.add(new BatteryType(null, "AG10"));
 
 		List<I18n> i18nList = new ArrayList<I18n>();
 
@@ -379,10 +410,48 @@ public class DBService {
 		i18nList.add(new I18n(null, "picture", "Picture", english));
 		i18nList.add(new I18n(null, "picture", "圖片", chinese));
 
+		i18nList.add(new I18n(null, "englishdescription", "English description", english));
+		i18nList.add(new I18n(null, "englishdescription", "英文說明", chinese));
+
+		i18nList.add(new I18n(null, "quantityofparts", "Quantity of parts", english));
+		i18nList.add(new I18n(null, "quantityofparts", "零件数量", chinese));
+
+		i18nList.add(new I18n(null, "composition", "Composition", english));
+		i18nList.add(new I18n(null, "composition", "組成", chinese));
+
+		i18nList.add(new I18n(null, "model", "Model", english));
+		i18nList.add(new I18n(null, "model", "模型", chinese));
+
+		i18nList.add(new I18n(null, "color", "Color", english));
+		i18nList.add(new I18n(null, "color", "顏色", chinese));
+
+		i18nList.add(new I18n(null, "specialrequirements", "Special requirements", english));
+		i18nList.add(new I18n(null, "specialrequirements", "特殊要求", chinese));
+
+		i18nList.add(new I18n(null, "sound", "Sound", english));
+		i18nList.add(new I18n(null, "sound", "聲音", chinese));
+
+		i18nList.add(new I18n(null, "light", "Light", english));
+		i18nList.add(new I18n(null, "light", "光", chinese));
+
+		i18nList.add(new I18n(null, "motor", "Motor", english));
+		i18nList.add(new I18n(null, "motor", "發動機", chinese));
+
+		i18nList.add(new I18n(null, "metalpart", "Metal part", english));
+		i18nList.add(new I18n(null, "metalpart", "金屬零件", chinese));
+
+		i18nList.add(new I18n(null, "clip", "Clip", english));
+		i18nList.add(new I18n(null, "clip", "夾", chinese));
+
+		i18nList.add(new I18n(null, "line", "Line", english));
+		i18nList.add(new I18n(null, "line", "線", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
 		customerRepository.saveAll(customerList);
 		packingRepository.saveAll(packingList);
+		voltageRepository.saveAll(voltageList);
+		batteryTypeRepository.saveAll(batteryTypeList);
 	}
 }
