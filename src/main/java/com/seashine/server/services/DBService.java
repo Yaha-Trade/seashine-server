@@ -12,15 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.seashine.server.config.SecurityConfig;
+import com.seashine.server.domain.Customer;
 import com.seashine.server.domain.Factory;
 import com.seashine.server.domain.I18n;
 import com.seashine.server.domain.Language;
+import com.seashine.server.domain.Packing;
 import com.seashine.server.domain.User;
 import com.seashine.server.domain.enums.Languages;
 import com.seashine.server.domain.enums.Profile;
+import com.seashine.server.repositories.CustomerRepository;
 import com.seashine.server.repositories.FactoryRepository;
 import com.seashine.server.repositories.I18nRepository;
 import com.seashine.server.repositories.LanguageRepository;
+import com.seashine.server.repositories.PackingRepository;
 import com.seashine.server.repositories.UserRepository;
 
 @Service
@@ -40,6 +44,12 @@ public class DBService {
 
 	@Autowired
 	private FactoryRepository factoryRepository;
+
+	@Autowired
+	private CustomerRepository customerRepository;
+
+	@Autowired
+	private PackingRepository packingRepository;
 
 	public void instantiateTestDataBase() throws ParseException {
 		Set<Integer> profiles = new HashSet<Integer>();
@@ -80,6 +90,19 @@ public class DBService {
 		}
 
 		factoryList.clear();
+
+		List<Customer> customerList = new ArrayList<Customer>();
+		customerList.add(new Customer(null, "Yaha"));
+		customerList.add(new Customer(null, "Jean"));
+		customerList.add(new Customer(null, "Mirando"));
+		customerList.add(new Customer(null, "Iron Man"));
+
+		List<Packing> packingList = new ArrayList<Packing>();
+		packingList.add(new Packing(null, "PVC", "透明蛋"));
+		packingList.add(new Packing(null, "Display box", "包装"));
+		packingList.add(new Packing(null, "Blister card", "透明蛋"));
+		packingList.add(new Packing(null, "Window box", "三角开窗盒"));
+		packingList.add(new Packing(null, "Insert card", "绑版盒"));
 
 		List<I18n> i18nList = new ArrayList<I18n>();
 
@@ -323,10 +346,10 @@ public class DBService {
 		i18nList.add(new I18n(null, "boxcubage", "CBM carton", english));
 		i18nList.add(new I18n(null, "boxcubage", "煤层气纸箱", chinese));
 
-		i18nList.add(new I18n(null, "boxgrossweight", "GW CARTON", english));
+		i18nList.add(new I18n(null, "boxgrossweight", "GW carton", english));
 		i18nList.add(new I18n(null, "boxgrossweight", "纸箱", chinese));
 
-		i18nList.add(new I18n(null, "boxnetweight", "NW CARTON", english));
+		i18nList.add(new I18n(null, "boxnetweight", "NW carton", english));
 		i18nList.add(new I18n(null, "boxnetweight", "西北纸箱", chinese));
 
 		i18nList.add(new I18n(null, "packingwidth", "Packing width", english));
@@ -359,5 +382,7 @@ public class DBService {
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
+		customerRepository.saveAll(customerList);
+		packingRepository.saveAll(packingList);
 	}
 }

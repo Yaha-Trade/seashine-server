@@ -79,7 +79,7 @@ public class PackingService {
 		}
 
 		if (!chineseName.equals("")) {
-			specs.add(new SearchCriteria("chineseName", englishName, SearchOperation.MATCH));
+			specs.add(new SearchCriteria("chineseName", chineseName, SearchOperation.MATCH));
 		}
 
 		return specs;

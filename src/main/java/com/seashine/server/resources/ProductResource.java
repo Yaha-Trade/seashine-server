@@ -46,11 +46,11 @@ public class ProductResource {
 			@RequestParam(value = "rowsPerPage", defaultValue = "50") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "reference") String orderBy,
 			@RequestParam(value = "orderByDirection", defaultValue = "ASC") String orderByDirection,
-			@RequestParam(value = "reference", defaultValue = "") String englishName,
-			@RequestParam(value = "description", defaultValue = "") String chineseName) {
+			@RequestParam(value = "reference", defaultValue = "") String reference,
+			@RequestParam(value = "description", defaultValue = "") String description) {
 
 		Page<Product> products = (Page<Product>) productService.findPage(page, linesPerPage, orderBy,
-				orderByDirection.toUpperCase(), englishName, chineseName);
+				orderByDirection.toUpperCase(), reference, description);
 
 		Page<ProductListDTO> productsListDTO = products.map(product -> new ProductListDTO(product));
 
