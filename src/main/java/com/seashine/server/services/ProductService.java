@@ -12,8 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.seashine.server.domain.BatteryData;
 import com.seashine.server.domain.Certification;
 import com.seashine.server.domain.Product;
+import com.seashine.server.repositories.BatteryDataRepository;
 import com.seashine.server.repositories.CertificationRepository;
 import com.seashine.server.repositories.ProductRepository;
 import com.seashine.server.services.exception.DataIntegrityException;
@@ -30,6 +32,9 @@ public class ProductService {
 
 	@Autowired
 	private CertificationRepository certificationRepository;
+
+	@Autowired
+	private BatteryDataRepository batteryDataRepository;
 
 	public Product findById(Integer id) {
 		Optional<Product> obj = productRepository.findById(id);
@@ -51,6 +56,9 @@ public class ProductService {
 
 	@Transactional
 	public Product insert(Product product) {
+		List<BatteryData> batteries = batteryDataRepository.saveAll(product.getCertification().getBatteries());
+		product.getCertification().setBatteries(batteries);
+
 		Certification certification = certificationRepository.save(product.getCertification());
 
 		product.setId(null);
@@ -62,6 +70,8 @@ public class ProductService {
 
 	public Product update(Product product) {
 		Product productDB = findById(product.getId());
+		List<BatteryData> batteries = batteryDataRepository.saveAll(product.getCertification().getBatteries());
+		product.getCertification().setBatteries(batteries);
 		Certification certification = certificationRepository.save(product.getCertification());
 		product.setCertification(certification);
 		updateData(productDB, product);

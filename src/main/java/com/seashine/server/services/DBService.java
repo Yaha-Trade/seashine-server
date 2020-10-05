@@ -446,6 +446,27 @@ public class DBService {
 		i18nList.add(new I18n(null, "line", "Line", english));
 		i18nList.add(new I18n(null, "line", "線", chinese));
 
+		i18nList.add(new I18n(null, "quantity", "Quantity", english));
+		i18nList.add(new I18n(null, "quantity", "數量", chinese));
+
+		i18nList.add(new I18n(null, "type", "Type", english));
+		i18nList.add(new I18n(null, "type", "類型", chinese));
+
+		i18nList.add(new I18n(null, "voltage", "Voltage", english));
+		i18nList.add(new I18n(null, "voltage", "電壓", chinese));
+
+		i18nList.add(new I18n(null, "included", "Included", english));
+		i18nList.add(new I18n(null, "included", "已包含", chinese));
+
+		i18nList.add(new I18n(null, "batterytype", "Battery Type", english));
+		i18nList.add(new I18n(null, "batterytype", "電池類型", chinese));
+
+		i18nList.add(new I18n(null, "battery", "Battery", english));
+		i18nList.add(new I18n(null, "battery", "電池", chinese));
+
+		i18nList.add(new I18n(null, "actions", "Actions", english));
+		i18nList.add(new I18n(null, "actions", "動作", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
