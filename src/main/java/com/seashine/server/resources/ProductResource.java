@@ -1,5 +1,6 @@
 package com.seashine.server.resources;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -7,17 +8,24 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.seashine.server.domain.Image;
 import com.seashine.server.domain.Product;
 import com.seashine.server.dto.ProductListDTO;
+import com.seashine.server.services.ImageService;
 import com.seashine.server.services.ProductService;
 
 @RestController
@@ -26,6 +34,9 @@ public class ProductResource {
 
 	@Autowired
 	private ProductService productService;
+
+	@Autowired
+	private ImageService imageService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Product>> findAll() {
@@ -80,6 +91,33 @@ public class ProductResource {
 		productService.delete(id);
 
 		return ResponseEntity.noContent().build();
+	}
+
+	@RequestMapping(value = "/image/{idProduct}", method = RequestMethod.POST)
+	public ResponseEntity<Void> uploadMultipleFiles(@RequestParam("images") MultipartFile file,
+			@PathVariable Integer idProduct) {
+
+		Image image = productService.uploadImage(file, idProduct);
+
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(image.getId()).toUri();
+
+		return ResponseEntity.created(uri).build();
+	}
+
+	@RequestMapping(value = "/image/{idImage}", produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
+	public @ResponseBody HttpEntity<byte[]> getImage(@PathVariable Integer idImage) {
+		byte[] image = null;
+		try {
+			image = imageService.getImage(idImage);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_JPEG);
+		headers.setContentLength(image.length);
+
+		return new HttpEntity<byte[]>(image, headers);
 	}
 
 }

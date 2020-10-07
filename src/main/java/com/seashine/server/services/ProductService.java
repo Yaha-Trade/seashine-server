@@ -11,12 +11,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.seashine.server.domain.BatteryData;
 import com.seashine.server.domain.Certification;
+import com.seashine.server.domain.Image;
 import com.seashine.server.domain.Product;
 import com.seashine.server.repositories.BatteryDataRepository;
 import com.seashine.server.repositories.CertificationRepository;
+import com.seashine.server.repositories.ImageRepository;
 import com.seashine.server.repositories.ProductRepository;
 import com.seashine.server.services.exception.DataIntegrityException;
 import com.seashine.server.services.exception.ObjectNotFoundException;
@@ -35,6 +38,12 @@ public class ProductService {
 
 	@Autowired
 	private BatteryDataRepository batteryDataRepository;
+
+	@Autowired
+	private ImageRepository imageRepository;
+
+	@Autowired
+	private ImageService imageService;
 
 	public Product findById(Integer id) {
 		Optional<Product> obj = productRepository.findById(id);
@@ -127,6 +136,16 @@ public class ProductService {
 		// TODO filter by factory and packing
 
 		return specs;
+	}
+
+	public Image uploadImage(MultipartFile file, Integer idProduct) {
+		Product productDB = findById(idProduct);
+		Image image = new Image(null, imageService.saveImage(file));
+		imageRepository.save(image);
+		productDB.getImages().add(image);
+		productRepository.save(productDB);
+
+		return image;
 	}
 
 }
