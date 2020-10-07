@@ -19,7 +19,6 @@ import com.seashine.server.domain.Image;
 import com.seashine.server.domain.Product;
 import com.seashine.server.repositories.BatteryDataRepository;
 import com.seashine.server.repositories.CertificationRepository;
-import com.seashine.server.repositories.ImageRepository;
 import com.seashine.server.repositories.ProductRepository;
 import com.seashine.server.services.exception.DataIntegrityException;
 import com.seashine.server.services.exception.ObjectNotFoundException;
@@ -38,9 +37,6 @@ public class ProductService {
 
 	@Autowired
 	private BatteryDataRepository batteryDataRepository;
-
-	@Autowired
-	private ImageRepository imageRepository;
 
 	@Autowired
 	private ImageService imageService;
@@ -89,7 +85,12 @@ public class ProductService {
 
 	public void delete(Integer id) {
 		try {
+			Product product = findById(id);
+			List<Image> images = product.getImages();
 			productRepository.deleteById(id);
+			for (Image image : images) {
+				imageService.delete(image);
+			}
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Product has orders");
 		}
@@ -140,12 +141,18 @@ public class ProductService {
 
 	public Image uploadImage(MultipartFile file, Integer idProduct) {
 		Product productDB = findById(idProduct);
-		Image image = new Image(null, imageService.saveImage(file));
-		image = imageRepository.save(image);
+		Image image = imageService.saveImage(file);
 		productDB.getImages().add(image);
 		productRepository.save(productDB);
 
 		return image;
+	}
+
+	public void deleteImageById(Integer idProduct, Integer idImage) {
+		Product productDB = findById(idProduct);
+		productDB.getImages().remove(imageService.findById(idImage));
+		productRepository.save(productDB);
+		imageService.deleteById(idImage);
 	}
 
 }

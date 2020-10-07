@@ -77,7 +77,7 @@ public class ImageService {
 		return Scalr.resize(sourceImg, Scalr.Method.ULTRA_QUALITY, sourceImg.getWidth(), sourceImg.getHeight());
 	}
 
-	public String saveImage(MultipartFile file) {
+	public Image saveImage(MultipartFile file) {
 		BufferedImage jpgImage = getJpgImageFromFile(file);
 		jpgImage = resize(jpgImage);
 
@@ -93,7 +93,10 @@ public class ImageService {
 			System.err.println(e.getMessage());
 		}
 
-		return fileName;
+		Image image = new Image(null, fileName);
+		image = imageRepository.save(image);
+
+		return image;
 	}
 
 	public Image findById(Integer id) {
@@ -110,4 +113,19 @@ public class ImageService {
 		return FileUtils.readFileToByteArray(file);
 	}
 
+	public void deleteById(Integer id) {
+		Image image = findById(id);
+		removeFile(image.getName());
+		imageRepository.deleteById(id);
+	}
+
+	public void delete(Image image) {
+		removeFile(image.getName());
+	}
+
+	private void removeFile(String fileName) {
+		File dir = new File(directory);
+		File imageFile = new File(dir.getAbsolutePath() + File.separator + fileName);
+		imageFile.delete();
+	}
 }

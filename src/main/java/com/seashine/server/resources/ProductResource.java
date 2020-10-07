@@ -8,7 +8,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -105,7 +104,7 @@ public class ProductResource {
 	}
 
 	@RequestMapping(value = "/image/{idImage}", produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
-	public @ResponseBody HttpEntity<byte[]> getImage(@PathVariable Integer idImage) {
+	public @ResponseBody ResponseEntity<byte[]> getImage(@PathVariable Integer idImage) {
 		Image image = imageService.findById(idImage);
 		byte[] imageBytes = null;
 		try {
@@ -117,10 +116,15 @@ public class ProductResource {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_JPEG);
 		headers.setContentLength(imageBytes.length);
-		headers.set("imageId", "" + image.getId());
-		headers.set("imageName", image.getName());
 
-		return new HttpEntity<byte[]>(imageBytes, headers);
+		return ResponseEntity.ok().headers(headers).body(imageBytes);
+	}
+
+	@RequestMapping(value = "/image/{idProduct}/{idImage}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> deleteImage(@PathVariable Integer idProduct, @PathVariable Integer idImage) {
+		productService.deleteImageById(idProduct, idImage);
+
+		return ResponseEntity.noContent().build();
 	}
 
 }
