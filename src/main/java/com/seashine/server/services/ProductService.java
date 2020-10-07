@@ -141,7 +141,7 @@ public class ProductService {
 	public Image uploadImage(MultipartFile file, Integer idProduct) {
 		Product productDB = findById(idProduct);
 		Image image = new Image(null, imageService.saveImage(file));
-		imageRepository.save(image);
+		image = imageRepository.save(image);
 		productDB.getImages().add(image);
 		productRepository.save(productDB);
 

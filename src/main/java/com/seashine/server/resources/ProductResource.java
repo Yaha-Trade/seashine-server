@@ -94,7 +94,7 @@ public class ProductResource {
 	}
 
 	@RequestMapping(value = "/image/{idProduct}", method = RequestMethod.POST)
-	public ResponseEntity<Void> uploadMultipleFiles(@RequestParam("images") MultipartFile file,
+	public ResponseEntity<Void> uploadFile(@RequestParam("images") MultipartFile file,
 			@PathVariable Integer idProduct) {
 
 		Image image = productService.uploadImage(file, idProduct);
@@ -106,18 +106,21 @@ public class ProductResource {
 
 	@RequestMapping(value = "/image/{idImage}", produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
 	public @ResponseBody HttpEntity<byte[]> getImage(@PathVariable Integer idImage) {
-		byte[] image = null;
+		Image image = imageService.findById(idImage);
+		byte[] imageBytes = null;
 		try {
-			image = imageService.getImage(idImage);
+			imageBytes = imageService.getImageBytes(image);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_JPEG);
-		headers.setContentLength(image.length);
+		headers.setContentLength(imageBytes.length);
+		headers.set("imageId", "" + image.getId());
+		headers.set("imageName", image.getName());
 
-		return new HttpEntity<byte[]>(image, headers);
+		return new HttpEntity<byte[]>(imageBytes, headers);
 	}
 
 }

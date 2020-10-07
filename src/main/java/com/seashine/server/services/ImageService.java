@@ -103,8 +103,7 @@ public class ImageService {
 				"Object not found! Id: " + id + ", Class: " + Product.class.getName()));
 	}
 
-	public byte[] getImage(Integer id) throws IOException {
-		Image image = findById(id);
+	public byte[] getImageBytes(Image image) throws IOException {
 		File dir = new File(directory);
 		File file = new File(dir.getAbsolutePath() + File.separator + image.getName());
 
