@@ -1,5 +1,6 @@
 package com.seashine.server.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -139,13 +140,19 @@ public class ProductService {
 		return specs;
 	}
 
-	public Image uploadImage(MultipartFile file, Integer idProduct) {
+	public List<Integer> uploadImages(MultipartFile[] files, Integer idProduct) {
+		List<Image> images = new ArrayList<Image>();
+		List<Integer> imageIds = new ArrayList<Integer>();
+		for (MultipartFile multipartFile : files) {
+			Image image = imageService.saveImage(multipartFile);
+			images.add(image);
+			imageIds.add(image.getId());
+		}
 		Product productDB = findById(idProduct);
-		Image image = imageService.saveImage(file);
-		productDB.getImages().add(image);
+		productDB.getImages().addAll(images);
 		productRepository.save(productDB);
 
-		return image;
+		return imageIds;
 	}
 
 	public void deleteImageById(Integer idProduct, Integer idImage) {

@@ -93,14 +93,12 @@ public class ProductResource {
 	}
 
 	@RequestMapping(value = "/image/{idProduct}", method = RequestMethod.POST)
-	public ResponseEntity<Void> uploadFile(@RequestParam("images") MultipartFile file,
+	public ResponseEntity<List<Integer>> uploadFile(@RequestParam("images") MultipartFile[] files,
 			@PathVariable Integer idProduct) {
 
-		Image image = productService.uploadImage(file, idProduct);
+		List<Integer> imageIds = productService.uploadImages(files, idProduct);
 
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(image.getId()).toUri();
-
-		return ResponseEntity.created(uri).build();
+		return ResponseEntity.ok().body(imageIds);
 	}
 
 	@RequestMapping(value = "/image/{idImage}", produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
