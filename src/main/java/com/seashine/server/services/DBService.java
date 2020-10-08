@@ -311,6 +311,9 @@ public class DBService {
 		i18nList.add(new I18n(null, "save", "Save", english));
 		i18nList.add(new I18n(null, "save", "保存", chinese));
 
+		i18nList.add(new I18n(null, "saveandexit", "Save and exit", english));
+		i18nList.add(new I18n(null, "saveandexit", "保存並退出", chinese));
+
 		i18nList.add(new I18n(null, "telephone", "Telephone", english));
 		i18nList.add(new I18n(null, "telephone", "電話", chinese));
 
