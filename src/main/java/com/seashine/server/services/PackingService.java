@@ -10,15 +10,14 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.seashine.server.domain.Packing;
 import com.seashine.server.repositories.PackingRepository;
 import com.seashine.server.services.exception.DataIntegrityException;
 import com.seashine.server.services.exception.ObjectNotFoundException;
-import com.seashine.server.specs.CustomSpecification;
-import com.seashine.server.specs.SearchCriteria;
-import com.seashine.server.specs.SearchOperation;
+import com.seashine.server.specs.PackingSpecs;
 
 @Service
 public class PackingService {
@@ -71,18 +70,18 @@ public class PackingService {
 		packingDB.setChineseName(packing.getChineseName());
 	}
 
-	private CustomSpecification<Packing> getFilters(String englishName, String chineseName) {
-		CustomSpecification<Packing> specs = new CustomSpecification<Packing>();
+	private Specification<Packing> getFilters(String englishName, String chineseName) {
+		Specification<Packing> packingSpecs = Specification.where(null);
 
 		if (!englishName.equals("")) {
-			specs.add(new SearchCriteria("englishName", englishName, SearchOperation.MATCH));
+			packingSpecs = packingSpecs.and(PackingSpecs.filterLikeByEnglishName(englishName));
 		}
 
 		if (!chineseName.equals("")) {
-			specs.add(new SearchCriteria("chineseName", chineseName, SearchOperation.MATCH));
+			packingSpecs = packingSpecs.and(PackingSpecs.filterLikeByChineseName(chineseName));
 		}
 
-		return specs;
+		return packingSpecs;
 	}
 
 }

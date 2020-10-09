@@ -10,15 +10,14 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.seashine.server.domain.Customer;
 import com.seashine.server.repositories.CustomerRepository;
 import com.seashine.server.services.exception.DataIntegrityException;
 import com.seashine.server.services.exception.ObjectNotFoundException;
-import com.seashine.server.specs.CustomSpecification;
-import com.seashine.server.specs.SearchCriteria;
-import com.seashine.server.specs.SearchOperation;
+import com.seashine.server.specs.CustomerSpecs;
 
 @Service
 public class CustomerService {
@@ -70,14 +69,14 @@ public class CustomerService {
 		customerDB.setName(customer.getName());
 	}
 
-	private CustomSpecification<Customer> getFilters(String name) {
-		CustomSpecification<Customer> specs = new CustomSpecification<Customer>();
+	private Specification<Customer> getFilters(String name) {
+		Specification<Customer> customerSpecs = Specification.where(null);
 
 		if (!name.equals("")) {
-			specs.add(new SearchCriteria("name", name, SearchOperation.MATCH));
+			customerSpecs = customerSpecs.and(CustomerSpecs.filterLikeByName(name));
 		}
 
-		return specs;
+		return customerSpecs;
 	}
 
 }

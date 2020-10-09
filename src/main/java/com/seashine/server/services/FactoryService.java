@@ -10,15 +10,14 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.seashine.server.domain.Factory;
 import com.seashine.server.repositories.FactoryRepository;
 import com.seashine.server.services.exception.DataIntegrityException;
 import com.seashine.server.services.exception.ObjectNotFoundException;
-import com.seashine.server.specs.CustomSpecification;
-import com.seashine.server.specs.SearchCriteria;
-import com.seashine.server.specs.SearchOperation;
+import com.seashine.server.specs.FactorySpecs;
 
 @Service
 public class FactoryService {
@@ -82,27 +81,26 @@ public class FactoryService {
 		factoryDB.setQqNumber3(factory.getQqNumber3());
 	}
 
-	private CustomSpecification<Factory> getFilters(String name, String address, String contact,
-			String bankAccountNumber) {
-		CustomSpecification<Factory> specs = new CustomSpecification<Factory>();
+	private Specification<Factory> getFilters(String name, String address, String contact, String bankAccountNumber) {
+		Specification<Factory> factorySpecs = Specification.where(null);
 
 		if (!name.equals("")) {
-			specs.add(new SearchCriteria("name", name, SearchOperation.MATCH));
+			factorySpecs = factorySpecs.and(FactorySpecs.filterLikeByName(name));
 		}
 
 		if (!address.equals("")) {
-			specs.add(new SearchCriteria("address", address, SearchOperation.MATCH));
+			factorySpecs = factorySpecs.and(FactorySpecs.filterLikeByAddress(address));
 		}
 
 		if (!contact.equals("")) {
-			specs.add(new SearchCriteria("contact", contact, SearchOperation.MATCH));
+			factorySpecs = factorySpecs.and(FactorySpecs.filterLikeByContact(contact));
 		}
 
 		if (!bankAccountNumber.equals("")) {
-			specs.add(new SearchCriteria("bankAccountNumber", bankAccountNumber, SearchOperation.MATCH));
+			factorySpecs = factorySpecs.and(FactorySpecs.filterLikeByBankAccountNumber(bankAccountNumber));
 		}
 
-		return specs;
+		return factorySpecs;
 	}
 
 }

@@ -11,6 +11,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,9 +24,7 @@ import com.seashine.server.repositories.CertificationRepository;
 import com.seashine.server.repositories.ProductRepository;
 import com.seashine.server.services.exception.DataIntegrityException;
 import com.seashine.server.services.exception.ObjectNotFoundException;
-import com.seashine.server.specs.CustomSpecification;
-import com.seashine.server.specs.SearchCriteria;
-import com.seashine.server.specs.SearchOperation;
+import com.seashine.server.specs.ProductSpecs;
 
 @Service
 public class ProductService {
@@ -54,10 +53,10 @@ public class ProductService {
 	}
 
 	public Page<Product> findPage(Integer page, Integer linesPerPage, String orderBy, String orderByDirection,
-			String reference, String description) {
+			String reference, String description, String factoryName) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection), orderBy);
 
-		return productRepository.findAll(getFilters(reference, description), pageRequest);
+		return productRepository.findAll(getFilters(reference, description, factoryName), pageRequest);
 	}
 
 	@Transactional
@@ -124,20 +123,22 @@ public class ProductService {
 		productDB.setCertification(product.getCertification());
 	}
 
-	private CustomSpecification<Product> getFilters(String reference, String description) {
-		CustomSpecification<Product> specs = new CustomSpecification<Product>();
+	private Specification<Product> getFilters(String reference, String description, String factoryName) {
+		Specification<Product> productsSpecs = Specification.where(null);
 
 		if (!reference.equals("")) {
-			specs.add(new SearchCriteria("reference", reference, SearchOperation.MATCH));
+			productsSpecs = productsSpecs.and(ProductSpecs.filterLikeByReference(reference));
 		}
 
 		if (!description.equals("")) {
-			specs.add(new SearchCriteria("description", description, SearchOperation.MATCH));
+			productsSpecs = productsSpecs.and(ProductSpecs.filterLikeByDescription(description));
 		}
 
-		// TODO filter by factory and packing
+		if (!factoryName.equals("")) {
+			productsSpecs = productsSpecs.and(ProductSpecs.filterLikeByFactoryName(factoryName));
+		}
 
-		return specs;
+		return productsSpecs;
 	}
 
 	public List<Integer> uploadImages(MultipartFile[] files, Integer idProduct) {
