@@ -395,10 +395,10 @@ public class DBService {
 		i18nList.add(new I18n(null, "packinglength", "Packing length", english));
 		i18nList.add(new I18n(null, "packinglength", "包裝長度", chinese));
 
-		i18nList.add(new I18n(null, "quantityofboxespercontainer", "Carton quantity 40HC", english));
+		i18nList.add(new I18n(null, "quantityofboxespercontainer", "Carton qty 40HC", english));
 		i18nList.add(new I18n(null, "quantityofboxespercontainer", "装箱数40HC", chinese));
 
-		i18nList.add(new I18n(null, "quantityofpiecespercontainer", "Pieces quantity 40HC", english));
+		i18nList.add(new I18n(null, "quantityofpiecespercontainer", "Pieces qty 40HC", english));
 		i18nList.add(new I18n(null, "quantityofpiecespercontainer", "数量40HC", chinese));
 
 		i18nList.add(new I18n(null, "netweightwithpacking", "NW with packing", english));
