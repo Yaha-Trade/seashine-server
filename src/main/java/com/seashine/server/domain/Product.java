@@ -91,6 +91,6 @@ public class Product implements Serializable {
 	private Certification certification;
 
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Image> images = new ArrayList<>();
 }
