@@ -470,6 +470,18 @@ public class DBService {
 		i18nList.add(new I18n(null, "actions", "Actions", english));
 		i18nList.add(new I18n(null, "actions", "動作", chinese));
 
+		i18nList.add(new I18n(null, "season", "Season", english));
+		i18nList.add(new I18n(null, "season", "季节", chinese));
+
+		i18nList.add(new I18n(null, "seasondata", "Season data", english));
+		i18nList.add(new I18n(null, "seasondata", "季節數據", chinese));
+
+		i18nList.add(new I18n(null, "scheduleddate", "Purchase start forecast", english));
+		i18nList.add(new I18n(null, "scheduleddate", "购买开始预测", chinese));
+
+		i18nList.add(new I18n(null, "invaliddate", "Invalid date", english));
+		i18nList.add(new I18n(null, "invaliddate", "失效日期", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
