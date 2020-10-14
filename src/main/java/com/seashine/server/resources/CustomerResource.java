@@ -2,6 +2,7 @@ package com.seashine.server.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.seashine.server.domain.Customer;
+import com.seashine.server.dto.CustomerSelectDTO;
 import com.seashine.server.services.CustomerService;
 
 @RestController
@@ -27,10 +29,13 @@ public class CustomerResource {
 	private CustomerService customerService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Customer>> findAll() {
+	public ResponseEntity<List<CustomerSelectDTO>> findAll() {
 		List<Customer> customers = customerService.findAll();
 
-		return ResponseEntity.ok().body(customers);
+		List<CustomerSelectDTO> customersDTO = customers.stream().map(customer -> new CustomerSelectDTO(customer))
+				.collect(Collectors.toList());
+
+		return ResponseEntity.ok().body(customersDTO);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

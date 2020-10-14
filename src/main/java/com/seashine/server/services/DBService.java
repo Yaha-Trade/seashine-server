@@ -18,6 +18,7 @@ import com.seashine.server.domain.Factory;
 import com.seashine.server.domain.I18n;
 import com.seashine.server.domain.Language;
 import com.seashine.server.domain.Packing;
+import com.seashine.server.domain.ShowRoom;
 import com.seashine.server.domain.User;
 import com.seashine.server.domain.Voltage;
 import com.seashine.server.domain.enums.Languages;
@@ -28,6 +29,7 @@ import com.seashine.server.repositories.FactoryRepository;
 import com.seashine.server.repositories.I18nRepository;
 import com.seashine.server.repositories.LanguageRepository;
 import com.seashine.server.repositories.PackingRepository;
+import com.seashine.server.repositories.ShowRoomRepository;
 import com.seashine.server.repositories.UserRepository;
 import com.seashine.server.repositories.VoltageRepository;
 
@@ -60,6 +62,9 @@ public class DBService {
 
 	@Autowired
 	private BatteryTypeRepository batteryTypeRepository;
+
+	@Autowired
+	private ShowRoomRepository showRoomRepository;
 
 	public void instantiateTestDataBase() throws ParseException {
 		Set<Integer> profiles = new HashSet<Integer>();
@@ -134,6 +139,14 @@ public class DBService {
 		batteryTypeList.add(new BatteryType(null, "LF36"));
 		batteryTypeList.add(new BatteryType(null, "LT56"));
 		batteryTypeList.add(new BatteryType(null, "AG10"));
+
+		List<ShowRoom> showRoomList = new ArrayList<ShowRoom>();
+		showRoomList.add(new ShowRoom(null, "On Top"));
+		showRoomList.add(new ShowRoom(null, "HK"));
+		showRoomList.add(new ShowRoom(null, "LC"));
+		showRoomList.add(new ShowRoom(null, "YS"));
+		showRoomList.add(new ShowRoom(null, "CBH"));
+		showRoomList.add(new ShowRoom(null, "Hong Teng"));
 
 		List<I18n> i18nList = new ArrayList<I18n>();
 
@@ -485,6 +498,12 @@ public class DBService {
 		i18nList.add(new I18n(null, "importlist", "Import list", english));
 		i18nList.add(new I18n(null, "importlist", "匯入清單", chinese));
 
+		i18nList.add(new I18n(null, "selectfile", "Select file", english));
+		i18nList.add(new I18n(null, "selectfile", "選擇文件", chinese));
+
+		i18nList.add(new I18n(null, "showroom", "Showroom", english));
+		i18nList.add(new I18n(null, "showroom", "陈列室", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
@@ -492,5 +511,6 @@ public class DBService {
 		packingRepository.saveAll(packingList);
 		voltageRepository.saveAll(voltageList);
 		batteryTypeRepository.saveAll(batteryTypeList);
+		showRoomRepository.saveAll(showRoomList);
 	}
 }
