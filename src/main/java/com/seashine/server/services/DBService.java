@@ -482,6 +482,9 @@ public class DBService {
 		i18nList.add(new I18n(null, "invaliddate", "Invalid date", english));
 		i18nList.add(new I18n(null, "invaliddate", "失效日期", chinese));
 
+		i18nList.add(new I18n(null, "importlist", "Import list", english));
+		i18nList.add(new I18n(null, "importlist", "匯入清單", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
