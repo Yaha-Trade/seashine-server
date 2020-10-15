@@ -1,6 +1,7 @@
 package com.seashine.server.services;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -18,6 +19,7 @@ import com.seashine.server.domain.Factory;
 import com.seashine.server.domain.I18n;
 import com.seashine.server.domain.Language;
 import com.seashine.server.domain.Packing;
+import com.seashine.server.domain.Season;
 import com.seashine.server.domain.ShowRoom;
 import com.seashine.server.domain.User;
 import com.seashine.server.domain.Voltage;
@@ -29,6 +31,7 @@ import com.seashine.server.repositories.FactoryRepository;
 import com.seashine.server.repositories.I18nRepository;
 import com.seashine.server.repositories.LanguageRepository;
 import com.seashine.server.repositories.PackingRepository;
+import com.seashine.server.repositories.SeasonRepository;
 import com.seashine.server.repositories.ShowRoomRepository;
 import com.seashine.server.repositories.UserRepository;
 import com.seashine.server.repositories.VoltageRepository;
@@ -65,6 +68,9 @@ public class DBService {
 
 	@Autowired
 	private ShowRoomRepository showRoomRepository;
+
+	@Autowired
+	private SeasonRepository seasonRepository;
 
 	public void instantiateTestDataBase() throws ParseException {
 		Set<Integer> profiles = new HashSet<Integer>();
@@ -147,6 +153,15 @@ public class DBService {
 		showRoomList.add(new ShowRoom(null, "YS"));
 		showRoomList.add(new ShowRoom(null, "CBH"));
 		showRoomList.add(new ShowRoom(null, "Hong Teng"));
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		List<Season> seasonsList = new ArrayList<Season>();
+		seasonsList.add(new Season(null, "First season", new java.sql.Date(sdf.parse("31/12/2020").getTime()),
+				customerList.get(0)));
+		seasonsList.add(new Season(null, "Second season", new java.sql.Date(sdf.parse("01/01/2021").getTime()),
+				customerList.get(1)));
+		seasonsList.add(new Season(null, "Third season", new java.sql.Date(sdf.parse("01/03/2021").getTime()),
+				customerList.get(2)));
 
 		List<I18n> i18nList = new ArrayList<I18n>();
 
@@ -512,5 +527,6 @@ public class DBService {
 		voltageRepository.saveAll(voltageList);
 		batteryTypeRepository.saveAll(batteryTypeList);
 		showRoomRepository.saveAll(showRoomList);
+		seasonRepository.saveAll(seasonsList);
 	}
 }
