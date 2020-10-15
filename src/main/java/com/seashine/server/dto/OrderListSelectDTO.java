@@ -2,7 +2,7 @@ package com.seashine.server.dto;
 
 import java.io.Serializable;
 
-import com.seashine.server.domain.Season;
+import com.seashine.server.domain.OrderList;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SeasonSelectDTO implements Serializable {
+public class OrderListSelectDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -19,11 +19,8 @@ public class SeasonSelectDTO implements Serializable {
 
 	private String name;
 
-	private String customerName;
-
-	public SeasonSelectDTO(Season season) {
-		this.id = season.getId();
-		this.name = season.getName();
-		this.customerName = season.getCustomer().getName();
+	public OrderListSelectDTO(OrderList orderList) {
+		this.id = orderList.getId();
+		this.name = orderList.getName();
 	}
 }

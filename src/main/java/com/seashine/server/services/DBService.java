@@ -115,7 +115,7 @@ public class DBService {
 		List<Customer> customerList = new ArrayList<Customer>();
 		customerList.add(new Customer(null, "Yaha"));
 		customerList.add(new Customer(null, "Jean"));
-		customerList.add(new Customer(null, "Mirando"));
+		customerList.add(new Customer(null, "Miranda"));
 		customerList.add(new Customer(null, "Iron Man"));
 
 		List<Packing> packingList = new ArrayList<Packing>();
@@ -518,6 +518,15 @@ public class DBService {
 
 		i18nList.add(new I18n(null, "showroom", "Showroom", english));
 		i18nList.add(new I18n(null, "showroom", "陈列室", chinese));
+
+		i18nList.add(new I18n(null, "order", "Order", english));
+		i18nList.add(new I18n(null, "order", "订购", chinese));
+
+		i18nList.add(new I18n(null, "purchasedate", "Purchase date", english));
+		i18nList.add(new I18n(null, "purchasedate", "購買日期", chinese));
+
+		i18nList.add(new I18n(null, "orderdata", "Order data", english));
+		i18nList.add(new I18n(null, "orderdata", "訂單資料", chinese));
 
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
