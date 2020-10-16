@@ -44,6 +44,6 @@ public class OrderList implements Serializable {
 	private Season season;
 
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-	@OneToMany(fetch = FetchType.LAZY)
-	private List<Product> products = new ArrayList<Product>();
+	@OneToMany(mappedBy = "id.order")
+	private List<OrderListItem> items = new ArrayList<OrderListItem>();
 }
