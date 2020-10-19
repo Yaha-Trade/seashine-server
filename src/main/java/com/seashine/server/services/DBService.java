@@ -590,6 +590,15 @@ public class DBService {
 		i18nList.add(new I18n(null, "orderlist", "Order list", english));
 		i18nList.add(new I18n(null, "orderlist", "訂單", chinese));
 
+		i18nList.add(new I18n(null, "back", "Back", english));
+		i18nList.add(new I18n(null, "back", "背部", chinese));
+
+		i18nList.add(new I18n(null, "next", "Next", english));
+		i18nList.add(new I18n(null, "next", "下一個", chinese));
+
+		i18nList.add(new I18n(null, "finish", "Finish", english));
+		i18nList.add(new I18n(null, "finish", "完", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
