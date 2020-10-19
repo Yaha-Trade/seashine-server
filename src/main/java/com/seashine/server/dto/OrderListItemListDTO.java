@@ -26,6 +26,7 @@ public class OrderListItemListDTO implements Serializable {
 	private Integer quantity;
 
 	public OrderListItemListDTO(OrderListItem orderListItem) {
+		this.id = orderListItem.getId();
 		this.factoryName = orderListItem.getProduct().getFactory().getName();
 		this.productReference = orderListItem.getProduct().getReference();
 		this.productDescription = orderListItem.getProduct().getDescription();
