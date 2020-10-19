@@ -14,9 +14,12 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.seashine.server.domain.OrderList;
+import com.seashine.server.domain.OrderListItem;
+import com.seashine.server.repositories.OrderListItemRepository;
 import com.seashine.server.repositories.OrderListRepository;
 import com.seashine.server.services.exception.DataIntegrityException;
 import com.seashine.server.services.exception.ObjectNotFoundException;
+import com.seashine.server.specs.OrderListItemSpecs;
 import com.seashine.server.specs.OrderListSpecs;
 
 @Service
@@ -24,6 +27,9 @@ public class OrderListService {
 
 	@Autowired
 	private OrderListRepository orderListRepository;
+
+	@Autowired
+	private OrderListItemRepository orderListItemRepository;
 
 	public OrderList findById(Integer id) {
 		Optional<OrderList> obj = orderListRepository.findById(id);
@@ -41,6 +47,21 @@ public class OrderListService {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection), orderBy);
 
 		return orderListRepository.findAll(getFilters(name), pageRequest);
+	}
+
+	public Page<OrderListItem> getOrderListItems(Integer page, Integer linesPerPage, String orderBy,
+			String orderByDirection, Integer id) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection), orderBy);
+
+		return orderListItemRepository.findAll(getItemFilters(id), pageRequest);
+	}
+
+	private Specification<OrderListItem> getItemFilters(Integer id) {
+		Specification<OrderListItem> orderListSpecs = Specification.where(null);
+
+		orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterByOrderListId(id));
+
+		return orderListSpecs;
 	}
 
 	@Transactional

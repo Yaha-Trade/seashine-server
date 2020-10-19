@@ -13,24 +13,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.seashine.server.config.SecurityConfig;
+import com.seashine.server.domain.BatteryData;
 import com.seashine.server.domain.BatteryType;
+import com.seashine.server.domain.Certification;
 import com.seashine.server.domain.Customer;
 import com.seashine.server.domain.Factory;
 import com.seashine.server.domain.I18n;
 import com.seashine.server.domain.Language;
+import com.seashine.server.domain.OrderList;
+import com.seashine.server.domain.OrderListItem;
 import com.seashine.server.domain.Packing;
+import com.seashine.server.domain.Product;
 import com.seashine.server.domain.Season;
 import com.seashine.server.domain.ShowRoom;
 import com.seashine.server.domain.User;
 import com.seashine.server.domain.Voltage;
 import com.seashine.server.domain.enums.Languages;
+import com.seashine.server.domain.enums.OrderStatus;
 import com.seashine.server.domain.enums.Profile;
 import com.seashine.server.repositories.BatteryTypeRepository;
 import com.seashine.server.repositories.CustomerRepository;
 import com.seashine.server.repositories.FactoryRepository;
 import com.seashine.server.repositories.I18nRepository;
 import com.seashine.server.repositories.LanguageRepository;
+import com.seashine.server.repositories.OrderListItemRepository;
+import com.seashine.server.repositories.OrderListRepository;
 import com.seashine.server.repositories.PackingRepository;
+import com.seashine.server.repositories.ProductRepository;
 import com.seashine.server.repositories.SeasonRepository;
 import com.seashine.server.repositories.ShowRoomRepository;
 import com.seashine.server.repositories.UserRepository;
@@ -72,6 +81,15 @@ public class DBService {
 	@Autowired
 	private SeasonRepository seasonRepository;
 
+	@Autowired
+	private ProductRepository productRepository;
+
+	@Autowired
+	private OrderListRepository orderListRepository;
+
+	@Autowired
+	private OrderListItemRepository orderListItemRepository;
+
 	public void instantiateTestDataBase() throws ParseException {
 		Set<Integer> profiles = new HashSet<Integer>();
 		profiles.add(Profile.ADMINISTRADOR.getCode());
@@ -93,7 +111,7 @@ public class DBService {
 		Random r = new Random();
 
 		int i = 1;
-		for (i = 0; i < 77; i++) {
+		for (i = 0; i < 25; i++) {
 			factoryList.add(new Factory(null, Character.toString(alphabet.charAt(r.nextInt(alphabet.length()))),
 					Character.toString(alphabet.charAt(r.nextInt(alphabet.length()))),
 					Character.toString(alphabet.charAt(r.nextInt(alphabet.length()))),
@@ -109,8 +127,6 @@ public class DBService {
 		if (factoryList.size() > 0) {
 			factoryRepository.saveAll(factoryList);
 		}
-
-		factoryList.clear();
 
 		List<Customer> customerList = new ArrayList<Customer>();
 		customerList.add(new Customer(null, "Yaha"));
@@ -162,6 +178,49 @@ public class DBService {
 				customerList.get(1)));
 		seasonsList.add(new Season(null, "Third season", new java.sql.Date(sdf.parse("01/03/2021").getTime()),
 				customerList.get(2)));
+
+		List<BatteryData> batteryDataList = new ArrayList<BatteryData>();
+		batteryDataList.add(new BatteryData(null, 1, 1, 1, batteryTypeList.get(1), voltageList.get(0)));
+		batteryDataList.add(new BatteryData(null, 1, 1, 1, batteryTypeList.get(2), voltageList.get(1)));
+		batteryDataList.add(new BatteryData(null, 1, 1, 1, batteryTypeList.get(3), voltageList.get(1)));
+		batteryDataList.add(new BatteryData(null, 1, 1, 1, batteryTypeList.get(4), voltageList.get(0)));
+
+		List<Certification> certificationList = new ArrayList<Certification>();
+		certificationList.add(new Certification(null, "1", 1, "Composition 1", 1, "Red", 1, 1, 1, 1, 1, 1, "Special 1",
+				Arrays.asList(batteryDataList.get(0))));
+		certificationList.add(new Certification(null, "1", 1, "Composition 2", 1, "Blue", 1, 1, 1, 1, 1, 1, "Special 2",
+				Arrays.asList(batteryDataList.get(1))));
+		certificationList.add(new Certification(null, "1", 1, "Composition 3", 1, "Green", 1, 1, 1, 1, 1, 1,
+				"Special 3", Arrays.asList(batteryDataList.get(2), batteryDataList.get(3))));
+
+		List<Product> productsList = new ArrayList<Product>();
+		productsList.add(new Product(null, "1", "Product 01", 1, 1, 14.99d, 2.5d, 3.5d, 4.5d, 5d, 5.2d, 5.3d, 6.3d,
+				6.5d, 7.5d, 8.5d, 9.6d, 7.5d, 5.5d, 2.5d, 3, 4, packingList.get(0), factoryList.get(0),
+				certificationList.get(0), null, null, null));
+		productsList.add(new Product(null, "2", "Product 02", 1, 1, 35.90d, 2.5d, 3.5d, 4.5d, 5d, 5.2d, 5.3d, 6.3d,
+				6.5d, 7.5d, 8.5d, 9.6d, 7.5d, 5.5d, 2.5d, 3, 4, packingList.get(0), factoryList.get(5),
+				certificationList.get(1), null, null, null));
+		productsList.add(new Product(null, "3", "Product 03", 1, 1, 1299.35, 2.5d, 3.5d, 4.5d, 5d, 5.2d, 5.3d, 6.3d,
+				6.5d, 7.5d, 8.5d, 9.6d, 7.5d, 5.5d, 2.5d, 3, 4, packingList.get(1), factoryList.get(3),
+				certificationList.get(2), null, null, null));
+
+		List<OrderList> orderList = new ArrayList<OrderList>();
+		orderList.add(new OrderList(null, "First order", new java.sql.Date(sdf.parse("25/12/2020").getTime()),
+				OrderStatus.NO_STATUS.getCode(), seasonsList.get(0)));
+
+		orderList.add(new OrderList(null, "Second order", new java.sql.Date(sdf.parse("31/01/2020").getTime()),
+				OrderStatus.NO_STATUS.getCode(), seasonsList.get(1)));
+
+		orderList.add(new OrderList(null, "Third order", new java.sql.Date(sdf.parse("25/03/2020").getTime()),
+				OrderStatus.NO_STATUS.getCode(), seasonsList.get(1)));
+
+		List<OrderListItem> orderListItems = new ArrayList<OrderListItem>();
+		orderListItems.add(new OrderListItem(null, 25, productsList.get(0), orderList.get(0)));
+		orderListItems.add(new OrderListItem(null, 35, productsList.get(1), orderList.get(0)));
+		orderListItems.add(new OrderListItem(null, 45, productsList.get(2), orderList.get(0)));
+		orderListItems.add(new OrderListItem(null, 55, productsList.get(1), orderList.get(1)));
+		orderListItems.add(new OrderListItem(null, 65, productsList.get(1), orderList.get(1)));
+		orderListItems.add(new OrderListItem(null, 75, productsList.get(2), orderList.get(2)));
 
 		List<I18n> i18nList = new ArrayList<I18n>();
 
@@ -537,5 +596,8 @@ public class DBService {
 		batteryTypeRepository.saveAll(batteryTypeList);
 		showRoomRepository.saveAll(showRoomList);
 		seasonRepository.saveAll(seasonsList);
+		productRepository.saveAll(productsList);
+		orderListRepository.saveAll(orderList);
+		orderListItemRepository.saveAll(orderListItems);
 	}
 }
