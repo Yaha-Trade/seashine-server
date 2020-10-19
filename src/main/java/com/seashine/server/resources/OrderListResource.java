@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.seashine.server.domain.OrderList;
-import com.seashine.server.domain.OrderListItem;
-import com.seashine.server.dto.OrderListItemListDTO;
 import com.seashine.server.dto.OrderListListDTO;
 import com.seashine.server.dto.OrderListSelectDTO;
 import com.seashine.server.services.OrderListService;
@@ -62,22 +60,6 @@ public class OrderListResource {
 		Page<OrderListListDTO> orderListDTO = orderLists.map(orderList -> new OrderListListDTO(orderList));
 
 		return ResponseEntity.ok().body(orderListDTO);
-	}
-
-	@RequestMapping(value = "/{id}/productorder/page", method = RequestMethod.GET)
-	public ResponseEntity<Page<OrderListItemListDTO>> getOrderListItems(@PathVariable Integer id,
-			@RequestParam(value = "page", defaultValue = "0") Integer page,
-			@RequestParam(value = "rowsPerPage", defaultValue = "50") Integer linesPerPage,
-			@RequestParam(value = "orderBy", defaultValue = "quantity") String orderBy,
-			@RequestParam(value = "orderByDirection", defaultValue = "ASC") String orderByDirection) {
-
-		Page<OrderListItem> orderListItems = (Page<OrderListItem>) orderListService.getOrderListItems(page,
-				linesPerPage, orderBy, orderByDirection.toUpperCase(), id);
-
-		Page<OrderListItemListDTO> orderListItemDTO = orderListItems
-				.map(orderListItem -> new OrderListItemListDTO(orderListItem));
-
-		return ResponseEntity.ok().body(orderListItemDTO);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
