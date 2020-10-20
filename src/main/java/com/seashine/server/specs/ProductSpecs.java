@@ -25,6 +25,13 @@ public class ProductSpecs {
 		};
 	}
 
+	public static Specification<Product> filterOnlyProductModels() {
+		return (root, query, criteriaBuilder) -> {
+			Predicate equalPredicate = criteriaBuilder.isNull(root.get("parentProduct"));
+			return equalPredicate;
+		};
+	}
+
 	public static Specification<Product> filterLikeByFactoryName(String factoryName) {
 		return (root, query, criteriaBuilder) -> {
 			Join<Product, Factory> factoryJoin = root.join("factory", JoinType.INNER);

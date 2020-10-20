@@ -138,6 +138,8 @@ public class ProductService {
 			productsSpecs = productsSpecs.and(ProductSpecs.filterLikeByFactoryName(factoryName));
 		}
 
+		productsSpecs = productsSpecs.and(ProductSpecs.filterOnlyProductModels());
+
 		return productsSpecs;
 	}
 

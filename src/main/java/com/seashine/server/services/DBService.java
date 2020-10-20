@@ -204,6 +204,25 @@ public class DBService {
 				65.3d, 64.5d, 74.5d, 84.5d, 94.6d, 75.5d, 55.5d, 26.5d, 3, 4, packingList.get(1), factoryList.get(3),
 				certificationList.get(2), null, null, null));
 
+		productsList.add(new Product(null, "1", "Product 01", 1, 1, 250d, 22.5d, 32.5d, 43.5d, 53d, 53.2d, 53.3d, 62.3d,
+				64.5d, 75.5d, 87.5d, 96.6d, 74.5d, 52.5d, 22.5d, 3, 4, packingList.get(0), factoryList.get(0),
+				certificationList.get(0), null, null, productsList.get(0)));
+		productsList.add(new Product(null, "2", "Product 02", 1, 1, 3590d, 23.5d, 32.5d, 14.5d, 15d, 25.2d, 51.3d,
+				26.3d, 64.5d, 76.5d, 85.5d, 94.6d, 76.5d, 57.5d, 25.5d, 3, 4, packingList.get(0), factoryList.get(5),
+				certificationList.get(1), null, null, productsList.get(1)));
+		productsList.add(new Product(null, "3", "Product 03", 1, 1, 129.25d, 23.5d, 36.5d, 44.5d, 54d, 55.2d, 56.3d,
+				65.3d, 64.5d, 74.5d, 84.5d, 94.6d, 75.5d, 55.5d, 26.5d, 3, 4, packingList.get(1), factoryList.get(3),
+				certificationList.get(2), null, null, productsList.get(2)));
+		productsList.add(new Product(null, "2", "Product 02", 1, 1, 3590d, 23.5d, 32.5d, 14.5d, 15d, 25.2d, 51.3d,
+				26.3d, 64.5d, 76.5d, 85.5d, 94.6d, 76.5d, 57.5d, 25.5d, 3, 4, packingList.get(0), factoryList.get(5),
+				certificationList.get(1), null, null, productsList.get(1)));
+		productsList.add(new Product(null, "3", "Product 03", 1, 1, 129.25d, 23.5d, 36.5d, 44.5d, 54d, 55.2d, 56.3d,
+				65.3d, 64.5d, 74.5d, 84.5d, 94.6d, 75.5d, 55.5d, 26.5d, 3, 4, packingList.get(1), factoryList.get(3),
+				certificationList.get(2), null, null, productsList.get(2)));
+		productsList.add(new Product(null, "3", "Product 03", 1, 1, 129.25d, 23.5d, 36.5d, 44.5d, 54d, 55.2d, 56.3d,
+				65.3d, 64.5d, 74.5d, 84.5d, 94.6d, 75.5d, 55.5d, 26.5d, 3, 4, packingList.get(1), factoryList.get(3),
+				certificationList.get(2), null, null, productsList.get(2)));
+
 		List<OrderList> orderList = new ArrayList<OrderList>();
 		orderList.add(new OrderList(null, "First order", new java.sql.Date(sdf.parse("25/12/2020").getTime()),
 				OrderStatus.NO_STATUS.getCode(), seasonsList.get(0)));
@@ -215,12 +234,12 @@ public class DBService {
 				OrderStatus.NO_STATUS.getCode(), seasonsList.get(1)));
 
 		List<OrderListItem> orderListItems = new ArrayList<OrderListItem>();
-		orderListItems.add(new OrderListItem(null, 25, productsList.get(0), orderList.get(0)));
-		orderListItems.add(new OrderListItem(null, 35, productsList.get(1), orderList.get(0)));
-		orderListItems.add(new OrderListItem(null, 45, productsList.get(2), orderList.get(0)));
-		orderListItems.add(new OrderListItem(null, 55, productsList.get(1), orderList.get(1)));
-		orderListItems.add(new OrderListItem(null, 65, productsList.get(1), orderList.get(1)));
-		orderListItems.add(new OrderListItem(null, 75, productsList.get(2), orderList.get(2)));
+		orderListItems.add(new OrderListItem(null, 25, productsList.get(3), orderList.get(0)));
+		orderListItems.add(new OrderListItem(null, 35, productsList.get(4), orderList.get(0)));
+		orderListItems.add(new OrderListItem(null, 45, productsList.get(5), orderList.get(0)));
+		orderListItems.add(new OrderListItem(null, 55, productsList.get(6), orderList.get(1)));
+		orderListItems.add(new OrderListItem(null, 65, productsList.get(7), orderList.get(1)));
+		orderListItems.add(new OrderListItem(null, 75, productsList.get(8), orderList.get(2)));
 
 		List<I18n> i18nList = new ArrayList<I18n>();
 
