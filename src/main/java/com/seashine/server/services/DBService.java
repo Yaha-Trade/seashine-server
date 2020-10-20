@@ -590,6 +590,9 @@ public class DBService {
 		i18nList.add(new I18n(null, "orderlist", "Order list", english));
 		i18nList.add(new I18n(null, "orderlist", "訂單", chinese));
 
+		i18nList.add(new I18n(null, "orderitemdata", "Order item data", english));
+		i18nList.add(new I18n(null, "orderitemdata", "訂單商品數據", chinese));
+
 		i18nList.add(new I18n(null, "back", "Back", english));
 		i18nList.add(new I18n(null, "back", "背部", chinese));
 
