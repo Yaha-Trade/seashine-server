@@ -194,14 +194,14 @@ public class DBService {
 				"Special 3", Arrays.asList(batteryDataList.get(2), batteryDataList.get(3))));
 
 		List<Product> productsList = new ArrayList<Product>();
-		productsList.add(new Product(null, "1", "Product 01", 1, 1, 14.99d, 2.5d, 3.5d, 4.5d, 5d, 5.2d, 5.3d, 6.3d,
-				6.5d, 7.5d, 8.5d, 9.6d, 7.5d, 5.5d, 2.5d, 3, 4, packingList.get(0), factoryList.get(0),
+		productsList.add(new Product(null, "1", "Product 01", 1, 1, 14.99d, 22.5d, 32.5d, 43.5d, 53d, 53.2d, 53.3d,
+				62.3d, 64.5d, 75.5d, 87.5d, 96.6d, 74.5d, 52.5d, 22.5d, 3, 4, packingList.get(0), factoryList.get(0),
 				certificationList.get(0), null, null, null));
-		productsList.add(new Product(null, "2", "Product 02", 1, 1, 35.90d, 2.5d, 3.5d, 4.5d, 5d, 5.2d, 5.3d, 6.3d,
-				6.5d, 7.5d, 8.5d, 9.6d, 7.5d, 5.5d, 2.5d, 3, 4, packingList.get(0), factoryList.get(5),
+		productsList.add(new Product(null, "2", "Product 02", 1, 1, 35.90d, 23.5d, 32.5d, 14.5d, 15d, 25.2d, 51.3d,
+				26.3d, 64.5d, 76.5d, 85.5d, 94.6d, 76.5d, 57.5d, 25.5d, 3, 4, packingList.get(0), factoryList.get(5),
 				certificationList.get(1), null, null, null));
-		productsList.add(new Product(null, "3", "Product 03", 1, 1, 1299.35, 2.5d, 3.5d, 4.5d, 5d, 5.2d, 5.3d, 6.3d,
-				6.5d, 7.5d, 8.5d, 9.6d, 7.5d, 5.5d, 2.5d, 3, 4, packingList.get(1), factoryList.get(3),
+		productsList.add(new Product(null, "3", "Product 03", 1, 1, 1299.35, 23.5d, 36.5d, 44.5d, 54d, 55.2d, 56.3d,
+				65.3d, 64.5d, 74.5d, 84.5d, 94.6d, 75.5d, 55.5d, 26.5d, 3, 4, packingList.get(1), factoryList.get(3),
 				certificationList.get(2), null, null, null));
 
 		List<OrderList> orderList = new ArrayList<OrderList>();
