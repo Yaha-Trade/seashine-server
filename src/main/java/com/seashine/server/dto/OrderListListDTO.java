@@ -22,15 +22,15 @@ public class OrderListListDTO implements Serializable {
 
 	private Date purchaseDate;
 
-	private String seasonName;
+	private String season;
 
-	private String customerName;
+	private String customer;
 
 	public OrderListListDTO(OrderList orderList) {
 		this.id = orderList.getId();
 		this.name = orderList.getName();
 		this.purchaseDate = orderList.getPurchaseDate();
-		this.seasonName = orderList.getSeason().getName();
-		this.customerName = orderList.getSeason().getCustomer().getName();
+		this.season = orderList.getSeason().getName();
+		this.customer = orderList.getSeason().getCustomer().getName();
 	}
 }

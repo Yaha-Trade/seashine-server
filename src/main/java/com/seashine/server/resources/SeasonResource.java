@@ -2,7 +2,6 @@ package com.seashine.server.resources;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -19,7 +18,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.seashine.server.domain.Season;
 import com.seashine.server.dto.SeasonListDTO;
-import com.seashine.server.dto.SeasonSelectDTO;
 import com.seashine.server.services.SeasonService;
 
 @RestController
@@ -30,13 +28,10 @@ public class SeasonResource {
 	private SeasonService seasonService;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<SeasonSelectDTO>> findAll() {
+	public ResponseEntity<List<Season>> findAll() {
 		List<Season> seasons = seasonService.findAll();
 
-		List<SeasonSelectDTO> seasonsDTO = seasons.stream().map(season -> new SeasonSelectDTO(season))
-				.collect(Collectors.toList());
-
-		return ResponseEntity.ok().body(seasonsDTO);
+		return ResponseEntity.ok().body(seasons);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
