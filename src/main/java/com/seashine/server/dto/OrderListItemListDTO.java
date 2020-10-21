@@ -23,13 +23,13 @@ public class OrderListItemListDTO implements Serializable {
 
 	private String productDescription;
 
-	private Integer quantity;
+	private Integer quantityOfBoxesOrder;
 
 	public OrderListItemListDTO(OrderListItem orderListItem) {
 		this.id = orderListItem.getId();
 		this.factoryName = orderListItem.getProduct().getFactory().getName();
 		this.productReference = orderListItem.getProduct().getReference();
 		this.productDescription = orderListItem.getProduct().getDescription();
-		this.quantity = orderListItem.getQuantity();
+		this.quantityOfBoxesOrder = orderListItem.getProduct().getQuantityOfBoxesOrder();
 	}
 }

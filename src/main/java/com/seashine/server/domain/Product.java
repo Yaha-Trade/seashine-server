@@ -75,6 +75,8 @@ public class Product implements Serializable {
 
 	private Integer quantityOfPiecesPerContainer;
 
+	private Integer quantityOfBoxesOrder;
+
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PACKAGEID")
