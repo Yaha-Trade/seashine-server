@@ -42,6 +42,10 @@ public class OrderList implements Serializable {
 	@Column(columnDefinition = "Decimal(19,3)")
 	private BigDecimal totalCubage;
 
+	private Integer totalOfBoxes;
+
+	private Integer totalOfReferences;
+
 	private Integer quantityOfProducts;
 
 	private Integer quantityOfContainers;

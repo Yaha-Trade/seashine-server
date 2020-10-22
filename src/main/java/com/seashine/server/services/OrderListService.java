@@ -1,5 +1,6 @@
 package com.seashine.server.services;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.seashine.server.domain.OrderList;
+import com.seashine.server.domain.OrderListItem;
 import com.seashine.server.repositories.OrderListRepository;
 import com.seashine.server.services.exception.DataIntegrityException;
 import com.seashine.server.services.exception.ObjectNotFoundException;
@@ -70,6 +72,10 @@ public class OrderListService {
 		orderListDB.setPurchaseDate(orderList.getPurchaseDate());
 		orderListDB.setSeason(orderList.getSeason());
 		orderListDB.setStatus(orderList.getStatus());
+		orderListDB.setQuantityOfContainers(orderList.getQuantityOfContainers());
+		orderListDB.setQuantityOfProducts(orderList.getQuantityOfProducts());
+		orderListDB.setTotalCubage(orderList.getTotalCubage());
+		orderListDB.setTotalPrice(orderList.getTotalPrice());
 	}
 
 	private Specification<OrderList> getFilters(String name) {
@@ -80,6 +86,33 @@ public class OrderListService {
 		}
 
 		return orderListSpecs;
+	}
+
+	public void updateTotals(List<OrderListItem> orderItems, Integer idOrderList) {
+		BigDecimal totalPrice = new BigDecimal("0");
+		BigDecimal totalCubage = new BigDecimal("0");
+		Integer quantityOfProducts = 0;
+		Integer quantityOfContainers = 0;
+		Integer totalOfReferences = 0;
+		Integer totalOfBoxes = 0;
+
+		for (OrderListItem orderListItem : orderItems) {
+			totalPrice = totalPrice.add(orderListItem.getTotalPrice());
+			totalCubage = totalCubage.add(orderListItem.getTotalCubage());
+			quantityOfProducts += orderListItem.getTotalQuantityOfPieces();
+			totalOfBoxes += orderListItem.getQuantityOfBoxes();
+			totalOfReferences++;
+		}
+
+		OrderList orderList = findById(idOrderList);
+		orderList.setQuantityOfContainers(quantityOfContainers);
+		orderList.setQuantityOfProducts(quantityOfProducts);
+		orderList.setTotalCubage(totalCubage);
+		orderList.setTotalPrice(totalPrice);
+		orderList.setTotalOfReferences(totalOfReferences);
+		orderList.setTotalOfBoxes(totalOfBoxes);
+
+		update(orderList);
 	}
 
 }

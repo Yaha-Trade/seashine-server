@@ -21,6 +21,9 @@ public class OrderListItemService {
 	@Autowired
 	private OrderListItemRepository orderListItemRepository;
 
+	@Autowired
+	private OrderListService orderListService;
+
 	public Page<OrderListItem> getOrderListItems(Integer page, Integer linesPerPage, String orderBy,
 			String orderByDirection, Integer id) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection), orderBy);
@@ -37,16 +40,19 @@ public class OrderListItemService {
 	}
 
 	@Transactional
-	public OrderListItem insert(OrderListItem orderListItem) {
+	public OrderListItem insert(OrderListItem orderListItem, Integer idOrderList) {
 		orderListItem.setId(null);
 		orderListItem = orderListItemRepository.save(orderListItem);
+
+		orderListService.updateTotals(orderListItemRepository.findAll(getItemFilters(idOrderList)), idOrderList);
 
 		return orderListItem;
 	}
 
-	public void delete(Integer id) {
+	public void delete(Integer id, Integer idOrderList) {
 		try {
 			orderListItemRepository.deleteById(id);
+			orderListService.updateTotals(orderListItemRepository.findAll(getItemFilters(idOrderList)), idOrderList);
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("OrderListItem has orders!");
 		}

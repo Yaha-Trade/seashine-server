@@ -44,7 +44,7 @@ public class OrderListItemResource {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody OrderListItem orderListItem) {
-		orderListItem = orderListItemService.insert(orderListItem);
+		orderListItem = orderListItemService.insert(orderListItem, orderListItem.getOrderList().getId());
 
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(orderListItem.getId())
 				.toUri();
@@ -54,7 +54,7 @@ public class OrderListItemResource {
 
 	@RequestMapping(value = "{idOrder}/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer idOrder, @PathVariable Integer id) {
-		orderListItemService.delete(id);
+		orderListItemService.delete(id, idOrder);
 
 		return ResponseEntity.noContent().build();
 	}
