@@ -72,10 +72,7 @@ public class OrderListService {
 		orderListDB.setPurchaseDate(orderList.getPurchaseDate());
 		orderListDB.setSeason(orderList.getSeason());
 		orderListDB.setStatus(orderList.getStatus());
-		orderListDB.setQuantityOfContainers(orderList.getQuantityOfContainers());
-		orderListDB.setQuantityOfProducts(orderList.getQuantityOfProducts());
-		orderListDB.setTotalCubage(orderList.getTotalCubage());
-		orderListDB.setTotalPrice(orderList.getTotalPrice());
+		orderListDB.setCustomer(orderList.getCustomer());
 	}
 
 	private Specification<OrderList> getFilters(String name) {
@@ -97,13 +94,10 @@ public class OrderListService {
 		Integer totalOfBoxes = 0;
 
 		for (OrderListItem orderListItem : orderItems) {
-			totalPrice = totalPrice
-					.add(orderListItem.getTotalPrice() == null ? new BigDecimal("0") : orderListItem.getTotalPrice());
-			totalCubage = totalCubage
-					.add(orderListItem.getTotalCubage() == null ? new BigDecimal("0") : orderListItem.getTotalCubage());
-			quantityOfProducts += orderListItem.getTotalQuantityOfPieces() == null ? 0
-					: orderListItem.getTotalQuantityOfPieces();
-			totalOfBoxes += orderListItem.getQuantityOfBoxes() == null ? 0 : orderListItem.getQuantityOfBoxes();
+			totalPrice = totalPrice.add(orderListItem.getTotalPrice());
+			totalCubage = totalCubage.add(orderListItem.getTotalCubage());
+			quantityOfProducts += orderListItem.getTotalQuantityOfPieces();
+			totalOfBoxes += orderListItem.getQuantityOfBoxes();
 			totalOfReferences++;
 		}
 
