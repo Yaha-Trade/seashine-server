@@ -1,10 +1,12 @@
 package com.seashine.server.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -41,41 +43,53 @@ public class Product implements Serializable {
 
 	private Integer quantityOfPieces;
 
-	private Double price;
+	private BigDecimal price;
 
-	private Double boxLength;
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal boxLength;
 
-	private Double boxWidth;
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal boxWidth;
 
-	private Double boxHeight;
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal boxHeight;
 
-	private Double packingLength;
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal packingLength;
 
-	private Double packingWidth;
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal packingWidth;
 
-	private Double packingHeight;
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal packingHeight;
 
-	private Double productLength;
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal productLength;
 
-	private Double productWidth;
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal productWidth;
 
-	private Double productHeight;
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal productHeight;
 
-	private Double boxCubage;
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal boxCubage;
 
-	private Double boxGrossWeight;
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal boxGrossWeight;
 
-	private Double boxNetWeight;
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal boxNetWeight;
 
-	private Double netWeightWithPacking;
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal netWeightWithPacking;
 
-	private Double netWeightWithoutPacking;
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal netWeightWithoutPacking;
 
 	private Integer quantityOfBoxesPerContainer;
 
 	private Integer quantityOfPiecesPerContainer;
-
-	private Integer quantityOfBoxesOrder;
 
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	@ManyToOne(fetch = FetchType.LAZY)

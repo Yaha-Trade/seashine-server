@@ -1,8 +1,10 @@
 package com.seashine.server.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,6 +36,15 @@ public class OrderList implements Serializable {
 	private Date purchaseDate;
 
 	private Integer status;
+
+	private BigDecimal totalPrice;
+
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal totalCubage;
+
+	private Integer quantityOfProducts;
+
+	private Integer quantityOfContainers;
 
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	@ManyToOne(fetch = FetchType.LAZY)

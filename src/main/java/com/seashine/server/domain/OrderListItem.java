@@ -1,7 +1,9 @@
 package com.seashine.server.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,6 +29,19 @@ public class OrderListItem implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
+	private Integer quantityOfBoxes;
+
+	private Integer quantityOfPiecesPerBox;
+
+	private Integer totalQuantityOfPieces;
+
+	private BigDecimal unitPrice;
+
+	private BigDecimal totalPrice;
+
+	@Column(columnDefinition = "Decimal(19,3)")
+	private BigDecimal totalCubage;
 
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	@ManyToOne(fetch = FetchType.LAZY)

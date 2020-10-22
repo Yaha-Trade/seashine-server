@@ -120,7 +120,6 @@ public class ProductService {
 		productDB.setQuantityOfBoxesPerContainer(product.getQuantityOfBoxesPerContainer());
 		productDB.setQuantityOfPieces(product.getQuantityOfPieces());
 		productDB.setQuantityOfPiecesPerContainer(product.getQuantityOfPiecesPerContainer());
-		productDB.setQuantityOfBoxesOrder(product.getQuantityOfBoxesOrder());
 		productDB.setCertification(product.getCertification());
 	}
 

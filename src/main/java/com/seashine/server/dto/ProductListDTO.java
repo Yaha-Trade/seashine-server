@@ -1,6 +1,7 @@
 package com.seashine.server.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import com.seashine.server.domain.Product;
 
@@ -23,7 +24,7 @@ public class ProductListDTO implements Serializable {
 
 	private String factoryName;
 
-	private Double price;
+	private BigDecimal price;
 
 	public ProductListDTO(Product product) {
 		this.id = product.getId();
