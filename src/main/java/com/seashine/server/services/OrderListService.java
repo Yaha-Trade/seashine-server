@@ -97,10 +97,13 @@ public class OrderListService {
 		Integer totalOfBoxes = 0;
 
 		for (OrderListItem orderListItem : orderItems) {
-			totalPrice = totalPrice.add(orderListItem.getTotalPrice());
-			totalCubage = totalCubage.add(orderListItem.getTotalCubage());
-			quantityOfProducts += orderListItem.getTotalQuantityOfPieces();
-			totalOfBoxes += orderListItem.getQuantityOfBoxes();
+			totalPrice = totalPrice
+					.add(orderListItem.getTotalPrice() == null ? new BigDecimal("0") : orderListItem.getTotalPrice());
+			totalCubage = totalCubage
+					.add(orderListItem.getTotalCubage() == null ? new BigDecimal("0") : orderListItem.getTotalCubage());
+			quantityOfProducts += orderListItem.getTotalQuantityOfPieces() == null ? 0
+					: orderListItem.getTotalQuantityOfPieces();
+			totalOfBoxes += orderListItem.getQuantityOfBoxes() == null ? 0 : orderListItem.getQuantityOfBoxes();
 			totalOfReferences++;
 		}
 
