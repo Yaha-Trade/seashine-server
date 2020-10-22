@@ -1,5 +1,7 @@
 package com.seashine.server.services;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.seashine.server.domain.OrderListItem;
 import com.seashine.server.repositories.OrderListItemRepository;
 import com.seashine.server.services.exception.DataIntegrityException;
+import com.seashine.server.services.exception.ObjectNotFoundException;
 import com.seashine.server.specs.OrderListItemSpecs;
 
 @Service
@@ -23,6 +26,13 @@ public class OrderListItemService {
 
 	@Autowired
 	private OrderListService orderListService;
+
+	public OrderListItem findById(Integer id) {
+		Optional<OrderListItem> obj = orderListItemRepository.findById(id);
+
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Object not found! Id: " + id + ", Class: " + OrderListItem.class.getName()));
+	}
 
 	public Page<OrderListItem> getOrderListItems(Integer page, Integer linesPerPage, String orderBy,
 			String orderByDirection, Integer id) {
@@ -47,6 +57,27 @@ public class OrderListItemService {
 		orderListService.updateTotals(orderListItemRepository.findAll(getItemFilters(idOrderList)), idOrderList);
 
 		return orderListItem;
+	}
+
+	public OrderListItem update(OrderListItem orderListItem, Integer idOrderList) {
+		OrderListItem orderListItemDB = findById(orderListItem.getId());
+		updateData(orderListItemDB, orderListItem);
+		orderListItemRepository.save(orderListItemDB);
+
+		orderListService.updateTotals(orderListItemRepository.findAll(getItemFilters(idOrderList)), idOrderList);
+
+		return orderListItemDB;
+	}
+
+	private void updateData(OrderListItem orderListItemDB, OrderListItem orderListItem) {
+		orderListItemDB.setOrderList(orderListItem.getOrderList());
+		orderListItemDB.setProduct(orderListItem.getProduct());
+		orderListItemDB.setQuantityOfBoxes(orderListItem.getQuantityOfBoxes());
+		orderListItemDB.setQuantityOfPiecesPerBox(orderListItem.getQuantityOfPiecesPerBox());
+		orderListItemDB.setTotalCubage(orderListItem.getTotalCubage());
+		orderListItemDB.setTotalPrice(orderListItem.getTotalPrice());
+		orderListItemDB.setTotalQuantityOfPieces(orderListItem.getTotalQuantityOfPieces());
+		orderListItemDB.setUnitPrice(orderListItem.getUnitPrice());
 	}
 
 	public void delete(Integer id, Integer idOrderList) {

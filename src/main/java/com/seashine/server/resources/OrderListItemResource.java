@@ -26,6 +26,13 @@ public class OrderListItemResource {
 	@Autowired
 	private OrderListItemService orderListItemService;
 
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<OrderListItemListDTO> findById(@PathVariable Integer id) {
+		OrderListItem orderListItem = orderListItemService.findById(id);
+
+		return ResponseEntity.ok().body(new OrderListItemListDTO(orderListItem));
+	}
+
 	@RequestMapping(value = "/{idOrder}/page", method = RequestMethod.GET)
 	public ResponseEntity<Page<OrderListItemListDTO>> getOrderListItems(@PathVariable Integer idOrder,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -50,6 +57,15 @@ public class OrderListItemResource {
 				.toUri();
 
 		return ResponseEntity.created(uri).build();
+	}
+
+	@RequestMapping(value = "{idOrderList}/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@Valid @RequestBody OrderListItem orderListItem, @PathVariable Integer id,
+			@PathVariable Integer idOrderList) {
+		orderListItem.setId(id);
+		orderListItem = orderListItemService.update(orderListItem, idOrderList);
+
+		return ResponseEntity.noContent().build();
 	}
 
 	@RequestMapping(value = "{idOrder}/{id}", method = RequestMethod.DELETE)
