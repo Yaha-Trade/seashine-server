@@ -695,6 +695,9 @@ public class DBService {
 				english));
 		i18nList.add(new I18n(null, "productalreadyexits", "該產品已經訂購。 您要編輯嗎？", chinese));
 
+		i18nList.add(new I18n(null, "ok", "Ok", english));
+		i18nList.add(new I18n(null, "ok", "好", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
