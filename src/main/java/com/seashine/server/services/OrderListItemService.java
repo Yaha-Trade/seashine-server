@@ -1,5 +1,6 @@
 package com.seashine.server.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -87,5 +88,12 @@ public class OrderListItemService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("OrderListItem has orders!");
 		}
+	}
+
+	public Integer checkIfProductIsInInOrder(Integer idOrderList, Integer idProductParent) {
+		List<OrderListItem> orderItemList = orderListItemRepository.findByParentProductIdAndOrderListId(idProductParent,
+				idOrderList);
+
+		return orderItemList.size() > 0 ? orderItemList.get(0).getId() : -1;
 	}
 }

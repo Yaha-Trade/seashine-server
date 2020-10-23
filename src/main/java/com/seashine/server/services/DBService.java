@@ -691,6 +691,10 @@ public class DBService {
 		i18nList.add(new I18n(null, "totalofreferences", "Total references", english));
 		i18nList.add(new I18n(null, "totalofreferences", "參考總數", chinese));
 
+		i18nList.add(new I18n(null, "productalreadyexits", "This product is already in order. Do you want to edit it?",
+				english));
+		i18nList.add(new I18n(null, "productalreadyexits", "該產品已經訂購。 您要編輯嗎？", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
