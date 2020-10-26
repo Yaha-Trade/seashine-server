@@ -44,7 +44,7 @@ public class OrderListListDTO implements Serializable {
 		this.name = orderList.getName();
 		this.purchaseDate = orderList.getPurchaseDate();
 		this.season = orderList.getSeason().getName();
-		this.customer = orderList.getSeason().getCustomer().getName();
+		this.customer = orderList.getCustomer().getName();
 		this.totalPrice = orderList.getTotalPrice();
 		this.totalCubage = orderList.getTotalCubage();
 		this.totalOfBoxes = orderList.getTotalOfBoxes();
