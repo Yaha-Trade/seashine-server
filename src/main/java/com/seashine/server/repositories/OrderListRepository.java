@@ -14,6 +14,6 @@ import com.seashine.server.domain.OrderList;
 @Repository
 public interface OrderListRepository extends JpaRepository<OrderList, Integer>, JpaSpecificationExecutor<OrderList> {
 
-	@EntityGraph(attributePaths = { "season", "customer" })
+	@EntityGraph(attributePaths = { "season", "season.customer" })
 	Page<OrderList> findAll(@Nullable Specification<OrderList> spec, Pageable pageable);
 }

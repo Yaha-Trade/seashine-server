@@ -254,15 +254,15 @@ public class DBService {
 		List<OrderList> orderList = new ArrayList<OrderList>();
 		orderList.add(new OrderList(null, "First order", new java.sql.Date(sdf.parse("25/12/2020").getTime()),
 				OrderStatus.NO_STATUS.getCode(), new BigDecimal("150"), new BigDecimal("50"), 10, 10, 10, 15,
-				seasonsList.get(0), seasonsList.get(0).getCustomer()));
+				seasonsList.get(0)));
 
 		orderList.add(new OrderList(null, "Second order", new java.sql.Date(sdf.parse("31/01/2020").getTime()),
 				OrderStatus.NO_STATUS.getCode(), new BigDecimal("150"), new BigDecimal("50"), 10, 10, 10, 15,
-				seasonsList.get(1), seasonsList.get(1).getCustomer()));
+				seasonsList.get(1)));
 
 		orderList.add(new OrderList(null, "Third order", new java.sql.Date(sdf.parse("25/03/2020").getTime()),
 				OrderStatus.NO_STATUS.getCode(), new BigDecimal("150"), new BigDecimal("50"), 10, 10, 10, 15,
-				seasonsList.get(1), seasonsList.get(1).getCustomer()));
+				seasonsList.get(1)));
 
 		List<OrderListItem> orderListItems = new ArrayList<OrderListItem>();
 		orderListItems.add(new OrderListItem(null, 10, 10, 100, new BigDecimal("150"), new BigDecimal("50"),

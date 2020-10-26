@@ -72,7 +72,6 @@ public class OrderListService {
 		orderListDB.setPurchaseDate(orderList.getPurchaseDate());
 		orderListDB.setSeason(orderList.getSeason());
 		orderListDB.setStatus(orderList.getStatus());
-		orderListDB.setCustomer(orderList.getCustomer());
 	}
 
 	private Specification<OrderList> getFilters(String name) {
