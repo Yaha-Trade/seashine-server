@@ -40,7 +40,8 @@ public class OrderListService {
 
 	public Page<OrderList> findPage(Integer page, Integer linesPerPage, String orderBy, String orderByDirection,
 			String name) {
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection), orderBy);
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection),
+				checkOrderBy(orderBy));
 
 		return orderListRepository.findAll(getFilters(name), pageRequest);
 	}
@@ -109,5 +110,14 @@ public class OrderListService {
 		orderList.setTotalOfBoxes(totalOfBoxes);
 
 		update(orderList);
+	}
+
+	private String checkOrderBy(String orderBy) {
+		switch (orderBy) {
+		case "customer":
+			return "season.customer.name";
+		}
+
+		return orderBy;
 	}
 }

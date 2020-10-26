@@ -37,7 +37,8 @@ public class OrderListItemService {
 
 	public Page<OrderListItem> getOrderListItems(Integer page, Integer linesPerPage, String orderBy,
 			String orderByDirection, Integer id) {
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection), orderBy);
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection),
+				checkOrderBy(orderBy));
 
 		return orderListItemRepository.findAll(getItemFilters(id), pageRequest);
 	}
@@ -99,8 +100,20 @@ public class OrderListItemService {
 
 	public Page<OrderListItem> findByParentProductId(Integer page, Integer linesPerPage, String orderBy,
 			String orderByDirection, Integer parentProductId) {
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection), orderBy);
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection),
+				checkOrderBy(orderBy));
 
 		return orderListItemRepository.findByParentProductId(parentProductId, pageRequest);
+	}
+
+	private String checkOrderBy(String orderBy) {
+		switch (orderBy) {
+		case "customerName":
+			return "orderList.season.customer.name";
+		case "factoryName":
+			return "product.factory.name";
+		}
+
+		return orderBy;
 	}
 }

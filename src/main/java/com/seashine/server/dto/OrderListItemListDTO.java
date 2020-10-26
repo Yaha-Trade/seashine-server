@@ -20,6 +20,8 @@ public class OrderListItemListDTO implements Serializable {
 
 	private String factoryName;
 
+	private String customerName;
+
 	private Integer productId;
 
 	private String productReference;
@@ -50,5 +52,6 @@ public class OrderListItemListDTO implements Serializable {
 		this.unitPrice = orderListItem.getUnitPrice();
 		this.totalPrice = orderListItem.getTotalPrice();
 		this.totalCubage = orderListItem.getTotalCubage();
+		this.customerName = orderListItem.getOrderList().getSeason().getCustomer().getName();
 	}
 }
