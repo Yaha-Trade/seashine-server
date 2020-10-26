@@ -96,4 +96,11 @@ public class OrderListItemService {
 
 		return orderItemList.size() > 0 ? orderItemList.get(0).getId() : -1;
 	}
+
+	public Page<OrderListItem> findByParentProductId(Integer page, Integer linesPerPage, String orderBy,
+			String orderByDirection, Integer parentProductId) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection), orderBy);
+
+		return orderListItemRepository.findByParentProductId(parentProductId, pageRequest);
+	}
 }

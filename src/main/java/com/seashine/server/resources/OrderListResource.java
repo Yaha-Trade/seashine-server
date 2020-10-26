@@ -86,5 +86,4 @@ public class OrderListResource {
 
 		return ResponseEntity.noContent().build();
 	}
-
 }

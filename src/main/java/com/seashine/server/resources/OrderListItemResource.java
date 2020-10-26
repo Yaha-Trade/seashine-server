@@ -55,6 +55,22 @@ public class OrderListItemResource {
 		return ResponseEntity.ok().body(orderListItemService.checkIfProductIsInInOrder(idOrderList, idProduct));
 	}
 
+	@RequestMapping(value = "purchasehistory/{parentProductId}/page", method = RequestMethod.GET)
+	public ResponseEntity<Page<OrderListItemListDTO>> findByParentProductId(@PathVariable Integer parentProductId,
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "rowsPerPage", defaultValue = "50") Integer linesPerPage,
+			@RequestParam(value = "orderBy", defaultValue = "product") String orderBy,
+			@RequestParam(value = "orderByDirection", defaultValue = "ASC") String orderByDirection) {
+
+		Page<OrderListItem> orderListItems = (Page<OrderListItem>) orderListItemService.findByParentProductId(page,
+				linesPerPage, orderBy, orderByDirection.toUpperCase(), parentProductId);
+
+		Page<OrderListItemListDTO> orderListItemDTO = orderListItems
+				.map(orderListItem -> new OrderListItemListDTO(orderListItem));
+
+		return ResponseEntity.ok().body(orderListItemDTO);
+	}
+
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody OrderListItem orderListItem) {
 		orderListItem = orderListItemService.insert(orderListItem, orderListItem.getOrderList().getId());
