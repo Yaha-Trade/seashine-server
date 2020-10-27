@@ -22,12 +22,12 @@ public class SeasonListDTO implements Serializable {
 
 	private Date scheduledDate;
 
-	private String customerName;
+	private String customer;
 
 	public SeasonListDTO(Season season) {
 		this.id = season.getId();
 		this.name = season.getName();
 		this.scheduledDate = season.getScheduledDate();
-		this.customerName = season.getCustomer().getName();
+		this.customer = season.getCustomer().getName();
 	}
 }

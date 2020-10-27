@@ -22,7 +22,7 @@ public class ProductListDTO implements Serializable {
 
 	private String description;
 
-	private String factoryName;
+	private String factory;
 
 	private BigDecimal price;
 
@@ -31,6 +31,6 @@ public class ProductListDTO implements Serializable {
 		this.reference = product.getReference();
 		this.description = product.getDescription();
 		this.price = product.getPrice();
-		this.factoryName = product.getFactory().getName();
+		this.factory = product.getFactory().getName();
 	}
 }

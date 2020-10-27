@@ -47,10 +47,10 @@ public class SeasonResource {
 			@RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
 			@RequestParam(value = "orderByDirection", defaultValue = "ASC") String orderByDirection,
 			@RequestParam(value = "name", defaultValue = "") String name,
-			@RequestParam(value = "customerName", defaultValue = "") String customerName) {
+			@RequestParam(value = "customer", defaultValue = "") String customer) {
 
 		Page<Season> seasons = (Page<Season>) seasonService.findPage(page, linesPerPage, orderBy,
-				orderByDirection.toUpperCase(), name, customerName);
+				orderByDirection.toUpperCase(), name, customer);
 
 		Page<SeasonListDTO> seasonsListDTO = seasons.map(season -> new SeasonListDTO(season));
 

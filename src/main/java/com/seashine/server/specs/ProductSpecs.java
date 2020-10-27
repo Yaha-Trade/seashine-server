@@ -32,10 +32,10 @@ public class ProductSpecs {
 		};
 	}
 
-	public static Specification<Product> filterLikeByFactoryName(String factoryName) {
+	public static Specification<Product> filterLikeByFactoryName(String factory) {
 		return (root, query, criteriaBuilder) -> {
 			Join<Product, Factory> factoryJoin = root.join("factory", JoinType.INNER);
-			Predicate equalPredicate = criteriaBuilder.like(factoryJoin.get("name"), "%" + factoryName + "%");
+			Predicate equalPredicate = criteriaBuilder.like(factoryJoin.get("name"), "%" + factory + "%");
 			return equalPredicate;
 		};
 	}

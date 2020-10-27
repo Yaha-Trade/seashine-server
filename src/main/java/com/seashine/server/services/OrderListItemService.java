@@ -108,9 +108,9 @@ public class OrderListItemService {
 
 	private String checkOrderBy(String orderBy) {
 		switch (orderBy) {
-		case "customerName":
+		case "customer":
 			return "orderList.season.customer.name";
-		case "factoryName":
+		case "factory":
 			return "product.factory.name";
 		}
 

@@ -37,10 +37,10 @@ public class SeasonService {
 	}
 
 	public Page<Season> findPage(Integer page, Integer linesPerPage, String orderBy, String orderByDirection,
-			String name, String customerName) {
+			String name, String customer) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection), orderBy);
 
-		return seasonRepository.findAll(getFilters(name, customerName), pageRequest);
+		return seasonRepository.findAll(getFilters(name, customer), pageRequest);
 	}
 
 	@Transactional
@@ -71,15 +71,15 @@ public class SeasonService {
 		seasonDB.setCustomer(season.getCustomer());
 	}
 
-	private Specification<Season> getFilters(String name, String customerName) {
+	private Specification<Season> getFilters(String name, String customer) {
 		Specification<Season> seasonSpecs = Specification.where(null);
 
 		if (!name.equals("")) {
 			seasonSpecs = seasonSpecs.and(SeasonSpecs.filterLikeByName(name));
 		}
 
-		if (!customerName.equals("")) {
-			seasonSpecs = seasonSpecs.and(SeasonSpecs.filterLikeByCustomerName(customerName));
+		if (!customer.equals("")) {
+			seasonSpecs = seasonSpecs.and(SeasonSpecs.filterLikeByCustomerName(customer));
 		}
 
 		return seasonSpecs;

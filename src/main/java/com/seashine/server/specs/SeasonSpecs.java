@@ -18,10 +18,10 @@ public class SeasonSpecs {
 		};
 	}
 
-	public static Specification<Season> filterLikeByCustomerName(String customerName) {
+	public static Specification<Season> filterLikeByCustomerName(String customer) {
 		return (root, query, criteriaBuilder) -> {
 			Join<Season, Customer> customerJoin = root.join("customer", JoinType.INNER);
-			Predicate equalPredicate = criteriaBuilder.like(customerJoin.get("name"), Utils.getLike(customerName));
+			Predicate equalPredicate = criteriaBuilder.like(customerJoin.get("name"), Utils.getLike(customer));
 			return equalPredicate;
 		};
 	}

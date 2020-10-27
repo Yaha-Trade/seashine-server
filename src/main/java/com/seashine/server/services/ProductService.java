@@ -53,10 +53,10 @@ public class ProductService {
 	}
 
 	public Page<Product> findPage(Integer page, Integer linesPerPage, String orderBy, String orderByDirection,
-			String reference, String description, String factoryName) {
+			String reference, String description, String factory) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection), orderBy);
 
-		return productRepository.findAll(getFilters(reference, description, factoryName), pageRequest);
+		return productRepository.findAll(getFilters(reference, description, factory), pageRequest);
 	}
 
 	@Transactional
@@ -123,7 +123,7 @@ public class ProductService {
 		productDB.setCertification(product.getCertification());
 	}
 
-	private Specification<Product> getFilters(String reference, String description, String factoryName) {
+	private Specification<Product> getFilters(String reference, String description, String factory) {
 		Specification<Product> productsSpecs = Specification.where(null);
 
 		if (!reference.equals("")) {
@@ -134,8 +134,8 @@ public class ProductService {
 			productsSpecs = productsSpecs.and(ProductSpecs.filterLikeByDescription(description));
 		}
 
-		if (!factoryName.equals("")) {
-			productsSpecs = productsSpecs.and(ProductSpecs.filterLikeByFactoryName(factoryName));
+		if (!factory.equals("")) {
+			productsSpecs = productsSpecs.and(ProductSpecs.filterLikeByFactoryName(factory));
 		}
 
 		productsSpecs = productsSpecs.and(ProductSpecs.filterOnlyProductModels());
