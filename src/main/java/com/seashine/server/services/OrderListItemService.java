@@ -43,10 +43,10 @@ public class OrderListItemService {
 		return orderListItemRepository.findAll(getItemFilters(id), pageRequest);
 	}
 
-	private Specification<OrderListItem> getItemFilters(Integer id) {
+	private Specification<OrderListItem> getItemFilters(Integer orderListId) {
 		Specification<OrderListItem> orderListSpecs = Specification.where(null);
 
-		orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterByOrderListId(id));
+		orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterByOrderListId(orderListId));
 
 		return orderListSpecs;
 	}
@@ -92,18 +92,21 @@ public class OrderListItemService {
 	}
 
 	public Integer checkIfProductIsInInOrder(Integer idOrderList, Integer idProductParent) {
-		List<OrderListItem> orderItemList = orderListItemRepository.findByParentProductIdAndOrderListId(idProductParent,
-				idOrderList);
+		Specification<OrderListItem> orderListItemSpecs = Specification.where(null);
+		orderListItemSpecs = orderListItemSpecs.and(getFilters(idProductParent, ""));
+		orderListItemSpecs = orderListItemSpecs.and(getItemFilters(idOrderList));
+
+		List<OrderListItem> orderItemList = orderListItemRepository.findAll(orderListItemSpecs);
 
 		return orderItemList.size() > 0 ? orderItemList.get(0).getId() : -1;
 	}
 
 	public Page<OrderListItem> findByParentProductId(Integer page, Integer linesPerPage, String orderBy,
-			String orderByDirection, Integer parentProductId) {
+			String orderByDirection, Integer parentProductId, String customer) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection),
 				checkOrderBy(orderBy));
 
-		return orderListItemRepository.findByParentProductId(parentProductId, pageRequest);
+		return orderListItemRepository.findAll(getFilters(parentProductId, customer), pageRequest);
 	}
 
 	private String checkOrderBy(String orderBy) {
@@ -115,5 +118,17 @@ public class OrderListItemService {
 		}
 
 		return orderBy;
+	}
+
+	private Specification<OrderListItem> getFilters(Integer parentProductId, String customer) {
+		Specification<OrderListItem> orderListItemSpecs = Specification.where(null);
+
+		if (!customer.equals("")) {
+			orderListItemSpecs = orderListItemSpecs.and(OrderListItemSpecs.filterLikeByCustomerName(customer));
+		}
+
+		orderListItemSpecs = orderListItemSpecs.and(OrderListItemSpecs.filterByParentProductId(parentProductId));
+
+		return orderListItemSpecs;
 	}
 }
