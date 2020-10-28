@@ -89,7 +89,6 @@ public class OrderListService {
 		BigDecimal totalPrice = new BigDecimal("0");
 		BigDecimal totalCubage = new BigDecimal("0");
 		Integer quantityOfProducts = 0;
-		Integer quantityOfContainers = 0;
 		Integer totalOfReferences = 0;
 		Integer totalOfBoxes = 0;
 
@@ -102,7 +101,7 @@ public class OrderListService {
 		}
 
 		OrderList orderList = findById(idOrderList);
-		orderList.setQuantityOfContainers(quantityOfContainers);
+		orderList.setQuantityOfContainers((int) Math.ceil(totalCubage.doubleValue() / 67));
 		orderList.setQuantityOfProducts(quantityOfProducts);
 		orderList.setTotalCubage(totalCubage);
 		orderList.setTotalPrice(totalPrice);
