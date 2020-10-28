@@ -719,6 +719,12 @@ public class DBService {
 		i18nList.add(new I18n(null, "remarks", "Remarks", english));
 		i18nList.add(new I18n(null, "remarks", "备注", chinese));
 
+		i18nList.add(new I18n(null, "savedwithsuccess", "Record successfully saved", english));
+		i18nList.add(new I18n(null, "savedwithsuccess", "記錄成功保存", chinese));
+
+		i18nList.add(new I18n(null, "couldnotdelete", "Couldn't delete. Record has relationships.", english));
+		i18nList.add(new I18n(null, "couldnotdelete", "無法刪除。 記錄具有關係。", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);

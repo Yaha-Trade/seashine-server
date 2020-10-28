@@ -61,7 +61,7 @@ public class FactoryService {
 		try {
 			factoryRepository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Factory has orders and products!");
+			throw new DataIntegrityException("Factory has products!");
 		}
 	}
 

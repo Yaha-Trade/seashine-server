@@ -70,7 +70,7 @@ public class OrderListService {
 		try {
 			orderListRepository.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("OrderList has orders!");
+			throw new DataIntegrityException("OrderList has products!");
 		}
 	}
 
