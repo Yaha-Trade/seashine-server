@@ -49,6 +49,12 @@ public class OrderListService {
 	@Transactional
 	public OrderList insert(OrderList orderList) {
 		orderList.setId(null);
+		orderList.setQuantityOfContainers(0);
+		orderList.setQuantityOfProducts(0);
+		orderList.setTotalCubage(new BigDecimal("0"));
+		orderList.setTotalPrice(new BigDecimal("0"));
+		orderList.setTotalOfReferences(0);
+		orderList.setTotalOfBoxes(0);
 		orderList = orderListRepository.save(orderList);
 
 		return orderList;
