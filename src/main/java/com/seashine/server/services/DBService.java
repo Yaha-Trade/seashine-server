@@ -704,6 +704,21 @@ public class DBService {
 		i18nList.add(new I18n(null, "quantityofcontainers", "Qty containers", english));
 		i18nList.add(new I18n(null, "quantityofcontainers", "數量容器", chinese));
 
+		i18nList.add(new I18n(null, "selectproduct", "Select product", english));
+		i18nList.add(new I18n(null, "selectproduct", "選擇產品", chinese));
+
+		i18nList.add(new I18n(null, "editproductdata", "Edit product data", english));
+		i18nList.add(new I18n(null, "editproductdata", "編輯產品數據", chinese));
+
+		i18nList.add(new I18n(null, "productaddedorder", "Product added to order", english));
+		i18nList.add(new I18n(null, "productaddedorder", "產品已添加到訂單", chinese));
+
+		i18nList.add(new I18n(null, "addnewproduct", "Add new product", english));
+		i18nList.add(new I18n(null, "addnewproduct", "新增產品", chinese));
+
+		i18nList.add(new I18n(null, "remarks", "Remarks", english));
+		i18nList.add(new I18n(null, "remarks", "备注", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
