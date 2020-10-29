@@ -39,11 +39,11 @@ public class OrderListService {
 	}
 
 	public Page<OrderList> findPage(Integer page, Integer linesPerPage, String orderBy, String orderByDirection,
-			String name) {
+			String name, String customer, String season) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection),
 				checkOrderBy(orderBy));
 
-		return orderListRepository.findAll(getFilters(name), pageRequest);
+		return orderListRepository.findAll(getFilters(name, customer, season), pageRequest);
 	}
 
 	@Transactional
@@ -81,11 +81,19 @@ public class OrderListService {
 		orderListDB.setStatus(orderList.getStatus());
 	}
 
-	private Specification<OrderList> getFilters(String name) {
+	private Specification<OrderList> getFilters(String name, String customer, String season) {
 		Specification<OrderList> orderListSpecs = Specification.where(null);
 
 		if (!name.equals("")) {
 			orderListSpecs = orderListSpecs.and(OrderListSpecs.filterLikeByName(name));
+		}
+
+		if (!customer.equals("")) {
+			orderListSpecs = orderListSpecs.and(OrderListSpecs.filterLikeByCustomerName(customer));
+		}
+
+		if (!season.equals("")) {
+			orderListSpecs = orderListSpecs.and(OrderListSpecs.filterLikeBySeasonName(season));
 		}
 
 		return orderListSpecs;

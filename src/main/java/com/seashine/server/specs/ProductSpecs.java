@@ -20,7 +20,7 @@ public class ProductSpecs {
 
 	public static Specification<Product> filterLikeByDescription(String description) {
 		return (root, query, criteriaBuilder) -> {
-			Predicate equalPredicate = criteriaBuilder.like(root.get("description"), "%" + description + "%");
+			Predicate equalPredicate = criteriaBuilder.like(root.get("description"), Utils.getLike(description));
 			return equalPredicate;
 		};
 	}
@@ -35,7 +35,7 @@ public class ProductSpecs {
 	public static Specification<Product> filterLikeByFactoryName(String factory) {
 		return (root, query, criteriaBuilder) -> {
 			Join<Product, Factory> factoryJoin = root.join("factory", JoinType.INNER);
-			Predicate equalPredicate = criteriaBuilder.like(factoryJoin.get("name"), "%" + factory + "%");
+			Predicate equalPredicate = criteriaBuilder.like(factoryJoin.get("name"), Utils.getLike(factory));
 			return equalPredicate;
 		};
 	}

@@ -52,10 +52,12 @@ public class OrderListResource {
 			@RequestParam(value = "rowsPerPage", defaultValue = "50") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
 			@RequestParam(value = "orderByDirection", defaultValue = "ASC") String orderByDirection,
-			@RequestParam(value = "name", defaultValue = "") String name) {
+			@RequestParam(value = "name", defaultValue = "") String name,
+			@RequestParam(value = "customer", defaultValue = "") String customer,
+			@RequestParam(value = "season", defaultValue = "") String season) {
 
 		Page<OrderList> orderLists = (Page<OrderList>) orderListService.findPage(page, linesPerPage, orderBy,
-				orderByDirection.toUpperCase(), name);
+				orderByDirection.toUpperCase(), name, customer, season);
 
 		Page<OrderListListDTO> orderListDTO = orderLists.map(orderList -> new OrderListListDTO(orderList));
 
