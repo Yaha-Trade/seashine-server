@@ -93,7 +93,7 @@ public class ProductResource {
 		return ResponseEntity.noContent().build();
 	}
 
-	@RequestMapping(value = "/image/{idProduct}", method = RequestMethod.POST)
+	@RequestMapping(value = "/uploadimages/{idProduct}", method = RequestMethod.POST)
 	public ResponseEntity<List<Integer>> uploadFile(@RequestParam("images") MultipartFile[] files,
 			@PathVariable Integer idProduct) {
 
@@ -102,7 +102,7 @@ public class ProductResource {
 		return ResponseEntity.ok().body(imageIds);
 	}
 
-	@RequestMapping(value = "/image/{idImage}", produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
+	@RequestMapping(value = "/getimage/{idImage}", produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<byte[]> getImage(@PathVariable Integer idImage) {
 		Image image = imageService.findById(idImage);
 		byte[] imageBytes = null;
@@ -119,7 +119,7 @@ public class ProductResource {
 		return ResponseEntity.ok().headers(headers).body(imageBytes);
 	}
 
-	@RequestMapping(value = "/image/{idProduct}/{idImage}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/deleteimage/{idProduct}/{idImage}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteImage(@PathVariable Integer idProduct, @PathVariable Integer idImage) {
 		productService.deleteImageById(idProduct, idImage);
 

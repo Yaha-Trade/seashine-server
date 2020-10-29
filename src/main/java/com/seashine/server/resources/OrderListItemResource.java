@@ -53,7 +53,7 @@ public class OrderListItemResource {
 		return ResponseEntity.ok().body(orderListItemDTO);
 	}
 
-	@RequestMapping(value = "check/{idOrderList}/{idProduct}", method = RequestMethod.GET)
+	@RequestMapping(value = "checkproductinorder/{idOrderList}/{idProduct}", method = RequestMethod.GET)
 	public ResponseEntity<Integer> update(@PathVariable Integer idOrderList, @PathVariable Integer idProduct) {
 
 		return ResponseEntity.ok().body(orderListItemService.checkIfProductIsInInOrder(idOrderList, idProduct));
