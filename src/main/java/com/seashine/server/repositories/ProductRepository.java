@@ -8,13 +8,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.seashine.server.domain.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer>, JpaSpecificationExecutor<Product> {
 
+	@Transactional(readOnly = true)
 	@EntityGraph(attributePaths = { "factory" })
 	Page<Product> findAll(@Nullable Specification<Product> spec, Pageable pageable);
-
 }
