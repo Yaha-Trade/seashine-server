@@ -39,10 +39,13 @@ public class OrderListItemResource {
 			@RequestParam(value = "rowsPerPage", defaultValue = "50") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "quantity") String orderBy,
 			@RequestParam(value = "orderByDirection", defaultValue = "ASC") String orderByDirection,
-			@RequestParam(value = "factory", defaultValue = "") String factory) {
+			@RequestParam(value = "factory", defaultValue = "") String factory,
+			@RequestParam(value = "productReference", defaultValue = "") String productReference,
+			@RequestParam(value = "productDescription", defaultValue = "") String productDescription) {
 
 		Page<OrderListItem> orderListItems = (Page<OrderListItem>) orderListItemService.getOrderListItems(page,
-				linesPerPage, orderBy, orderByDirection.toUpperCase(), idOrder, factory);
+				linesPerPage, orderBy, orderByDirection.toUpperCase(), idOrder, factory, productReference,
+				productDescription);
 
 		Page<OrderListItemListDTO> orderListItemDTO = orderListItems
 				.map(orderListItem -> new OrderListItemListDTO(orderListItem));

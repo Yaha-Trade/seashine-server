@@ -40,10 +40,28 @@ public class OrderListItemSpecs {
 		};
 	}
 
-	public static Specification<OrderListItem> filterLikeByFactoryName(String factory) {
+	public static Specification<OrderListItem> filterLikeByProductReference(String productReference) {
 		return (root, query, criteriaBuilder) -> {
 			Join<OrderListItem, Product> productJoin = root.join("product", JoinType.INNER);
-			Join<Product, Factory> factoryJoin = productJoin.join("factory", JoinType.INNER);
+			Predicate equalPredicate = criteriaBuilder.like(productJoin.get("reference"),
+					Utils.getLike(productReference));
+			return equalPredicate;
+		};
+	}
+
+	public static Specification<OrderListItem> filterLikeByProductDescription(String productDescription) {
+		return (root, query, criteriaBuilder) -> {
+			Join<OrderListItem, Product> productJoin = root.join("product", JoinType.INNER);
+			Predicate equalPredicate = criteriaBuilder.like(productJoin.get("description"),
+					Utils.getLike(productDescription));
+			return equalPredicate;
+		};
+	}
+
+	public static Specification<OrderListItem> filterLikeByFactoryName(String factory) {
+		return (root, query, criteriaBuilder) -> {
+			Join<OrderListItem, Product> productJoin = root.join("product", JoinType.LEFT);
+			Join<Product, Factory> factoryJoin = productJoin.join("factory", JoinType.LEFT);
 			Predicate equalPredicate = criteriaBuilder.like(factoryJoin.get("name"), Utils.getLike(factory));
 			return equalPredicate;
 		};
