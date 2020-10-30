@@ -111,7 +111,7 @@ public class Product implements Serializable {
 	private List<Image> images = new ArrayList<Image>();
 
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Remark> remarks = new ArrayList<Remark>();
 
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })

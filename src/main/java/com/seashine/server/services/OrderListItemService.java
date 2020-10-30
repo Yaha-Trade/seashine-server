@@ -28,6 +28,9 @@ public class OrderListItemService {
 	@Autowired
 	private OrderListService orderListService;
 
+	@Autowired
+	private ProductService productService;
+
 	public OrderListItem findById(Integer id) {
 		Optional<OrderListItem> obj = orderListItemRepository.findById(id);
 
@@ -100,9 +103,12 @@ public class OrderListItemService {
 
 	public void delete(Integer id, Integer idOrderList) {
 		try {
-			orderListItemRepository.deleteById(id);
+			OrderListItem orderListItem = findById(id);
+			orderListItemRepository.delete(orderListItem);
 			orderListService.updateTotals(orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "")),
 					idOrderList);
+
+			productService.delete(orderListItem.getProduct().getId());
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("OrderListItem has orders!");
 		}

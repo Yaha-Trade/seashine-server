@@ -185,14 +185,34 @@ public class DBService {
 		batteryDataList.add(new BatteryData(null, 1, 1, 1, batteryTypeList.get(2), voltageList.get(1)));
 		batteryDataList.add(new BatteryData(null, 1, 1, 1, batteryTypeList.get(3), voltageList.get(1)));
 		batteryDataList.add(new BatteryData(null, 1, 1, 1, batteryTypeList.get(4), voltageList.get(0)));
+		batteryDataList.add(new BatteryData(null, 1, 1, 1, batteryTypeList.get(1), voltageList.get(0)));
+		batteryDataList.add(new BatteryData(null, 1, 1, 1, batteryTypeList.get(2), voltageList.get(1)));
+		batteryDataList.add(new BatteryData(null, 1, 1, 1, batteryTypeList.get(3), voltageList.get(1)));
+		batteryDataList.add(new BatteryData(null, 1, 1, 1, batteryTypeList.get(4), voltageList.get(0)));
+		batteryDataList.add(new BatteryData(null, 1, 1, 1, batteryTypeList.get(4), voltageList.get(0)));
+		batteryDataList.add(new BatteryData(null, 1, 1, 1, batteryTypeList.get(4), voltageList.get(0)));
+		batteryDataList.add(new BatteryData(null, 1, 1, 1, batteryTypeList.get(4), voltageList.get(0)));
+		batteryDataList.add(new BatteryData(null, 1, 1, 1, batteryTypeList.get(4), voltageList.get(0)));
 
 		List<Certification> certificationList = new ArrayList<Certification>();
 		certificationList.add(new Certification(null, "1", 1, "Composition 1", 1, "Red", 1, 1, 1, 1, 1, 1, "Special 1",
 				Arrays.asList(batteryDataList.get(0))));
-		certificationList.add(new Certification(null, "1", 1, "Composition 2", 1, "Blue", 1, 1, 1, 1, 1, 1, "Special 2",
+		certificationList.add(new Certification(null, "2", 1, "Composition 2", 1, "Blue", 1, 1, 1, 1, 1, 1, "Special 2",
 				Arrays.asList(batteryDataList.get(1))));
-		certificationList.add(new Certification(null, "1", 1, "Composition 3", 1, "Green", 1, 1, 1, 1, 1, 1,
+		certificationList.add(new Certification(null, "3", 1, "Composition 3", 1, "Green", 1, 1, 1, 1, 1, 1,
 				"Special 3", Arrays.asList(batteryDataList.get(2), batteryDataList.get(3))));
+		certificationList.add(new Certification(null, "4", 1, "Composition 4", 1, "Red", 1, 1, 1, 1, 1, 1, "Special 4",
+				Arrays.asList(batteryDataList.get(4))));
+		certificationList.add(new Certification(null, "5", 1, "Composition 5", 1, "Blue", 1, 1, 1, 1, 1, 1, "Special 5",
+				Arrays.asList(batteryDataList.get(5))));
+		certificationList.add(new Certification(null, "6", 1, "Composition 6", 1, "Green", 1, 1, 1, 1, 1, 1,
+				"Special 6", Arrays.asList(batteryDataList.get(6), batteryDataList.get(7))));
+		certificationList.add(new Certification(null, "7", 1, "Composition 7", 1, "Red", 1, 1, 1, 1, 1, 1, "Special 7",
+				Arrays.asList(batteryDataList.get(8))));
+		certificationList.add(new Certification(null, "8", 1, "Composition 8", 1, "Blue", 1, 1, 1, 1, 1, 1, "Special 8",
+				Arrays.asList(batteryDataList.get(9))));
+		certificationList.add(new Certification(null, "9", 1, "Composition 9", 1, "Green", 1, 1, 1, 1, 1, 1,
+				"Special 9", Arrays.asList(batteryDataList.get(10), batteryDataList.get(11))));
 
 		List<Product> productsList = new ArrayList<Product>();
 		productsList.add(new Product(null, "1", "Product 01", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
@@ -218,37 +238,37 @@ public class DBService {
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
-				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(0), certificationList.get(0), null,
+				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(0), certificationList.get(3), null,
 				null, productsList.get(0)));
 		productsList.add(new Product(null, "2", "Product 02", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
-				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(5), certificationList.get(1), null,
+				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(5), certificationList.get(4), null,
 				null, productsList.get(1)));
 		productsList.add(new Product(null, "3", "Product 03", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
-				new BigDecimal("22.5"), 3, 4, packingList.get(1), factoryList.get(3), certificationList.get(2), null,
+				new BigDecimal("22.5"), 3, 4, packingList.get(1), factoryList.get(3), certificationList.get(5), null,
 				null, productsList.get(2)));
 		productsList.add(new Product(null, "2", "Product 02", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
-				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(5), certificationList.get(1), null,
+				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(5), certificationList.get(6), null,
 				null, productsList.get(1)));
 		productsList.add(new Product(null, "3", "Product 03", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
-				new BigDecimal("22.5"), 3, 4, packingList.get(1), factoryList.get(3), certificationList.get(2), null,
+				new BigDecimal("22.5"), 3, 4, packingList.get(1), factoryList.get(3), certificationList.get(7), null,
 				null, productsList.get(2)));
 		productsList.add(new Product(null, "3", "Product 03", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
-				new BigDecimal("22.5"), 3, 4, packingList.get(1), factoryList.get(3), certificationList.get(2), null,
+				new BigDecimal("22.5"), 3, 4, packingList.get(1), factoryList.get(3), certificationList.get(8), null,
 				null, productsList.get(2)));
 
 		List<OrderList> orderList = new ArrayList<OrderList>();

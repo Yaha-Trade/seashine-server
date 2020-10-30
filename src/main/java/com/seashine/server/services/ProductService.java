@@ -75,11 +75,18 @@ public class ProductService {
 
 	public Product update(Product product) {
 		Product productDB = findById(product.getId());
+
 		List<BatteryData> batteries = batteryDataRepository.saveAll(product.getCertification().getBatteries());
 		product.getCertification().setBatteries(batteries);
+
 		Certification certification = certificationRepository.save(product.getCertification());
+
+		productDB.getRemarks().clear();
+		productDB.getRemarks().addAll(product.getRemarks());
+
 		product.setCertification(certification);
 		updateData(productDB, product);
+
 		return productRepository.save(productDB);
 	}
 
