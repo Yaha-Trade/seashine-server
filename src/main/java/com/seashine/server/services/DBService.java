@@ -220,56 +220,56 @@ public class DBService {
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(0), certificationList.get(0), null,
-				null, null));
+				null, null, 0));
 		productsList.add(new Product(null, "2", "Product 02", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(5), certificationList.get(1), null,
-				null, null));
+				null, null, 0));
 		productsList.add(new Product(null, "3", "Product 03", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(1), factoryList.get(3), certificationList.get(2), null,
-				null, null));
+				null, null, 0));
 
 		productsList.add(new Product(null, "1", "Product 01", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(0), certificationList.get(3), null,
-				null, productsList.get(0)));
+				null, productsList.get(0), 0));
 		productsList.add(new Product(null, "2", "Product 02", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(5), certificationList.get(4), null,
-				null, productsList.get(1)));
+				null, productsList.get(1), 0));
 		productsList.add(new Product(null, "3", "Product 03", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(1), factoryList.get(3), certificationList.get(5), null,
-				null, productsList.get(2)));
+				null, productsList.get(2), 0));
 		productsList.add(new Product(null, "2", "Product 02", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(5), certificationList.get(6), null,
-				null, productsList.get(1)));
+				null, productsList.get(1), 0));
 		productsList.add(new Product(null, "3", "Product 03", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(1), factoryList.get(3), certificationList.get(7), null,
-				null, productsList.get(2)));
+				null, productsList.get(2), 0));
 		productsList.add(new Product(null, "3", "Product 03", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(1), factoryList.get(3), certificationList.get(8), null,
-				null, productsList.get(2)));
+				null, productsList.get(2), 0));
 
 		List<OrderList> orderList = new ArrayList<OrderList>();
 		orderList.add(new OrderList(null, "First order", new java.sql.Date(sdf.parse("25/12/2020").getTime()),
@@ -747,6 +747,24 @@ public class DBService {
 
 		i18nList.add(new I18n(null, "deletesuccess", "Record successfully deleted", english));
 		i18nList.add(new I18n(null, "deletesuccess", "記錄成功刪除", chinese));
+
+		i18nList.add(new I18n(null, "status", "Status", english));
+		i18nList.add(new I18n(null, "status", "状态", chinese));
+
+		i18nList.add(new I18n(null, "quantityofimages", "Qty images", english));
+		i18nList.add(new I18n(null, "quantityofimages", "圖片數量", chinese));
+
+		i18nList.add(new I18n(null, "picturewithpack", "Picture with pack", english));
+		i18nList.add(new I18n(null, "picturewithpack", "帶包裝圖片", chinese));
+
+		i18nList.add(new I18n(null, "picturewithoutpack", "Picture without pack", english));
+		i18nList.add(new I18n(null, "picturewithoutpack", "圖片不包", chinese));
+
+		i18nList.add(new I18n(null, "picture4", "Picture 4", english));
+		i18nList.add(new I18n(null, "picture4", "圖片4", chinese));
+
+		i18nList.add(new I18n(null, "picture5", "Picture 5", english));
+		i18nList.add(new I18n(null, "picture5", "圖片5", chinese));
 
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));

@@ -21,6 +21,8 @@ public class OrderListListDTO implements Serializable {
 
 	private String name;
 
+	private Integer status;
+
 	private Date purchaseDate;
 
 	private String season;
@@ -42,6 +44,7 @@ public class OrderListListDTO implements Serializable {
 	public OrderListListDTO(OrderList orderList) {
 		this.id = orderList.getId();
 		this.name = orderList.getName();
+		this.status = orderList.getStatus();
 		this.purchaseDate = orderList.getPurchaseDate();
 		this.season = orderList.getSeason().getName();
 		this.customer = orderList.getSeason().getCustomer().getName();

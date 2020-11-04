@@ -33,6 +33,29 @@ public class OrderListItemResource {
 		return ResponseEntity.ok().body(new OrderListItemListDTO(orderListItem));
 	}
 
+	@RequestMapping(value = "images/page", method = RequestMethod.GET)
+	public ResponseEntity<Page<OrderListItemListDTO>> getAllOrderListsItems(
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "rowsPerPage", defaultValue = "50") Integer linesPerPage,
+			@RequestParam(value = "orderBy", defaultValue = "quantity") String orderBy,
+			@RequestParam(value = "orderByDirection", defaultValue = "ASC") String orderByDirection,
+			@RequestParam(value = "factory", defaultValue = "") String factory,
+			@RequestParam(value = "productReference", defaultValue = "") String productReference,
+			@RequestParam(value = "productDescription", defaultValue = "") String productDescription,
+			@RequestParam(value = "customer", defaultValue = "") String customer,
+			@RequestParam(value = "season", defaultValue = "") String season,
+			@RequestParam(value = "order", defaultValue = "") String order) {
+
+		Page<OrderListItem> orderListItems = (Page<OrderListItem>) orderListItemService.getAllOrderListsItems(page,
+				linesPerPage, orderBy, orderByDirection.toUpperCase(), customer, season, order, factory,
+				productReference, productDescription);
+
+		Page<OrderListItemListDTO> orderListItemDTO = orderListItems
+				.map(orderListItem -> new OrderListItemListDTO(orderListItem));
+
+		return ResponseEntity.ok().body(orderListItemDTO);
+	}
+
 	@RequestMapping(value = "/{idOrder}/page", method = RequestMethod.GET)
 	public ResponseEntity<Page<OrderListItemListDTO>> getOrderListItems(@PathVariable Integer idOrder,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,

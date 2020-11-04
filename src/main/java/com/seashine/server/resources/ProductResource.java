@@ -95,9 +95,9 @@ public class ProductResource {
 
 	@RequestMapping(value = "/uploadimages/{idProduct}", method = RequestMethod.POST)
 	public ResponseEntity<List<Integer>> uploadFile(@RequestParam("images") MultipartFile[] files,
-			@PathVariable Integer idProduct) {
+			@PathVariable Integer idProduct, @RequestParam(value = "order", defaultValue = "1") Integer order) {
 
-		List<Integer> imageIds = productService.uploadImages(files, idProduct);
+		List<Integer> imageIds = productService.uploadImages(files, idProduct, order);
 
 		return ResponseEntity.ok().body(imageIds);
 	}
@@ -124,6 +124,11 @@ public class ProductResource {
 		productService.deleteImageById(idProduct, idImage);
 
 		return ResponseEntity.noContent().build();
+	}
+
+	@RequestMapping(value = "/getimages/{idProduct}", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<List<Image>> getImages(@PathVariable Integer idProduct) {
+		return ResponseEntity.ok().body(productService.findById(idProduct).getImages());
 	}
 
 }

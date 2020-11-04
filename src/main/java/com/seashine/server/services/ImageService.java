@@ -77,7 +77,7 @@ public class ImageService {
 		return Scalr.resize(sourceImg, Scalr.Method.ULTRA_QUALITY, sourceImg.getWidth(), sourceImg.getHeight());
 	}
 
-	public Image saveImage(MultipartFile file) {
+	public Image saveImage(MultipartFile file, int order) {
 		BufferedImage jpgImage = getJpgImageFromFile(file);
 		jpgImage = resize(jpgImage);
 
@@ -93,7 +93,7 @@ public class ImageService {
 			System.err.println(e.getMessage());
 		}
 
-		Image image = new Image(null, fileName);
+		Image image = new Image(null, fileName, order);
 		image = imageRepository.save(image);
 
 		return image;

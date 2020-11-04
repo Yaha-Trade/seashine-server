@@ -117,4 +117,6 @@ public class Product implements Serializable {
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Product parentProduct;
+
+	private Integer quantityOfImages = 0;
 }

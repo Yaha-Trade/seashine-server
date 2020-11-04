@@ -150,16 +150,18 @@ public class ProductService {
 		return productsSpecs;
 	}
 
-	public List<Integer> uploadImages(MultipartFile[] files, Integer idProduct) {
+	public List<Integer> uploadImages(MultipartFile[] files, Integer idProduct, Integer order) {
 		List<Image> images = new ArrayList<Image>();
 		List<Integer> imageIds = new ArrayList<Integer>();
 		for (MultipartFile multipartFile : files) {
-			Image image = imageService.saveImage(multipartFile);
+			Image image = imageService.saveImage(multipartFile, order);
 			images.add(image);
 			imageIds.add(image.getId());
+			order++;
 		}
 		Product productDB = findById(idProduct);
 		productDB.getImages().addAll(images);
+		productDB.setQuantityOfImages(productDB.getImages().size());
 		productRepository.save(productDB);
 
 		return imageIds;
@@ -168,6 +170,7 @@ public class ProductService {
 	public void deleteImageById(Integer idProduct, Integer idImage) {
 		Product productDB = findById(idProduct);
 		productDB.getImages().remove(imageService.findById(idImage));
+		productDB.setQuantityOfImages(productDB.getImages().size());
 		productRepository.save(productDB);
 		imageService.deleteById(idImage);
 	}

@@ -24,4 +24,6 @@ public class Image implements Serializable {
 	private Integer id;
 
 	private String name;
+
+	private Integer nrOrder;
 }

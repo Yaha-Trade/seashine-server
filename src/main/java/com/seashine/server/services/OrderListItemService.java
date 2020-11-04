@@ -43,15 +43,17 @@ public class OrderListItemService {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection),
 				checkOrderBy(orderBy));
 
-		return orderListItemRepository.findAll(getItemFilters(id, factory, productReference, productDescription),
-				pageRequest);
+		return orderListItemRepository
+				.findAll(getItemFilters(id, factory, productReference, productDescription, "", "", ""), pageRequest);
 	}
 
 	private Specification<OrderListItem> getItemFilters(Integer orderListId, String factory, String productReference,
-			String productDescription) {
+			String productDescription, String customer, String season, String order) {
 		Specification<OrderListItem> orderListSpecs = Specification.where(null);
 
-		orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterByOrderListId(orderListId));
+		if (orderListId != null) {
+			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterByOrderListId(orderListId));
+		}
 
 		if (!productReference.equals("")) {
 			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterLikeByProductReference(productReference));
@@ -65,6 +67,18 @@ public class OrderListItemService {
 			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterLikeByFactoryName(factory));
 		}
 
+		if (!customer.equals("")) {
+			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterLikeByCustomerName(customer));
+		}
+
+		if (!season.equals("")) {
+			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterLikeBySeasonName(season));
+		}
+
+		if (!order.equals("")) {
+			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterLikeByOrderName(order));
+		}
+
 		return orderListSpecs;
 	}
 
@@ -73,8 +87,8 @@ public class OrderListItemService {
 		orderListItem.setId(null);
 		orderListItem = orderListItemRepository.save(orderListItem);
 
-		orderListService.updateTotals(orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "")),
-				idOrderList);
+		orderListService.updateTotals(
+				orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "", "", "", "")), idOrderList);
 
 		return orderListItem;
 	}
@@ -84,8 +98,8 @@ public class OrderListItemService {
 		updateData(orderListItemDB, orderListItem);
 		orderListItemRepository.save(orderListItemDB);
 
-		orderListService.updateTotals(orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "")),
-				idOrderList);
+		orderListService.updateTotals(
+				orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "", "", "", "")), idOrderList);
 
 		return orderListItemDB;
 	}
@@ -105,8 +119,8 @@ public class OrderListItemService {
 		try {
 			OrderListItem orderListItem = findById(id);
 			orderListItemRepository.delete(orderListItem);
-			orderListService.updateTotals(orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "")),
-					idOrderList);
+			orderListService.updateTotals(
+					orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "", "", "", "")), idOrderList);
 
 			productService.delete(orderListItem.getProduct().getId());
 		} catch (DataIntegrityViolationException e) {
@@ -117,7 +131,7 @@ public class OrderListItemService {
 	public Integer checkIfProductIsInInOrder(Integer idOrderList, Integer idProductParent) {
 		Specification<OrderListItem> orderListItemSpecs = Specification.where(null);
 		orderListItemSpecs = orderListItemSpecs.and(getFilters(idProductParent, ""));
-		orderListItemSpecs = orderListItemSpecs.and(getItemFilters(idOrderList, "", "", ""));
+		orderListItemSpecs = orderListItemSpecs.and(getItemFilters(idOrderList, "", "", "", "", "", ""));
 
 		List<OrderListItem> orderItemList = orderListItemRepository.findAll(orderListItemSpecs);
 
@@ -138,6 +152,12 @@ public class OrderListItemService {
 			return "orderList.season.customer.name";
 		case "factory":
 			return "product.factory.name";
+		case "season":
+			return "orderList.season.name";
+		case "order":
+			return "orderList.name";
+		case "quantityOfImages":
+			return "product.quantityOfImages";
 		}
 
 		return orderBy;
@@ -153,5 +173,17 @@ public class OrderListItemService {
 		orderListItemSpecs = orderListItemSpecs.and(OrderListItemSpecs.filterByParentProductId(parentProductId));
 
 		return orderListItemSpecs;
+	}
+
+	public Page<OrderListItem> getAllOrderListsItems(Integer page, Integer linesPerPage, String orderBy,
+			String orderByDirection, String customer, String season, String order, String factory,
+			String productReference, String productDescription) {
+
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection),
+				checkOrderBy(orderBy));
+
+		return orderListItemRepository.findAll(
+				getItemFilters(null, factory, productReference, productDescription, customer, season, order),
+				pageRequest);
 	}
 }

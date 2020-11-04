@@ -17,6 +17,7 @@ public interface OrderListItemRepository
 		extends JpaRepository<OrderListItem, Integer>, JpaSpecificationExecutor<OrderListItem> {
 
 	@Transactional(readOnly = true)
-	@EntityGraph(attributePaths = { "product", "product.factory" })
+	@EntityGraph(attributePaths = { "product", "product.factory", "orderList", "orderList.season",
+			"orderList.season.customer" })
 	Page<OrderListItem> findAll(@Nullable Specification<OrderListItem> spec, Pageable pageable);
 }

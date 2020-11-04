@@ -66,4 +66,21 @@ public class OrderListItemSpecs {
 			return equalPredicate;
 		};
 	}
+
+	public static Specification<OrderListItem> filterLikeBySeasonName(String season) {
+		return (root, query, criteriaBuilder) -> {
+			Join<OrderListItem, OrderList> orderListJoin = root.join("orderList", JoinType.INNER);
+			Join<OrderList, Season> seasonJoin = orderListJoin.join("season", JoinType.INNER);
+			Predicate equalPredicate = criteriaBuilder.like(seasonJoin.get("name"), Utils.getLike(season));
+			return equalPredicate;
+		};
+	}
+
+	public static Specification<OrderListItem> filterLikeByOrderName(String order) {
+		return (root, query, criteriaBuilder) -> {
+			Join<OrderListItem, OrderList> orderListJoin = root.join("orderList", JoinType.INNER);
+			Predicate equalPredicate = criteriaBuilder.like(orderListJoin.get("name"), Utils.getLike(order));
+			return equalPredicate;
+		};
+	}
 }
