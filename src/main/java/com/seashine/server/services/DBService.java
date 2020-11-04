@@ -766,6 +766,9 @@ public class DBService {
 		i18nList.add(new I18n(null, "picture5", "Picture 5", english));
 		i18nList.add(new I18n(null, "picture5", "圖片5", chinese));
 
+		i18nList.add(new I18n(null, "picture6", "Picture 6", english));
+		i18nList.add(new I18n(null, "picture6", "圖片6", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
