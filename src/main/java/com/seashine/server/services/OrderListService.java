@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.seashine.server.domain.History;
 import com.seashine.server.domain.OrderList;
 import com.seashine.server.domain.OrderListItem;
 import com.seashine.server.repositories.OrderListRepository;
@@ -26,6 +27,9 @@ public class OrderListService {
 
 	@Autowired
 	private OrderListRepository orderListRepository;
+
+	@Autowired
+	private HistoryService historyService;
 
 	public OrderList findById(Integer id) {
 		Optional<OrderList> obj = orderListRepository.findById(id);
@@ -68,7 +72,11 @@ public class OrderListService {
 
 	public void delete(Integer id) {
 		try {
+			OrderList orderListDB = findById(id);
+			orderListDB.getHistories().size();
+			List<History> histories = orderListDB.getHistories();
 			orderListRepository.deleteById(id);
+			historyService.deleteAll(histories);
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("OrderList has products!");
 		}
@@ -79,6 +87,7 @@ public class OrderListService {
 		orderListDB.setPurchaseDate(orderList.getPurchaseDate());
 		orderListDB.setSeason(orderList.getSeason());
 		orderListDB.setStatus(orderList.getStatus());
+		orderListDB.setHistories(orderList.getHistories());
 	}
 
 	private Specification<OrderList> getFilters(String name, String customer, String season) {
