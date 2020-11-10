@@ -104,8 +104,8 @@ public class DBService {
 		User miranda = new User(null, "Rafael Miranda", "rafaelmiranda@yahacomex.com.br", "miranda",
 				pe.bCryptPasswordEncoder().encode("456"), chinese, profiles);
 
-		User doctor = new User(null, "Doutor Estranho", null, "doctor", pe.bCryptPasswordEncoder().encode("789"),
-				english, profiles);
+		User doctor = new User(null, "Doutor Estranho", "doutor@yahacomex.com.br", "doctor",
+				pe.bCryptPasswordEncoder().encode("789"), english, profiles);
 
 		List<Factory> factoryList = new ArrayList<Factory>();
 		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVXYWZ";
@@ -801,6 +801,9 @@ public class DBService {
 
 		i18nList.add(new I18n(null, "wishtosendtoapproval", "Do you want to submit for approval?", english));
 		i18nList.add(new I18n(null, "wishtosendtoapproval", "您要提交批准嗎？", chinese));
+
+		i18nList.add(new I18n(null, "userdata", "User data", english));
+		i18nList.add(new I18n(null, "userdata", "用戶數據", chinese));
 
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
