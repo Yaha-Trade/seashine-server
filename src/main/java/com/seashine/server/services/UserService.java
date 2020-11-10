@@ -74,6 +74,7 @@ public class UserService {
 	public User insert(User user) {
 		user.setId(null);
 		user = userRepository.save(user);
+		user.setPassword(pe.bCryptPasswordEncoder().encode(user.getPassword()));
 
 		return user;
 	}
@@ -82,6 +83,7 @@ public class UserService {
 		User userDB = findById(user.getId());
 		userDB.setName(user.getName());
 		userDB.setEmail(user.getEmail());
+		userDB.setLogin(user.getLogin());
 		if (!user.getPassword().equals("")) {
 			userDB.setPassword(pe.bCryptPasswordEncoder().encode(user.getPassword()));
 		}
