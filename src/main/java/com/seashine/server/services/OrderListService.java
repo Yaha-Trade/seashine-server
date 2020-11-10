@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.seashine.server.domain.History;
 import com.seashine.server.domain.OrderList;
 import com.seashine.server.domain.OrderListItem;
+import com.seashine.server.domain.enums.OrderStatus;
 import com.seashine.server.repositories.OrderListRepository;
 import com.seashine.server.services.exception.DataIntegrityException;
 import com.seashine.server.services.exception.ObjectNotFoundException;
@@ -59,6 +60,7 @@ public class OrderListService {
 		orderList.setTotalPrice(new BigDecimal("0"));
 		orderList.setTotalOfReferences(0);
 		orderList.setTotalOfBoxes(0);
+		orderList.setStatus(OrderStatus.OPENED.getCode());
 		orderList = orderListRepository.save(orderList);
 
 		return orderList;
@@ -86,7 +88,6 @@ public class OrderListService {
 		orderListDB.setName(orderList.getName());
 		orderListDB.setPurchaseDate(orderList.getPurchaseDate());
 		orderListDB.setSeason(orderList.getSeason());
-		orderListDB.setStatus(orderList.getStatus());
 		orderListDB.setHistories(orderList.getHistories());
 	}
 
@@ -141,5 +142,11 @@ public class OrderListService {
 		}
 
 		return orderBy;
+	}
+
+	public OrderList sendToApproval(Integer id) {
+		OrderList orderListDB = findById(id);
+		orderListDB.setStatus(OrderStatus.ON_APPROVAL.getCode());
+		return orderListRepository.save(orderListDB);
 	}
 }

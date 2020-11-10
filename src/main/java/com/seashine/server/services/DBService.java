@@ -273,15 +273,15 @@ public class DBService {
 
 		List<OrderList> orderList = new ArrayList<OrderList>();
 		orderList.add(new OrderList(null, "First order", new java.sql.Date(sdf.parse("25/12/2020").getTime()),
-				OrderStatus.NO_STATUS.getCode(), new BigDecimal("150"), new BigDecimal("50"), 10, 10, 10, 15,
+				OrderStatus.OPENED.getCode(), new BigDecimal("150"), new BigDecimal("50"), 10, 10, 10, 15,
 				seasonsList.get(0), null));
 
 		orderList.add(new OrderList(null, "Second order", new java.sql.Date(sdf.parse("31/01/2020").getTime()),
-				OrderStatus.NO_STATUS.getCode(), new BigDecimal("150"), new BigDecimal("50"), 10, 10, 10, 15,
+				OrderStatus.OPENED.getCode(), new BigDecimal("150"), new BigDecimal("50"), 10, 10, 10, 15,
 				seasonsList.get(1), null));
 
 		orderList.add(new OrderList(null, "Third order", new java.sql.Date(sdf.parse("25/03/2020").getTime()),
-				OrderStatus.NO_STATUS.getCode(), new BigDecimal("150"), new BigDecimal("50"), 10, 10, 10, 15,
+				OrderStatus.OPENED.getCode(), new BigDecimal("150"), new BigDecimal("50"), 10, 10, 10, 15,
 				seasonsList.get(1), null));
 
 		List<OrderListItem> orderListItems = new ArrayList<OrderListItem>();
@@ -789,6 +789,18 @@ public class DBService {
 
 		i18nList.add(new I18n(null, "ordercreated", "created the order", english));
 		i18nList.add(new I18n(null, "ordercreated", "創建訂單", chinese));
+
+		i18nList.add(new I18n(null, "sendtoapproval", "Send to approval", english));
+		i18nList.add(new I18n(null, "sendtoapproval", "發送給批准", chinese));
+
+		i18nList.add(new I18n(null, "opened", "Opened", english));
+		i18nList.add(new I18n(null, "opened", "開了", chinese));
+
+		i18nList.add(new I18n(null, "onapproval", "On approval", english));
+		i18nList.add(new I18n(null, "onapproval", "待批准", chinese));
+
+		i18nList.add(new I18n(null, "wishtosendtoapproval", "Do you want to submit for approval?", english));
+		i18nList.add(new I18n(null, "wishtosendtoapproval", "您要提交批准嗎？", chinese));
 
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));

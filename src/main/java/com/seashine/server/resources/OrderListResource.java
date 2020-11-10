@@ -88,4 +88,11 @@ public class OrderListResource {
 
 		return ResponseEntity.noContent().build();
 	}
+
+	@RequestMapping(value = "sendtoapproval/{id}", method = RequestMethod.POST)
+	public ResponseEntity<Void> sendToApproval(@PathVariable Integer id) {
+		orderListService.sendToApproval(id);
+
+		return ResponseEntity.noContent().build();
+	}
 }
