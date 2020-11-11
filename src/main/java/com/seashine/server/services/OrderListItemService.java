@@ -43,12 +43,12 @@ public class OrderListItemService {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection),
 				checkOrderBy(orderBy));
 
-		return orderListItemRepository
-				.findAll(getItemFilters(id, factory, productReference, productDescription, "", "", ""), pageRequest);
+		return orderListItemRepository.findAll(
+				getItemFilters(id, factory, productReference, productDescription, "", "", "", ""), pageRequest);
 	}
 
 	private Specification<OrderListItem> getItemFilters(Integer orderListId, String factory, String productReference,
-			String productDescription, String customer, String season, String order) {
+			String productDescription, String customer, String season, String order, String quantityOfImages) {
 		Specification<OrderListItem> orderListSpecs = Specification.where(null);
 
 		if (orderListId != null) {
@@ -79,6 +79,10 @@ public class OrderListItemService {
 			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterLikeByOrderName(order));
 		}
 
+		if (!quantityOfImages.equals("")) {
+			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterByQuantity(quantityOfImages));
+		}
+
 		return orderListSpecs;
 	}
 
@@ -88,7 +92,7 @@ public class OrderListItemService {
 		orderListItem = orderListItemRepository.save(orderListItem);
 
 		orderListService.updateTotals(
-				orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "", "", "", "")), idOrderList);
+				orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "", "", "", "", "")), idOrderList);
 
 		return orderListItem;
 	}
@@ -99,7 +103,7 @@ public class OrderListItemService {
 		orderListItemRepository.save(orderListItemDB);
 
 		orderListService.updateTotals(
-				orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "", "", "", "")), idOrderList);
+				orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "", "", "", "", "")), idOrderList);
 
 		return orderListItemDB;
 	}
@@ -120,7 +124,8 @@ public class OrderListItemService {
 			OrderListItem orderListItem = findById(id);
 			orderListItemRepository.delete(orderListItem);
 			orderListService.updateTotals(
-					orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "", "", "", "")), idOrderList);
+					orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "", "", "", "", "")),
+					idOrderList);
 
 			productService.delete(orderListItem.getProduct().getId());
 		} catch (DataIntegrityViolationException e) {
@@ -131,7 +136,7 @@ public class OrderListItemService {
 	public Integer checkIfProductIsInInOrder(Integer idOrderList, Integer idProductParent) {
 		Specification<OrderListItem> orderListItemSpecs = Specification.where(null);
 		orderListItemSpecs = orderListItemSpecs.and(getFilters(idProductParent, ""));
-		orderListItemSpecs = orderListItemSpecs.and(getItemFilters(idOrderList, "", "", "", "", "", ""));
+		orderListItemSpecs = orderListItemSpecs.and(getItemFilters(idOrderList, "", "", "", "", "", "", ""));
 
 		List<OrderListItem> orderItemList = orderListItemRepository.findAll(orderListItemSpecs);
 
@@ -177,13 +182,12 @@ public class OrderListItemService {
 
 	public Page<OrderListItem> getAllOrderListsItems(Integer page, Integer linesPerPage, String orderBy,
 			String orderByDirection, String customer, String season, String order, String factory,
-			String productReference, String productDescription) {
+			String productReference, String productDescription, String quantityOfImages) {
 
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection),
 				checkOrderBy(orderBy));
 
-		return orderListItemRepository.findAll(
-				getItemFilters(null, factory, productReference, productDescription, customer, season, order),
-				pageRequest);
+		return orderListItemRepository.findAll(getItemFilters(null, factory, productReference, productDescription,
+				customer, season, order, quantityOfImages), pageRequest);
 	}
 }

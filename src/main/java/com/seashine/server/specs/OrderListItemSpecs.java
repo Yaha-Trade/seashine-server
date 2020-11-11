@@ -83,4 +83,12 @@ public class OrderListItemSpecs {
 			return equalPredicate;
 		};
 	}
+
+	public static Specification<OrderListItem> filterByQuantity(String quantityOfImages) {
+		return (root, query, criteriaBuilder) -> {
+			Join<OrderListItem, Product> productJoin = root.join("product", JoinType.INNER);
+			Predicate equalPredicate = criteriaBuilder.equal(productJoin.get("quantityOfImages"), quantityOfImages);
+			return equalPredicate;
+		};
+	}
 }

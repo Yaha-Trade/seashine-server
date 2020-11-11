@@ -44,11 +44,12 @@ public class OrderListItemResource {
 			@RequestParam(value = "productDescription", defaultValue = "") String productDescription,
 			@RequestParam(value = "customer", defaultValue = "") String customer,
 			@RequestParam(value = "season", defaultValue = "") String season,
-			@RequestParam(value = "order", defaultValue = "") String order) {
+			@RequestParam(value = "order", defaultValue = "") String order,
+			@RequestParam(value = "quantityOfImages", defaultValue = "") String quantityOfImages) {
 
 		Page<OrderListItem> orderListItems = (Page<OrderListItem>) orderListItemService.getAllOrderListsItems(page,
 				linesPerPage, orderBy, orderByDirection.toUpperCase(), customer, season, order, factory,
-				productReference, productDescription);
+				productReference, productDescription, quantityOfImages);
 
 		Page<OrderListItemListDTO> orderListItemDTO = orderListItems
 				.map(orderListItem -> new OrderListItemListDTO(orderListItem));
