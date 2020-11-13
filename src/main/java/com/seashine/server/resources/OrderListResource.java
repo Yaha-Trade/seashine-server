@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,8 +66,9 @@ public class OrderListResource {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody OrderList orderList) {
-		orderList = orderListService.insert(orderList);
+	public ResponseEntity<Void> insert(@Valid @RequestBody OrderList orderList,
+			@RequestHeader("userId") Integer userId) {
+		orderList = orderListService.insert(orderList, userId);
 
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(orderList.getId())
 				.toUri();
@@ -75,9 +77,10 @@ public class OrderListResource {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody OrderList orderList, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody OrderList orderList, @PathVariable Integer id,
+			@RequestHeader("userId") Integer userId) {
 		orderList.setId(id);
-		orderList = orderListService.update(orderList);
+		orderList = orderListService.update(orderList, userId);
 
 		return ResponseEntity.noContent().build();
 	}
@@ -90,8 +93,8 @@ public class OrderListResource {
 	}
 
 	@RequestMapping(value = "sendtoapproval/{id}", method = RequestMethod.POST)
-	public ResponseEntity<Void> sendToApproval(@PathVariable Integer id) {
-		orderListService.sendToApproval(id);
+	public ResponseEntity<Void> sendToApproval(@PathVariable Integer id, @RequestHeader("userId") Integer userId) {
+		orderListService.sendToApproval(id, userId);
 
 		return ResponseEntity.noContent().build();
 	}

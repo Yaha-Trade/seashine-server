@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -101,8 +102,9 @@ public class OrderListItemResource {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody OrderListItem orderListItem) {
-		orderListItem = orderListItemService.insert(orderListItem, orderListItem.getOrderList().getId());
+	public ResponseEntity<Void> insert(@Valid @RequestBody OrderListItem orderListItem,
+			@RequestHeader("userId") Integer userId) {
+		orderListItem = orderListItemService.insert(orderListItem, orderListItem.getOrderList().getId(), userId);
 
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(orderListItem.getId())
 				.toUri();
@@ -112,16 +114,17 @@ public class OrderListItemResource {
 
 	@RequestMapping(value = "{idOrderList}/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody OrderListItem orderListItem, @PathVariable Integer id,
-			@PathVariable Integer idOrderList) {
+			@PathVariable Integer idOrderList, @RequestHeader("userId") Integer userId) {
 		orderListItem.setId(id);
-		orderListItem = orderListItemService.update(orderListItem, idOrderList);
+		orderListItem = orderListItemService.update(orderListItem, idOrderList, userId);
 
 		return ResponseEntity.noContent().build();
 	}
 
 	@RequestMapping(value = "{idOrder}/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Integer idOrder, @PathVariable Integer id) {
-		orderListItemService.delete(id, idOrder);
+	public ResponseEntity<Void> delete(@PathVariable Integer idOrder, @PathVariable Integer id,
+			@RequestHeader("userId") Integer userId) {
+		orderListItemService.delete(id, idOrder, userId);
 
 		return ResponseEntity.noContent().build();
 	}

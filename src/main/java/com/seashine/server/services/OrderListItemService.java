@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.seashine.server.domain.OrderListItem;
 import com.seashine.server.repositories.OrderListItemRepository;
@@ -87,23 +88,26 @@ public class OrderListItemService {
 	}
 
 	@Transactional
-	public OrderListItem insert(OrderListItem orderListItem, Integer idOrderList) {
+	public OrderListItem insert(OrderListItem orderListItem, Integer idOrderList,
+			@RequestHeader("userId") Integer userId) {
 		orderListItem.setId(null);
 		orderListItem = orderListItemRepository.save(orderListItem);
 
 		orderListService.updateTotals(
-				orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "", "", "", "", "")), idOrderList);
+				orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "", "", "", "", "")), idOrderList,
+				userId);
 
 		return orderListItem;
 	}
 
-	public OrderListItem update(OrderListItem orderListItem, Integer idOrderList) {
+	public OrderListItem update(OrderListItem orderListItem, Integer idOrderList, Integer userId) {
 		OrderListItem orderListItemDB = findById(orderListItem.getId());
 		updateData(orderListItemDB, orderListItem);
 		orderListItemRepository.save(orderListItemDB);
 
 		orderListService.updateTotals(
-				orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "", "", "", "", "")), idOrderList);
+				orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "", "", "", "", "")), idOrderList,
+				userId);
 
 		return orderListItemDB;
 	}
@@ -119,13 +123,13 @@ public class OrderListItemService {
 		orderListItemDB.setUnitPrice(orderListItem.getUnitPrice());
 	}
 
-	public void delete(Integer id, Integer idOrderList) {
+	public void delete(Integer id, Integer idOrderList, Integer userId) {
 		try {
 			OrderListItem orderListItem = findById(id);
 			orderListItemRepository.delete(orderListItem);
 			orderListService.updateTotals(
 					orderListItemRepository.findAll(getItemFilters(idOrderList, "", "", "", "", "", "", "")),
-					idOrderList);
+					idOrderList, userId);
 
 			productService.delete(orderListItem.getProduct().getId());
 		} catch (DataIntegrityViolationException e) {

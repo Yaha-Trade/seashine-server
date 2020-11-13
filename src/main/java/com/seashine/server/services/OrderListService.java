@@ -1,6 +1,7 @@
 package com.seashine.server.services;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.seashine.server.domain.History;
 import com.seashine.server.domain.OrderList;
 import com.seashine.server.domain.OrderListItem;
+import com.seashine.server.domain.enums.OrderHistoryAction;
 import com.seashine.server.domain.enums.OrderStatus;
 import com.seashine.server.repositories.OrderListRepository;
 import com.seashine.server.services.exception.DataIntegrityException;
@@ -31,6 +33,9 @@ public class OrderListService {
 
 	@Autowired
 	private HistoryService historyService;
+
+	@Autowired
+	private UserService userService;
 
 	public OrderList findById(Integer id) {
 		Optional<OrderList> obj = orderListRepository.findById(id);
@@ -52,7 +57,9 @@ public class OrderListService {
 	}
 
 	@Transactional
-	public OrderList insert(OrderList orderList) {
+	public OrderList insert(OrderList orderList, Integer userId) {
+		History history = addHistory(userId, OrderHistoryAction.CREATED);
+
 		orderList.setId(null);
 		orderList.setQuantityOfContainers(0);
 		orderList.setQuantityOfProducts(0);
@@ -61,14 +68,15 @@ public class OrderListService {
 		orderList.setTotalOfReferences(0);
 		orderList.setTotalOfBoxes(0);
 		orderList.setStatus(OrderStatus.OPENED.getCode());
+		orderList.getHistories().add(history);
 		orderList = orderListRepository.save(orderList);
 
 		return orderList;
 	}
 
-	public OrderList update(OrderList orderList) {
+	public OrderList update(OrderList orderList, Integer userId) {
 		OrderList orderListDB = findById(orderList.getId());
-		updateData(orderListDB, orderList);
+		updateData(orderListDB, orderList, userId);
 		return orderListRepository.save(orderListDB);
 	}
 
@@ -84,11 +92,13 @@ public class OrderListService {
 		}
 	}
 
-	private void updateData(OrderList orderListDB, OrderList orderList) {
+	private void updateData(OrderList orderListDB, OrderList orderList, Integer userId) {
 		orderListDB.setName(orderList.getName());
 		orderListDB.setPurchaseDate(orderList.getPurchaseDate());
 		orderListDB.setSeason(orderList.getSeason());
 		orderListDB.setHistories(orderList.getHistories());
+
+		orderListDB.getHistories().add(addHistory(userId, OrderHistoryAction.EDITED));
 	}
 
 	private Specification<OrderList> getFilters(String name, String customer, String season) {
@@ -109,7 +119,7 @@ public class OrderListService {
 		return orderListSpecs;
 	}
 
-	public void updateTotals(List<OrderListItem> orderItems, Integer idOrderList) {
+	public void updateTotals(List<OrderListItem> orderItems, Integer idOrderList, Integer userId) {
 		BigDecimal totalPrice = new BigDecimal("0");
 		BigDecimal totalCubage = new BigDecimal("0");
 		Integer quantityOfProducts = 0;
@@ -132,7 +142,7 @@ public class OrderListService {
 		orderList.setTotalOfReferences(totalOfReferences);
 		orderList.setTotalOfBoxes(totalOfBoxes);
 
-		update(orderList);
+		update(orderList, userId);
 	}
 
 	private String checkOrderBy(String orderBy) {
@@ -144,9 +154,44 @@ public class OrderListService {
 		return orderBy;
 	}
 
-	public OrderList sendToApproval(Integer id) {
+	public OrderList sendToApproval(Integer id, Integer userId) {
 		OrderList orderListDB = findById(id);
 		orderListDB.setStatus(OrderStatus.ON_APPROVAL.getCode());
+
+		orderListDB.getHistories().add(addHistory(userId, OrderHistoryAction.SENT_TO_APPROVAL));
+
 		return orderListRepository.save(orderListDB);
+	}
+
+	private History addHistory(Integer userId, OrderHistoryAction value) {
+		String message = "";
+
+		switch (value) {
+		case CREATED:
+			message = "ordercreated";
+			break;
+
+		case EDITED:
+			message = "orderedited";
+			break;
+
+		case SENT_TO_APPROVAL:
+			message = "senttoapproval";
+			break;
+
+		case APPROVED:
+			message = "approvedtheorder";
+			break;
+
+		case REPROVED:
+			message = "reprovedtheorder";
+			break;
+		}
+
+		History history = new History(null, new Timestamp(System.currentTimeMillis()), userService.findById(userId),
+				message, 1);
+		history = historyService.insert(history);
+
+		return history;
 	}
 }
