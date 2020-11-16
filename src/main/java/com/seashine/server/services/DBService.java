@@ -817,6 +817,12 @@ public class DBService {
 		i18nList.add(new I18n(null, "reprovedtheorder", "reproved the order", english));
 		i18nList.add(new I18n(null, "reprovedtheorder", "驗證訂單", chinese));
 
+		i18nList.add(new I18n(null, "orderisinapproval", "Order is already in approval", english));
+		i18nList.add(new I18n(null, "orderisinapproval", "訂單已被批准", chinese));
+
+		i18nList.add(new I18n(null, "ordersuccesssenttoapprov", "Order successfully submitted for approval", english));
+		i18nList.add(new I18n(null, "ordersuccesssenttoapprov", "訂單已成功提交批准", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
