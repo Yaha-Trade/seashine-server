@@ -823,6 +823,33 @@ public class DBService {
 		i18nList.add(new I18n(null, "ordersuccesssenttoapprov", "Order successfully submitted for approval", english));
 		i18nList.add(new I18n(null, "ordersuccesssenttoapprov", "訂單已成功提交批准", chinese));
 
+		i18nList.add(new I18n(null, "orderapproval", "Order approval", english));
+		i18nList.add(new I18n(null, "orderapproval", "訂單批准", chinese));
+
+		i18nList.add(new I18n(null, "approve", "Approve", english));
+		i18nList.add(new I18n(null, "approve", "批准", chinese));
+
+		i18nList.add(new I18n(null, "reprove", "Reprove", english));
+		i18nList.add(new I18n(null, "reprove", "責備", chinese));
+
+		i18nList.add(new I18n(null, "wanttoapprove", "Do you want to approve?", english));
+		i18nList.add(new I18n(null, "wanttoapprove", "您要批准嗎？", chinese));
+
+		i18nList.add(new I18n(null, "wanttoreprove", "Do you want to reprove?", english));
+		i18nList.add(new I18n(null, "wanttoreprove", "您要譴責嗎？", chinese));
+
+		i18nList.add(new I18n(null, "ordersuccessapproved", "Order successfully approved", english));
+		i18nList.add(new I18n(null, "ordersuccessapproved", "訂單成功獲批", chinese));
+
+		i18nList.add(new I18n(null, "orderreproved", "Order reproved", english));
+		i18nList.add(new I18n(null, "orderreproved", "訂單已驗證", chinese));
+
+		i18nList.add(new I18n(null, "approved", "Approved", english));
+		i18nList.add(new I18n(null, "approved", "已批准", chinese));
+
+		i18nList.add(new I18n(null, "reproved", "Reproved", english));
+		i18nList.add(new I18n(null, "reproved", "已驗證", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);

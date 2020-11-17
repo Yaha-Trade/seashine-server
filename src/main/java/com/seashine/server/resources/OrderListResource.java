@@ -57,12 +57,31 @@ public class OrderListResource {
 			@RequestParam(value = "customer", defaultValue = "") String customer,
 			@RequestParam(value = "season", defaultValue = "") String season) {
 
+		return ResponseEntity.ok().body(
+				getPages(page, linesPerPage, orderBy, orderByDirection.toUpperCase(), name, customer, season, false));
+	}
+
+	@RequestMapping(value = "approval/page", method = RequestMethod.GET)
+	public ResponseEntity<Page<OrderListListDTO>> orderListApproval(
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "rowsPerPage", defaultValue = "50") Integer linesPerPage,
+			@RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
+			@RequestParam(value = "orderByDirection", defaultValue = "ASC") String orderByDirection,
+			@RequestParam(value = "name", defaultValue = "") String name,
+			@RequestParam(value = "customer", defaultValue = "") String customer,
+			@RequestParam(value = "season", defaultValue = "") String season) {
+
+		return ResponseEntity.ok().body(
+				getPages(page, linesPerPage, orderBy, orderByDirection.toUpperCase(), name, customer, season, true));
+	}
+
+	private Page<OrderListListDTO> getPages(Integer page, Integer linesPerPage, String orderBy, String orderByDirection,
+			String name, String customer, String season, Boolean isApproval) {
+
 		Page<OrderList> orderLists = (Page<OrderList>) orderListService.findPage(page, linesPerPage, orderBy,
-				orderByDirection.toUpperCase(), name, customer, season);
+				orderByDirection.toUpperCase(), name, customer, season, isApproval);
 
-		Page<OrderListListDTO> orderListDTO = orderLists.map(orderList -> new OrderListListDTO(orderList));
-
-		return ResponseEntity.ok().body(orderListDTO);
+		return orderLists.map(orderList -> new OrderListListDTO(orderList));
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -95,6 +114,20 @@ public class OrderListResource {
 	@RequestMapping(value = "sendtoapproval/{id}", method = RequestMethod.POST)
 	public ResponseEntity<Void> sendToApproval(@PathVariable Integer id, @RequestHeader("userId") Integer userId) {
 		orderListService.sendToApproval(id, userId);
+
+		return ResponseEntity.noContent().build();
+	}
+
+	@RequestMapping(value = "approve/{id}", method = RequestMethod.POST)
+	public ResponseEntity<Void> approve(@PathVariable Integer id, @RequestHeader("userId") Integer userId) {
+		orderListService.approve(id, userId);
+
+		return ResponseEntity.noContent().build();
+	}
+
+	@RequestMapping(value = "reprove/{id}", method = RequestMethod.POST)
+	public ResponseEntity<Void> reprove(@PathVariable Integer id, @RequestHeader("userId") Integer userId) {
+		orderListService.reprove(id, userId);
 
 		return ResponseEntity.noContent().build();
 	}

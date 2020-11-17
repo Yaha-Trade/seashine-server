@@ -36,4 +36,11 @@ public class OrderListSpecs {
 		};
 	}
 
+	public static Specification<OrderList> filterByStatusApproval() {
+		return (root, query, criteriaBuilder) -> {
+			Predicate equalPredicate = criteriaBuilder.equal(root.get("status"), 1);
+			return equalPredicate;
+		};
+	}
+
 }

@@ -49,11 +49,11 @@ public class OrderListService {
 	}
 
 	public Page<OrderList> findPage(Integer page, Integer linesPerPage, String orderBy, String orderByDirection,
-			String name, String customer, String season) {
+			String name, String customer, String season, Boolean isApproval) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection),
 				checkOrderBy(orderBy));
 
-		return orderListRepository.findAll(getFilters(name, customer, season), pageRequest);
+		return orderListRepository.findAll(getFilters(name, customer, season, isApproval), pageRequest);
 	}
 
 	@Transactional
@@ -101,7 +101,7 @@ public class OrderListService {
 		orderListDB.getHistories().add(addHistory(userId, OrderHistoryAction.EDITED));
 	}
 
-	private Specification<OrderList> getFilters(String name, String customer, String season) {
+	private Specification<OrderList> getFilters(String name, String customer, String season, Boolean isApproval) {
 		Specification<OrderList> orderListSpecs = Specification.where(null);
 
 		if (!name.equals("")) {
@@ -114,6 +114,10 @@ public class OrderListService {
 
 		if (!season.equals("")) {
 			orderListSpecs = orderListSpecs.and(OrderListSpecs.filterLikeBySeasonName(season));
+		}
+
+		if (isApproval) {
+			orderListSpecs = orderListSpecs.and(OrderListSpecs.filterByStatusApproval());
 		}
 
 		return orderListSpecs;
@@ -163,6 +167,24 @@ public class OrderListService {
 		return orderListRepository.save(orderListDB);
 	}
 
+	public OrderList approve(Integer id, Integer userId) {
+		OrderList orderListDB = findById(id);
+		orderListDB.setStatus(OrderStatus.APPROVED.getCode());
+
+		orderListDB.getHistories().add(addHistory(userId, OrderHistoryAction.APPROVED));
+
+		return orderListRepository.save(orderListDB);
+	}
+
+	public OrderList reprove(Integer id, Integer userId) {
+		OrderList orderListDB = findById(id);
+		orderListDB.setStatus(OrderStatus.REPROVED.getCode());
+
+		orderListDB.getHistories().add(addHistory(userId, OrderHistoryAction.REPROVED));
+
+		return orderListRepository.save(orderListDB);
+	}
+
 	private History addHistory(Integer userId, OrderHistoryAction value) {
 		String message = "";
 
@@ -194,4 +216,5 @@ public class OrderListService {
 
 		return history;
 	}
+
 }
