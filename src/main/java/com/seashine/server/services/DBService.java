@@ -850,6 +850,9 @@ public class DBService {
 		i18nList.add(new I18n(null, "reproved", "Reproved", english));
 		i18nList.add(new I18n(null, "reproved", "已驗證", chinese));
 
+		i18nList.add(new I18n(null, "export", "Export", english));
+		i18nList.add(new I18n(null, "export", "出口", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);

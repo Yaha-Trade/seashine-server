@@ -1,5 +1,7 @@
 package com.seashine.server.services;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
@@ -7,6 +9,13 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -215,6 +224,45 @@ public class OrderListService {
 		history = historyService.insert(history);
 
 		return history;
+	}
+
+	public byte[] exportOrder(Integer id) {
+		ByteArrayOutputStream byteArrayOutputStream = null;
+		try {
+			XSSFWorkbook workbook = new XSSFWorkbook();
+			XSSFSheet sheet = workbook.createSheet("Order List");
+
+			String[] headers = { "Foto", "Factory", "Code", "Descrição", "Material", "Model", "Colors" };
+
+			Font headerFont = workbook.createFont();
+			headerFont.setBold(true);
+			headerFont.setFontHeightInPoints((short) 14);
+			headerFont.setColor(IndexedColors.RED.getIndex());
+
+			// Create a CellStyle with the font
+			CellStyle headerCellStyle = workbook.createCellStyle();
+			headerCellStyle.setFont(headerFont);
+
+			// Create a Row
+			Row headerRow = sheet.createRow(0);
+
+			// Create cells
+			for (int i = 0; i < headers.length; i++) {
+				Cell cell = headerRow.createCell(i);
+				cell.setCellValue(headers[i]);
+				cell.setCellStyle(headerCellStyle);
+			}
+
+			OrderList orderList = findById(id);
+//			List<OrderListItem> orderListItems = orderList.get
+
+			byteArrayOutputStream = new ByteArrayOutputStream();
+			workbook.write(byteArrayOutputStream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return byteArrayOutputStream.toByteArray();
 	}
 
 }

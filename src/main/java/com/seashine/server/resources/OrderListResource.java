@@ -2,12 +2,15 @@ package com.seashine.server.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -130,5 +134,14 @@ public class OrderListResource {
 		orderListService.reprove(id, userId);
 
 		return ResponseEntity.noContent().build();
+	}
+
+	@RequestMapping(value = "/export/{id}", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<byte[]> export(@PathVariable Integer id) {
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION,
+						"attachment; filename=" + UUID.randomUUID().toString() + ".xlsx")
+				.contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+				.body(orderListService.exportOrder(id));
 	}
 }
