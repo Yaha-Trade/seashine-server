@@ -26,6 +26,7 @@ import com.seashine.server.domain.OrderList;
 import com.seashine.server.dto.OrderListListDTO;
 import com.seashine.server.dto.OrderListSelectDTO;
 import com.seashine.server.services.OrderListService;
+import com.seashine.server.services.UserService;
 
 @RestController
 @RequestMapping(value = "/orderlists")
@@ -33,6 +34,9 @@ public class OrderListResource {
 
 	@Autowired
 	private OrderListService orderListService;
+
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<OrderListSelectDTO>> findAll() {
@@ -137,11 +141,12 @@ public class OrderListResource {
 	}
 
 	@RequestMapping(value = "/export/{id}", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<byte[]> export(@PathVariable Integer id) {
+	public @ResponseBody ResponseEntity<byte[]> export(@PathVariable Integer id,
+			@RequestHeader("userId") Integer userId) {
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION,
 						"attachment; filename=" + UUID.randomUUID().toString() + ".xlsx")
 				.contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
-				.body(orderListService.exportOrder(id));
+				.body(orderListService.exportOrder(id, userService.findById(userId)));
 	}
 }

@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -63,4 +64,8 @@ public class OrderList implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY)
 	@OrderBy(value = "date desc")
 	private List<History> histories = new ArrayList<History>();
+
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "orderList")
+	private List<OrderListItem> orderListItems = new ArrayList<OrderListItem>();
 }

@@ -1,7 +1,9 @@
 package com.seashine.server.services;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,6 +38,12 @@ public class I18nService {
 		return i18nRepository.findByLanguageId(languageId);
 	}
 
+	public Map<String, String> getMapByLanguageId(Integer id) {
+		List<I18n> i18ns = i18nRepository.findByLanguageId(id);
+
+		return i18ns.stream().collect(Collectors.toMap(I18n::getKeyValue, i18n -> i18n.getTextValue()));
+	}
+
 	public Page<I18n> findPage(Integer page, Integer linesPerPage, String orderBy, String orderByDirection,
 			String textValue, String language) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection), orderBy);
@@ -62,5 +70,4 @@ public class I18nService {
 		i18nDB.setTextValue(i18n.getTextValue());
 		return i18nRepository.save(i18nDB);
 	}
-
 }
