@@ -28,6 +28,9 @@ public class UserService {
 	private UserRepository userRepository;
 
 	@Autowired
+	private LanguageService languageService;
+
+	@Autowired
 	private SecurityConfig pe;
 
 	public User findById(Integer id) {
@@ -96,6 +99,13 @@ public class UserService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Can't delete user");
 		}
+	}
+
+	public User changeLanguage(Integer userId, Integer idLanguage) {
+		User user = findById(userId);
+		user.setLanguage(languageService.findById(idLanguage));
+
+		return userRepository.save(user);
 	}
 
 }

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,6 +71,15 @@ public class UserResource {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		userService.delete(id);
+
+		return ResponseEntity.noContent().build();
+	}
+
+	@RequestMapping(value = "changelanguage", method = RequestMethod.GET)
+	public ResponseEntity<Void> changeLanguage(@RequestHeader("userId") Integer userId,
+			@RequestParam(value = "language") Integer idLanguage) {
+
+		userService.changeLanguage(userId, idLanguage);
 
 		return ResponseEntity.noContent().build();
 	}
