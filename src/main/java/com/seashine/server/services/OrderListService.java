@@ -31,6 +31,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.seashine.server.domain.BatteryData;
 import com.seashine.server.domain.History;
 import com.seashine.server.domain.Image;
 import com.seashine.server.domain.OrderList;
@@ -254,12 +255,12 @@ public class OrderListService {
 					i18n.get("description"), i18n.get("englishdescription"), i18n.get("quantityofpieces"),
 					i18n.get("composition"), i18n.get("model"), i18n.get("color"), i18n.get("sound"), i18n.get("light"),
 					i18n.get("motor"), i18n.get("metalpart"), i18n.get("clip"), i18n.get("line"), i18n.get("battery"),
-					"Quantity battery \n 电池数量", "Battery included", i18n.get("specialrequirements"),
-					"Unit Product Size \n 产品尺寸", "Packing size \n 产品包装尺寸", i18n.get("packing"), "Price",
-					i18n.get("ordermasterqty"), "Total unit \n 总数量", i18n.get("quantityinner"), "CBM master",
-					"Carton measure \n CM纸箱尺寸", i18n.get("quantityofcontainers"), "Quantity 40HC", "G.W. KGS",
-					"N.W. KGS", "N.W. KGS without package", "NW/Unit without package", "Photo with G.W \n 毛重图片",
-					"Photo with N.W \n 净重图片", "Remarks" };
+					i18n.get("specialrequirements"), i18n.get("unitproductsize"), i18n.get("packingsize"),
+					i18n.get("packing"), i18n.get("price"), i18n.get("ordermasterqty"), i18n.get("quantityofpieces"),
+					i18n.get("quantityinner"), i18n.get("totalcubage"), i18n.get("cartonsize"),
+					i18n.get("quantityofcontainers"), i18n.get("quantityofboxespercontainer"),
+					i18n.get("netweightwithpacking"), i18n.get("netweightwithoutpacking"), i18n.get("picturewithpack"),
+					i18n.get("picturewithoutpack"), i18n.get("remarks") };
 
 			Font headerFont = workbook.createFont();
 			headerFont.setBold(true);
@@ -281,6 +282,7 @@ public class OrderListService {
 
 			CellStyle cs = workbook.createCellStyle();
 			cs.setWrapText(true);
+			cs.setVerticalAlignment(VerticalAlignment.BOTTOM);
 
 			OrderList orderList = findById(id);
 			List<OrderListItem> orderListItems = orderList.getOrderListItems();
@@ -289,19 +291,21 @@ public class OrderListService {
 			for (OrderListItem orderListItem : orderListItems) {
 				Row row = sheet.createRow(rowNum);
 
-				int imageId1 = workbook.addPicture(getImage(orderListItem.getProduct().getImages().get(0).getId()),
-						HSSFWorkbook.PICTURE_TYPE_JPEG);
+				Image image1 = findImageByOrder(orderListItem.getProduct().getImages(), 1);
+				if (image1 != null) {
+					int imageId1 = workbook.addPicture(getImage(image1.getId()), HSSFWorkbook.PICTURE_TYPE_JPEG);
 
-				CreationHelper helper1 = workbook.getCreationHelper();
+					CreationHelper helper1 = workbook.getCreationHelper();
 
-				Drawing drawing1 = sheet.createDrawingPatriarch();
+					Drawing drawing1 = sheet.createDrawingPatriarch();
 
-				ClientAnchor anchor1 = helper1.createClientAnchor();
-				anchor1.setCol1(0);
-				anchor1.setRow1(rowNum);
+					ClientAnchor anchor1 = helper1.createClientAnchor();
+					anchor1.setCol1(0);
+					anchor1.setRow1(rowNum);
 
-				Picture pict1 = drawing1.createPicture(anchor1, imageId1);
-				pict1.resize(1, 1);
+					Picture pict1 = drawing1.createPicture(anchor1, imageId1);
+					pict1.resize(1, 1);
+				}
 
 				int columnIndex = 1;
 
@@ -315,67 +319,100 @@ public class OrderListService {
 						.setCellValue(orderListItem.getProduct().getCertification().getComposition());
 				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getCertification().getModel());
 				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getCertification().getColor());
-				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getCertification().getSound());
-				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getCertification().getLight());
-				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getCertification().getMotor());
 				row.createCell(columnIndex++)
-						.setCellValue(orderListItem.getProduct().getCertification().getMetalPart());
-				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getCertification().getClip());
-				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getCertification().getLine());
+						.setCellValue(orderListItem.getProduct().getCertification().getSound() == 1 ? i18n.get("yes")
+								: i18n.get("no"));
 				row.createCell(columnIndex++)
-						.setCellValue(orderListItem.getProduct().getCertification().getBatteries().size());
+						.setCellValue(orderListItem.getProduct().getCertification().getLight() == 1 ? i18n.get("yes")
+								: i18n.get("no"));
 				row.createCell(columnIndex++)
-						.setCellValue(orderListItem.getProduct().getCertification().getBatteries().size());
+						.setCellValue(orderListItem.getProduct().getCertification().getMotor() == 1 ? i18n.get("yes")
+								: i18n.get("no"));
 				row.createCell(columnIndex++).setCellValue(
-						orderListItem.getProduct().getCertification().getBatteries().get(0).getIncluded());
+						orderListItem.getProduct().getCertification().getMetalPart() == 1 ? i18n.get("yes")
+								: i18n.get("no"));
+				row.createCell(columnIndex++)
+						.setCellValue(orderListItem.getProduct().getCertification().getClip() == 1 ? i18n.get("yes")
+								: i18n.get("no"));
+				row.createCell(columnIndex++)
+						.setCellValue(orderListItem.getProduct().getCertification().getLine() == 1 ? i18n.get("yes")
+								: i18n.get("no"));
+
+				List<BatteryData> batteries = orderListItem.getProduct().getCertification().getBatteries();
+				String battery = "";
+				for (BatteryData bt : batteries) {
+					battery = battery + bt.getQuantity() + "x " + bt.getBatteryType().getName() + " "
+							+ bt.getVoltage().getName() + " "
+							+ i18n.get(bt.getIncluded() == 1 ? "included" : "notincluded") + "\n";
+				}
+
+				Cell cellBattery = row.createCell(columnIndex++);
+				cellBattery.setCellValue(battery);
+				cellBattery.setCellStyle(cs);
+
 				row.createCell(columnIndex++)
 						.setCellValue(orderListItem.getProduct().getCertification().getSpecialRequirements());
-				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getProductHeight().doubleValue());
-				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getPackingHeight().doubleValue());
-				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getPacking().getEnglishName());
+				row.createCell(columnIndex++)
+						.setCellValue(orderListItem.getProduct().getProductLength().doubleValue() + " x "
+								+ orderListItem.getProduct().getProductWidth().doubleValue() + " x "
+								+ orderListItem.getProduct().getProductHeight().doubleValue());
+				row.createCell(columnIndex++)
+						.setCellValue(orderListItem.getProduct().getPackingLength().doubleValue() + " x "
+								+ orderListItem.getProduct().getPackingWidth().doubleValue() + " x "
+								+ orderListItem.getProduct().getPackingHeight().doubleValue());
+
+				Cell cellPacking = row.createCell(columnIndex++);
+				cellPacking.setCellValue(orderListItem.getProduct().getPacking().getEnglishName() + "\n"
+						+ orderListItem.getProduct().getPacking().getChineseName());
+				cellPacking.setCellStyle(cs);
+
 				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getPrice().doubleValue());
 				row.createCell(columnIndex++).setCellValue(orderListItem.getQuantityOfBoxes());
 				row.createCell(columnIndex++).setCellValue(orderListItem.getTotalQuantityOfPieces());
 				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getQuantityInner());
-				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getPackingHeight().doubleValue());
 				row.createCell(columnIndex++).setCellValue(orderListItem.getTotalCubage().doubleValue());
-				row.createCell(columnIndex++).setCellValue("Total de containers");
-				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getQuantityOfBoxesPerContainer());
 				row.createCell(columnIndex++)
-						.setCellValue(orderListItem.getProduct().getBoxGrossWeight().doubleValue());
-				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getBoxNetWeight().doubleValue());
+						.setCellValue(orderListItem.getProduct().getBoxLength().doubleValue() + " x "
+								+ orderListItem.getProduct().getBoxWidth().doubleValue() + " x "
+								+ orderListItem.getProduct().getBoxHeight().doubleValue());
+				row.createCell(columnIndex++).setCellValue(orderList.getQuantityOfContainers());
+				row.createCell(columnIndex++).setCellValue(orderListItem.getProduct().getQuantityOfBoxesPerContainer());
 				row.createCell(columnIndex++)
 						.setCellValue(orderListItem.getProduct().getNetWeightWithPacking().doubleValue());
 				row.createCell(columnIndex++)
 						.setCellValue(orderListItem.getProduct().getNetWeightWithoutPacking().doubleValue());
 
-				int imageId2 = workbook.addPicture(getImage(orderListItem.getProduct().getImages().get(1).getId()),
-						HSSFWorkbook.PICTURE_TYPE_JPEG);
+				Image image2 = findImageByOrder(orderListItem.getProduct().getImages(), 2);
+				if (image2 != null) {
+					int imageId2 = workbook.addPicture(getImage(image2.getId()), HSSFWorkbook.PICTURE_TYPE_JPEG);
 
-				CreationHelper helper2 = workbook.getCreationHelper();
+					CreationHelper helper2 = workbook.getCreationHelper();
 
-				Drawing drawing2 = sheet.createDrawingPatriarch();
+					Drawing drawing2 = sheet.createDrawingPatriarch();
 
-				ClientAnchor anchor2 = helper2.createClientAnchor();
-				anchor2.setCol1(columnIndex++);
-				anchor2.setRow1(rowNum);
+					ClientAnchor anchor2 = helper2.createClientAnchor();
+					anchor2.setCol1(columnIndex++);
+					anchor2.setRow1(rowNum);
 
-				Picture pict2 = drawing2.createPicture(anchor2, imageId2);
-				pict2.resize(1, 1);
+					Picture pict2 = drawing2.createPicture(anchor2, imageId2);
+					pict2.resize(1, 1);
+				}
 
-				int imageId3 = workbook.addPicture(getImage(orderListItem.getProduct().getImages().get(2).getId()),
-						HSSFWorkbook.PICTURE_TYPE_JPEG);
+				Image image3 = findImageByOrder(orderListItem.getProduct().getImages(), 3);
+				if (image3 != null) {
+					int imageId3 = workbook.addPicture(getImage(image3.getId()), HSSFWorkbook.PICTURE_TYPE_JPEG);
 
-				CreationHelper helper3 = workbook.getCreationHelper();
+					CreationHelper helper3 = workbook.getCreationHelper();
 
-				Drawing drawing3 = sheet.createDrawingPatriarch();
+					Drawing drawing3 = sheet.createDrawingPatriarch();
 
-				ClientAnchor anchor3 = helper3.createClientAnchor();
-				anchor3.setCol1(columnIndex++);
-				anchor3.setRow1(rowNum);
+					ClientAnchor anchor3 = helper3.createClientAnchor();
+					anchor3.setCol1(columnIndex++);
+					anchor3.setRow1(rowNum);
 
-				Picture pict3 = drawing3.createPicture(anchor3, imageId3);
-				pict3.resize(1, 1);
+					Picture pict3 = drawing3.createPicture(anchor3, imageId3);
+					pict3.resize(1, 1);
+				}
 
 				List<Remark> remarks = orderListItem.getProduct().getRemarks();
 				String remark = "";
@@ -383,9 +420,9 @@ public class OrderListService {
 					remark = remark + re.getName() + "\n";
 				}
 
-				Cell cell = row.createCell(columnIndex++);
-				cell.setCellValue(remark);
-				cell.setCellStyle(cs);
+				Cell cellRemark = row.createCell(columnIndex++);
+				cellRemark.setCellValue(remark);
+				cellRemark.setCellStyle(cs);
 
 				row.setHeight((short) 1000);
 
@@ -417,6 +454,18 @@ public class OrderListService {
 		}
 
 		return imageBytes;
+	}
+
+	private Image findImageByOrder(List<Image> images, Integer order) {
+		Image image = null;
+
+		for (Image img : images) {
+			if (img.getNrOrder() == order) {
+				return img;
+			}
+		}
+
+		return image;
 	}
 
 }

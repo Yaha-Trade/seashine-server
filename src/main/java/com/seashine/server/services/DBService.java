@@ -624,6 +624,9 @@ public class DBService {
 		i18nList.add(new I18n(null, "included", "Included", english));
 		i18nList.add(new I18n(null, "included", "已包含", chinese));
 
+		i18nList.add(new I18n(null, "notincluded", "Not included", english));
+		i18nList.add(new I18n(null, "notincluded", "不包含", chinese));
+
 		i18nList.add(new I18n(null, "batterytype", "Battery Type", english));
 		i18nList.add(new I18n(null, "batterytype", "電池類型", chinese));
 
@@ -852,6 +855,27 @@ public class DBService {
 
 		i18nList.add(new I18n(null, "export", "Export", english));
 		i18nList.add(new I18n(null, "export", "出口", chinese));
+
+		i18nList.add(new I18n(null, "qtybattery", "Battery quantity", english));
+		i18nList.add(new I18n(null, "qtybattery", "電池數量", chinese));
+
+		i18nList.add(new I18n(null, "batteryincluded", "Battery included", english));
+		i18nList.add(new I18n(null, "batteryincluded", "含電池", chinese));
+
+		i18nList.add(new I18n(null, "unitproductsize", "Unit product size", english));
+		i18nList.add(new I18n(null, "unitproductsize", "單位產品尺寸", chinese));
+
+		i18nList.add(new I18n(null, "packingsize", "Packing size", english));
+		i18nList.add(new I18n(null, "packingsize", "包裝尺寸", chinese));
+
+		i18nList.add(new I18n(null, "cartonsize", "Carton size", english));
+		i18nList.add(new I18n(null, "cartonsize", "紙箱尺寸", chinese));
+
+		i18nList.add(new I18n(null, "yes", "Yes", english));
+		i18nList.add(new I18n(null, "yes", "是", chinese));
+
+		i18nList.add(new I18n(null, "no", "No", english));
+		i18nList.add(new I18n(null, "no", "沒有", chinese));
 
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
