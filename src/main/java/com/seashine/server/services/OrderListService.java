@@ -63,6 +63,9 @@ public class OrderListService {
 	@Autowired
 	private I18nService i18nService;
 
+	@Autowired
+	private CertificationService certificationService;
+
 	public OrderList findById(Integer id) {
 		Optional<OrderList> obj = orderListRepository.findById(id);
 
@@ -190,6 +193,11 @@ public class OrderListService {
 
 		orderListDB.getHistories().add(addHistory(userId, OrderHistoryAction.SENT_TO_APPROVAL));
 
+		List<OrderListItem> orderListItems = orderListDB.getOrderListItems();
+		for (OrderListItem orderListItem : orderListItems) {
+			certificationService.open(orderListItem.getProduct().getCertification().getId());
+		}
+
 		return orderListRepository.save(orderListDB);
 	}
 
@@ -199,6 +207,11 @@ public class OrderListService {
 
 		orderListDB.getHistories().add(addHistory(userId, OrderHistoryAction.APPROVED));
 
+		List<OrderListItem> orderListItems = orderListDB.getOrderListItems();
+		for (OrderListItem orderListItem : orderListItems) {
+			certificationService.onApproval(orderListItem.getProduct().getCertification().getId());
+		}
+
 		return orderListRepository.save(orderListDB);
 	}
 
@@ -207,6 +220,11 @@ public class OrderListService {
 		orderListDB.setStatus(OrderStatus.REPROVED.getCode());
 
 		orderListDB.getHistories().add(addHistory(userId, OrderHistoryAction.REPROVED));
+
+		List<OrderListItem> orderListItems = orderListDB.getOrderListItems();
+		for (OrderListItem orderListItem : orderListItems) {
+			certificationService.open(orderListItem.getProduct().getCertification().getId());
+		}
 
 		return orderListRepository.save(orderListDB);
 	}

@@ -19,6 +19,7 @@ import com.seashine.server.domain.BatteryData;
 import com.seashine.server.domain.Certification;
 import com.seashine.server.domain.Image;
 import com.seashine.server.domain.Product;
+import com.seashine.server.domain.enums.CertificationStatus;
 import com.seashine.server.repositories.BatteryDataRepository;
 import com.seashine.server.repositories.CertificationRepository;
 import com.seashine.server.repositories.ProductRepository;
@@ -65,6 +66,7 @@ public class ProductService {
 		product.getCertification().setBatteries(batteries);
 
 		Certification certification = certificationRepository.save(product.getCertification());
+		certification.setStatus(CertificationStatus.OPENED.getCode());
 
 		product.setId(null);
 		product.setCertification(certification);
@@ -80,6 +82,7 @@ public class ProductService {
 		product.getCertification().setBatteries(batteries);
 
 		Certification certification = certificationRepository.save(product.getCertification());
+		certification.setStatus(CertificationStatus.OPENED.getCode());
 
 		productDB.getRemarks().clear();
 		productDB.getRemarks().addAll(product.getRemarks());

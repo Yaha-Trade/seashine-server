@@ -29,6 +29,7 @@ import com.seashine.server.domain.Season;
 import com.seashine.server.domain.ShowRoom;
 import com.seashine.server.domain.User;
 import com.seashine.server.domain.Voltage;
+import com.seashine.server.domain.enums.CertificationStatus;
 import com.seashine.server.domain.enums.Languages;
 import com.seashine.server.domain.enums.OrderStatus;
 import com.seashine.server.domain.enums.Profile;
@@ -196,23 +197,26 @@ public class DBService {
 
 		List<Certification> certificationList = new ArrayList<Certification>();
 		certificationList.add(new Certification(null, "1", 1, "Composition 1", 1, "Red", 1, 1, 1, 1, 1, 1, "Special 1",
-				Arrays.asList(batteryDataList.get(0))));
+				CertificationStatus.OPENED.getCode(), Arrays.asList(batteryDataList.get(0))));
 		certificationList.add(new Certification(null, "2", 1, "Composition 2", 1, "Blue", 1, 1, 1, 1, 1, 1, "Special 2",
-				Arrays.asList(batteryDataList.get(1))));
+				CertificationStatus.OPENED.getCode(), Arrays.asList(batteryDataList.get(1))));
 		certificationList.add(new Certification(null, "3", 1, "Composition 3", 1, "Green", 1, 1, 1, 1, 1, 1,
-				"Special 3", Arrays.asList(batteryDataList.get(2), batteryDataList.get(3))));
+				"Special 3", CertificationStatus.OPENED.getCode(),
+				Arrays.asList(batteryDataList.get(2), batteryDataList.get(3))));
 		certificationList.add(new Certification(null, "4", 1, "Composition 4", 1, "Red", 1, 1, 1, 1, 1, 1, "Special 4",
-				Arrays.asList(batteryDataList.get(4))));
+				CertificationStatus.OPENED.getCode(), Arrays.asList(batteryDataList.get(4))));
 		certificationList.add(new Certification(null, "5", 1, "Composition 5", 1, "Blue", 1, 1, 1, 1, 1, 1, "Special 5",
-				Arrays.asList(batteryDataList.get(5))));
+				CertificationStatus.OPENED.getCode(), Arrays.asList(batteryDataList.get(5))));
 		certificationList.add(new Certification(null, "6", 1, "Composition 6", 1, "Green", 1, 1, 1, 1, 1, 1,
-				"Special 6", Arrays.asList(batteryDataList.get(6), batteryDataList.get(7))));
+				"Special 6", CertificationStatus.OPENED.getCode(),
+				Arrays.asList(batteryDataList.get(6), batteryDataList.get(7))));
 		certificationList.add(new Certification(null, "7", 1, "Composition 7", 1, "Red", 1, 1, 1, 1, 1, 1, "Special 7",
-				Arrays.asList(batteryDataList.get(8))));
+				CertificationStatus.OPENED.getCode(), Arrays.asList(batteryDataList.get(8))));
 		certificationList.add(new Certification(null, "8", 1, "Composition 8", 1, "Blue", 1, 1, 1, 1, 1, 1, "Special 8",
-				Arrays.asList(batteryDataList.get(9))));
+				CertificationStatus.OPENED.getCode(), Arrays.asList(batteryDataList.get(9))));
 		certificationList.add(new Certification(null, "9", 1, "Composition 9", 1, "Green", 1, 1, 1, 1, 1, 1,
-				"Special 9", Arrays.asList(batteryDataList.get(10), batteryDataList.get(11))));
+				"Special 9", CertificationStatus.OPENED.getCode(),
+				Arrays.asList(batteryDataList.get(10), batteryDataList.get(11))));
 
 		List<Product> productsList = new ArrayList<Product>();
 		productsList.add(new Product(null, "1", "Product 01", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
@@ -876,6 +880,15 @@ public class DBService {
 
 		i18nList.add(new I18n(null, "no", "No", english));
 		i18nList.add(new I18n(null, "no", "沒有", chinese));
+
+		i18nList.add(new I18n(null, "labeling", "Labeling", english));
+		i18nList.add(new I18n(null, "labeling", "貼標", chinese));
+
+		i18nList.add(new I18n(null, "certificationsuccessapproved", "Certification successfully approved", english));
+		i18nList.add(new I18n(null, "certificationsuccessapproved", "認證成功通過", chinese));
+
+		i18nList.add(new I18n(null, "certificationreproved", "Certification reproved", english));
+		i18nList.add(new I18n(null, "certificationreproved", "認證通過", chinese));
 
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));

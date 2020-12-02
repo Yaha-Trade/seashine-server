@@ -46,6 +46,8 @@ public class OrderListItemListDTO implements Serializable {
 
 	private Integer quantityOfImages;
 
+	private Integer certificationStatus;
+
 	public OrderListItemListDTO(OrderListItem orderListItem) {
 		this.id = orderListItem.getId();
 		this.factory = orderListItem.getProduct().getFactory().getName();
@@ -62,5 +64,6 @@ public class OrderListItemListDTO implements Serializable {
 		this.season = orderListItem.getOrderList().getSeason().getName();
 		this.order = orderListItem.getOrderList().getName();
 		this.quantityOfImages = orderListItem.getProduct().getQuantityOfImages();
+		this.certificationStatus = orderListItem.getProduct().getCertification().getStatus();
 	}
 }

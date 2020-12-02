@@ -194,4 +194,20 @@ public class OrderListItemService {
 		return orderListItemRepository.findAll(getItemFilters(null, factory, productReference, productDescription,
 				customer, season, order, quantityOfImages), pageRequest);
 	}
+
+	public Page<OrderListItem> getAllOrderListItemsApproved(Integer page, Integer linesPerPage, String orderBy,
+			String orderByDirection, String customer, String season, String order, String factory,
+			String productReference, String productDescription) {
+		Specification<OrderListItem> orderListSpecs = Specification.where(null);
+
+		orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterOrderApproved());
+
+		orderListSpecs = orderListSpecs
+				.and(getItemFilters(null, factory, productReference, productDescription, customer, season, order, ""));
+
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection),
+				checkOrderBy(orderBy));
+
+		return orderListItemRepository.findAll(orderListSpecs, pageRequest);
+	}
 }

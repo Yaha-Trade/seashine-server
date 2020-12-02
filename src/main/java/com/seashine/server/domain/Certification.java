@@ -54,6 +54,8 @@ public class Certification implements Serializable {
 
 	private String specialRequirements;
 
+	private Integer status;
+
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<BatteryData> batteries = new ArrayList<>();

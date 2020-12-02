@@ -91,4 +91,12 @@ public class OrderListItemSpecs {
 			return equalPredicate;
 		};
 	}
+
+	public static Specification<OrderListItem> filterOrderApproved() {
+		return (root, query, criteriaBuilder) -> {
+			Join<OrderListItem, OrderList> orderListJoin = root.join("orderList", JoinType.INNER);
+			Predicate equalPredicate = criteriaBuilder.equal(orderListJoin.get("status"), 2);
+			return equalPredicate;
+		};
+	}
 }
