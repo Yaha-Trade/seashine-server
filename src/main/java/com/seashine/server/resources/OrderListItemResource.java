@@ -58,7 +58,7 @@ public class OrderListItemResource {
 		return ResponseEntity.ok().body(orderListItemDTO);
 	}
 
-	@RequestMapping(value = "certification/page", method = RequestMethod.GET)
+	@RequestMapping(value = "allorderlistapproved/page", method = RequestMethod.GET)
 	public ResponseEntity<Page<OrderListItemListDTO>> getAllOrderListItemsApproved(
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "rowsPerPage", defaultValue = "50") Integer linesPerPage,

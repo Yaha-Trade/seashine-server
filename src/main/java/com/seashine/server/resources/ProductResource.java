@@ -131,4 +131,18 @@ public class ProductResource {
 		return ResponseEntity.ok().body(productService.findById(idProduct).getImages());
 	}
 
+	@RequestMapping(value = "approvelabeling/{id}", method = RequestMethod.POST)
+	public ResponseEntity<Void> approveLabeling(@PathVariable Integer id) {
+		productService.approveLabeling(id);
+
+		return ResponseEntity.noContent().build();
+	}
+
+	@RequestMapping(value = "reprovelabeling/{id}", method = RequestMethod.POST)
+	public ResponseEntity<Void> reproveLabeling(@PathVariable Integer id) {
+		productService.reproveLabeling(id);
+
+		return ResponseEntity.noContent().build();
+	}
+
 }

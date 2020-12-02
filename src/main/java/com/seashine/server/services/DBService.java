@@ -30,6 +30,7 @@ import com.seashine.server.domain.ShowRoom;
 import com.seashine.server.domain.User;
 import com.seashine.server.domain.Voltage;
 import com.seashine.server.domain.enums.CertificationStatus;
+import com.seashine.server.domain.enums.LabelingStatus;
 import com.seashine.server.domain.enums.Languages;
 import com.seashine.server.domain.enums.OrderStatus;
 import com.seashine.server.domain.enums.Profile;
@@ -224,56 +225,56 @@ public class DBService {
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(0), certificationList.get(0), null,
-				null, null, 0));
+				null, null, 0, LabelingStatus.OPENED.getCode()));
 		productsList.add(new Product(null, "2", "Product 02", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(5), certificationList.get(1), null,
-				null, null, 0));
+				null, null, 0, LabelingStatus.OPENED.getCode()));
 		productsList.add(new Product(null, "3", "Product 03", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(1), factoryList.get(3), certificationList.get(2), null,
-				null, null, 0));
+				null, null, 0, LabelingStatus.OPENED.getCode()));
 
 		productsList.add(new Product(null, "1", "Product 01", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(0), certificationList.get(3), null,
-				null, productsList.get(0), 0));
+				null, productsList.get(0), 0, LabelingStatus.OPENED.getCode()));
 		productsList.add(new Product(null, "2", "Product 02", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(5), certificationList.get(4), null,
-				null, productsList.get(1), 0));
+				null, productsList.get(1), 0, LabelingStatus.OPENED.getCode()));
 		productsList.add(new Product(null, "3", "Product 03", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(1), factoryList.get(3), certificationList.get(5), null,
-				null, productsList.get(2), 0));
+				null, productsList.get(2), 0, LabelingStatus.OPENED.getCode()));
 		productsList.add(new Product(null, "2", "Product 02", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(0), factoryList.get(5), certificationList.get(6), null,
-				null, productsList.get(1), 0));
+				null, productsList.get(1), 0, LabelingStatus.OPENED.getCode()));
 		productsList.add(new Product(null, "3", "Product 03", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(1), factoryList.get(3), certificationList.get(7), null,
-				null, productsList.get(2), 0));
+				null, productsList.get(2), 0, LabelingStatus.OPENED.getCode()));
 		productsList.add(new Product(null, "3", "Product 03", 1, 1, new BigDecimal("14.99"), new BigDecimal("22.5"),
 				new BigDecimal("32.5"), new BigDecimal("43.5"), new BigDecimal("53"), new BigDecimal("53.2"),
 				new BigDecimal("53.3"), new BigDecimal("62.3"), new BigDecimal("64.5"), new BigDecimal("75.5"),
 				new BigDecimal("87.5"), new BigDecimal("96.6"), new BigDecimal("74.5"), new BigDecimal("52.5"),
 				new BigDecimal("22.5"), 3, 4, packingList.get(1), factoryList.get(3), certificationList.get(8), null,
-				null, productsList.get(2), 0));
+				null, productsList.get(2), 0, LabelingStatus.OPENED.getCode()));
 
 		List<OrderList> orderList = new ArrayList<OrderList>();
 		orderList.add(new OrderList(null, "First order", new java.sql.Date(sdf.parse("25/12/2020").getTime()),
@@ -889,6 +890,12 @@ public class DBService {
 
 		i18nList.add(new I18n(null, "certificationreproved", "Certification reproved", english));
 		i18nList.add(new I18n(null, "certificationreproved", "認證通過", chinese));
+
+		i18nList.add(new I18n(null, "labelingsuccessapproved", "Labeling successfully approved", english));
+		i18nList.add(new I18n(null, "labelingsuccessapproved", "標籤成功獲得批准", chinese));
+
+		i18nList.add(new I18n(null, "labelingreproved", "Labeling reproved", english));
+		i18nList.add(new I18n(null, "labelingreproved", "標籤經過驗證", chinese));
 
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));

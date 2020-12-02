@@ -66,6 +66,9 @@ public class OrderListService {
 	@Autowired
 	private CertificationService certificationService;
 
+	@Autowired
+	private ProductService productService;
+
 	public OrderList findById(Integer id) {
 		Optional<OrderList> obj = orderListRepository.findById(id);
 
@@ -196,6 +199,7 @@ public class OrderListService {
 		List<OrderListItem> orderListItems = orderListDB.getOrderListItems();
 		for (OrderListItem orderListItem : orderListItems) {
 			certificationService.open(orderListItem.getProduct().getCertification().getId());
+			productService.open(orderListItem.getProduct().getId());
 		}
 
 		return orderListRepository.save(orderListDB);
@@ -210,6 +214,7 @@ public class OrderListService {
 		List<OrderListItem> orderListItems = orderListDB.getOrderListItems();
 		for (OrderListItem orderListItem : orderListItems) {
 			certificationService.onApproval(orderListItem.getProduct().getCertification().getId());
+			productService.onApproval(orderListItem.getProduct().getId());
 		}
 
 		return orderListRepository.save(orderListDB);
@@ -224,6 +229,7 @@ public class OrderListService {
 		List<OrderListItem> orderListItems = orderListDB.getOrderListItems();
 		for (OrderListItem orderListItem : orderListItems) {
 			certificationService.open(orderListItem.getProduct().getCertification().getId());
+			productService.open(orderListItem.getProduct().getId());
 		}
 
 		return orderListRepository.save(orderListDB);

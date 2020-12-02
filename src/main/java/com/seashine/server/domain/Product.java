@@ -119,4 +119,6 @@ public class Product implements Serializable {
 	private Product parentProduct;
 
 	private Integer quantityOfImages = 0;
+
+	private Integer labelingStatus;
 }

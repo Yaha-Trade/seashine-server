@@ -20,6 +20,7 @@ import com.seashine.server.domain.Certification;
 import com.seashine.server.domain.Image;
 import com.seashine.server.domain.Product;
 import com.seashine.server.domain.enums.CertificationStatus;
+import com.seashine.server.domain.enums.LabelingStatus;
 import com.seashine.server.repositories.BatteryDataRepository;
 import com.seashine.server.repositories.CertificationRepository;
 import com.seashine.server.repositories.ProductRepository;
@@ -70,6 +71,7 @@ public class ProductService {
 
 		product.setId(null);
 		product.setCertification(certification);
+		product.setLabelingStatus(LabelingStatus.OPENED.getCode());
 		product = productRepository.save(product);
 
 		return product;
@@ -88,6 +90,7 @@ public class ProductService {
 		productDB.getRemarks().addAll(product.getRemarks());
 
 		product.setCertification(certification);
+		product.setLabelingStatus(LabelingStatus.OPENED.getCode());
 		updateData(productDB, product);
 
 		return productRepository.save(productDB);
@@ -178,4 +181,27 @@ public class ProductService {
 		imageService.deleteById(idImage);
 	}
 
+	public void approveLabeling(Integer id) {
+		Product productDB = findById(id);
+		productDB.setLabelingStatus(LabelingStatus.APPROVED.getCode());
+		productRepository.save(productDB);
+	}
+
+	public void reproveLabeling(Integer id) {
+		Product productDB = findById(id);
+		productDB.setLabelingStatus(LabelingStatus.REPROVED.getCode());
+		productRepository.save(productDB);
+	}
+
+	public void open(Integer id) {
+		Product productDB = findById(id);
+		productDB.setLabelingStatus(LabelingStatus.OPENED.getCode());
+		productRepository.save(productDB);
+	}
+
+	public void onApproval(Integer id) {
+		Product productDB = findById(id);
+		productDB.setLabelingStatus(LabelingStatus.ON_APPROVAL.getCode());
+		productRepository.save(productDB);
+	}
 }
