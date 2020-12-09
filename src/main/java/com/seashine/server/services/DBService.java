@@ -25,6 +25,7 @@ import com.seashine.server.domain.OrderList;
 import com.seashine.server.domain.OrderListItem;
 import com.seashine.server.domain.Packing;
 import com.seashine.server.domain.Product;
+import com.seashine.server.domain.Production;
 import com.seashine.server.domain.Season;
 import com.seashine.server.domain.ShowRoom;
 import com.seashine.server.domain.User;
@@ -33,6 +34,7 @@ import com.seashine.server.domain.enums.CertificationStatus;
 import com.seashine.server.domain.enums.LabelingStatus;
 import com.seashine.server.domain.enums.Languages;
 import com.seashine.server.domain.enums.OrderStatus;
+import com.seashine.server.domain.enums.ProductionStatus;
 import com.seashine.server.domain.enums.Profile;
 import com.seashine.server.repositories.BatteryTypeRepository;
 import com.seashine.server.repositories.CustomerRepository;
@@ -43,6 +45,7 @@ import com.seashine.server.repositories.OrderListItemRepository;
 import com.seashine.server.repositories.OrderListRepository;
 import com.seashine.server.repositories.PackingRepository;
 import com.seashine.server.repositories.ProductRepository;
+import com.seashine.server.repositories.ProductionRepository;
 import com.seashine.server.repositories.SeasonRepository;
 import com.seashine.server.repositories.ShowRoomRepository;
 import com.seashine.server.repositories.UserRepository;
@@ -92,6 +95,9 @@ public class DBService {
 
 	@Autowired
 	private OrderListItemRepository orderListItemRepository;
+
+	@Autowired
+	private ProductionRepository productionRepository;
 
 	public void instantiateTestDataBase() throws ParseException {
 		Set<Integer> profiles = new HashSet<Integer>();
@@ -289,19 +295,28 @@ public class DBService {
 				OrderStatus.OPENED.getCode(), new BigDecimal("150"), new BigDecimal("50"), 10, 10, 10, 15,
 				seasonsList.get(1), null, null));
 
+		List<Production> productionList = new ArrayList<Production>();
+
+		productionList.add(new Production(null, null, null, null, null, ProductionStatus.WAITING_START.getCode()));
+		productionList.add(new Production(null, null, null, null, null, ProductionStatus.WAITING_START.getCode()));
+		productionList.add(new Production(null, null, null, null, null, ProductionStatus.WAITING_START.getCode()));
+		productionList.add(new Production(null, null, null, null, null, ProductionStatus.WAITING_START.getCode()));
+		productionList.add(new Production(null, null, null, null, null, ProductionStatus.WAITING_START.getCode()));
+		productionList.add(new Production(null, null, null, null, null, ProductionStatus.WAITING_START.getCode()));
+
 		List<OrderListItem> orderListItems = new ArrayList<OrderListItem>();
 		orderListItems.add(new OrderListItem(null, 10, 10, 100, new BigDecimal("150"), new BigDecimal("50"),
-				new BigDecimal(150), productsList.get(3), orderList.get(0)));
+				new BigDecimal(150), productsList.get(3), orderList.get(0), productionList.get(0)));
 		orderListItems.add(new OrderListItem(null, 10, 10, 100, new BigDecimal("150"), new BigDecimal("50"),
-				new BigDecimal(150), productsList.get(4), orderList.get(0)));
+				new BigDecimal(150), productsList.get(4), orderList.get(0), productionList.get(1)));
 		orderListItems.add(new OrderListItem(null, 10, 10, 100, new BigDecimal("150"), new BigDecimal("50"),
-				new BigDecimal(150), productsList.get(5), orderList.get(0)));
+				new BigDecimal(150), productsList.get(5), orderList.get(0), productionList.get(2)));
 		orderListItems.add(new OrderListItem(null, 10, 10, 100, new BigDecimal("150"), new BigDecimal("50"),
-				new BigDecimal(150), productsList.get(6), orderList.get(1)));
+				new BigDecimal(150), productsList.get(6), orderList.get(1), productionList.get(3)));
 		orderListItems.add(new OrderListItem(null, 10, 10, 100, new BigDecimal("150"), new BigDecimal("50"),
-				new BigDecimal(150), productsList.get(7), orderList.get(1)));
+				new BigDecimal(150), productsList.get(7), orderList.get(1), productionList.get(4)));
 		orderListItems.add(new OrderListItem(null, 10, 10, 100, new BigDecimal("150"), new BigDecimal("50"),
-				new BigDecimal(150), productsList.get(8), orderList.get(2)));
+				new BigDecimal(150), productsList.get(8), orderList.get(2), productionList.get(5)));
 
 		List<I18n> i18nList = new ArrayList<I18n>();
 
@@ -897,6 +912,33 @@ public class DBService {
 		i18nList.add(new I18n(null, "labelingreproved", "Labeling reproved", english));
 		i18nList.add(new I18n(null, "labelingreproved", "標籤經過驗證", chinese));
 
+		i18nList.add(new I18n(null, "orderlistfactory", "Order list factory", english));
+		i18nList.add(new I18n(null, "orderlistfactory", "訂單清單工廠", chinese));
+
+		i18nList.add(new I18n(null, "waitingproduction", "Waiting production", english));
+		i18nList.add(new I18n(null, "waitingproduction", "等待生產", chinese));
+
+		i18nList.add(new I18n(null, "ordergenerated", "Order generated", english));
+		i18nList.add(new I18n(null, "ordergenerated", "訂單產生", chinese));
+
+		i18nList.add(new I18n(null, "viewproductdata", "View product data", english));
+		i18nList.add(new I18n(null, "viewproductdata", "查看產品數據", chinese));
+
+		i18nList.add(new I18n(null, "productiondata", "Production data", english));
+		i18nList.add(new I18n(null, "productiondetails", "生產數據", chinese));
+
+		i18nList.add(new I18n(null, "received", "Received", english));
+		i18nList.add(new I18n(null, "received", "已收到", chinese));
+
+		i18nList.add(new I18n(null, "delivery", "Delivery", english));
+		i18nList.add(new I18n(null, "delivery", "交貨", chinese));
+
+		i18nList.add(new I18n(null, "qualityinspectionrequirements", "Quality inspection requirements", english));
+		i18nList.add(new I18n(null, "qualityinspectionrequirements", "質量檢驗要求", chinese));
+
+		i18nList.add(new I18n(null, "orderterms", "Order terms", english));
+		i18nList.add(new I18n(null, "orderterms", "訂單條款", chinese));
+
 		languageRepository.saveAll(Arrays.asList(english, chinese));
 		userRepository.saveAll(Arrays.asList(jean, miranda, doctor));
 		i18nRepository.saveAll(i18nList);
@@ -907,6 +949,7 @@ public class DBService {
 		showRoomRepository.saveAll(showRoomList);
 		seasonRepository.saveAll(seasonsList);
 		productRepository.saveAll(productsList);
+		productionRepository.saveAll(productionList);
 		orderListRepository.saveAll(orderList);
 		orderListItemRepository.saveAll(orderListItems);
 	}

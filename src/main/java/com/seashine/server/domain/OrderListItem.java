@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -52,5 +53,10 @@ public class OrderListItem implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ORDERLISTID")
 	private OrderList orderList;
+
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PRODUCTIONID")
+	private Production production;
 
 }

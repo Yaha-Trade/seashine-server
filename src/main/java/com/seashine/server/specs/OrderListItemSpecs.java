@@ -6,6 +6,7 @@ import javax.persistence.criteria.Predicate;
 
 import org.springframework.data.jpa.domain.Specification;
 
+import com.seashine.server.domain.Certification;
 import com.seashine.server.domain.Customer;
 import com.seashine.server.domain.Factory;
 import com.seashine.server.domain.OrderList;
@@ -96,6 +97,23 @@ public class OrderListItemSpecs {
 		return (root, query, criteriaBuilder) -> {
 			Join<OrderListItem, OrderList> orderListJoin = root.join("orderList", JoinType.INNER);
 			Predicate equalPredicate = criteriaBuilder.equal(orderListJoin.get("status"), 2);
+			return equalPredicate;
+		};
+	}
+
+	public static Specification<OrderListItem> filterCertificationApproved() {
+		return (root, query, criteriaBuilder) -> {
+			Join<OrderList, Product> productJoin = root.join("product", JoinType.INNER);
+			Join<Product, Certification> certificationJoin = productJoin.join("certification", JoinType.INNER);
+			Predicate equalPredicate = criteriaBuilder.equal(certificationJoin.get("status"), 2);
+			return equalPredicate;
+		};
+	}
+
+	public static Specification<OrderListItem> filterLabelingApproved() {
+		return (root, query, criteriaBuilder) -> {
+			Join<OrderListItem, Product> productJoin = root.join("product", JoinType.INNER);
+			Predicate equalPredicate = criteriaBuilder.equal(productJoin.get("labelingStatus"), 2);
 			return equalPredicate;
 		};
 	}

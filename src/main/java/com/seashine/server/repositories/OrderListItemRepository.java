@@ -18,6 +18,6 @@ public interface OrderListItemRepository
 
 	@Transactional(readOnly = true)
 	@EntityGraph(attributePaths = { "product", "product.factory", "product.certification", "orderList",
-			"orderList.season", "orderList.season.customer" })
+			"orderList.season", "orderList.season.customer", "production" })
 	Page<OrderListItem> findAll(@Nullable Specification<OrderListItem> spec, Pageable pageable);
 }

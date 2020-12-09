@@ -15,7 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.seashine.server.domain.OrderListItem;
+import com.seashine.server.domain.Production;
+import com.seashine.server.domain.enums.ProductionStatus;
 import com.seashine.server.repositories.OrderListItemRepository;
+import com.seashine.server.repositories.ProductionRepository;
 import com.seashine.server.services.exception.DataIntegrityException;
 import com.seashine.server.services.exception.ObjectNotFoundException;
 import com.seashine.server.specs.OrderListItemSpecs;
@@ -31,6 +34,9 @@ public class OrderListItemService {
 
 	@Autowired
 	private ProductService productService;
+
+	@Autowired
+	private ProductionRepository productionRepository;
 
 	public OrderListItem findById(Integer id) {
 		Optional<OrderListItem> obj = orderListItemRepository.findById(id);
@@ -90,6 +96,11 @@ public class OrderListItemService {
 	@Transactional
 	public OrderListItem insert(OrderListItem orderListItem, Integer idOrderList,
 			@RequestHeader("userId") Integer userId) {
+
+		Production production = new Production(null, null, null, null, null, ProductionStatus.WAITING_START.getCode());
+
+		productionRepository.save(production);
+
 		orderListItem.setId(null);
 		orderListItem = orderListItemRepository.save(orderListItem);
 
@@ -201,6 +212,24 @@ public class OrderListItemService {
 		Specification<OrderListItem> orderListSpecs = Specification.where(null);
 
 		orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterOrderApproved());
+
+		orderListSpecs = orderListSpecs
+				.and(getItemFilters(null, factory, productReference, productDescription, customer, season, order, ""));
+
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(orderByDirection),
+				checkOrderBy(orderBy));
+
+		return orderListItemRepository.findAll(orderListSpecs, pageRequest);
+	}
+
+	public Page<OrderListItem> getAllProductsApproved(Integer page, Integer linesPerPage, String orderBy,
+			String orderByDirection, String customer, String season, String order, String factory,
+			String productReference, String productDescription) {
+		Specification<OrderListItem> orderListSpecs = Specification.where(null);
+
+		orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterOrderApproved());
+		orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterLabelingApproved());
+		orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterCertificationApproved());
 
 		orderListSpecs = orderListSpecs
 				.and(getItemFilters(null, factory, productReference, productDescription, customer, season, order, ""));
