@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,8 +29,10 @@ public class Production implements Serializable {
 
 	private Date deliveryDate;
 
+	@Lob
 	private String qualityInspectionRequirements;
 
+	@Lob
 	private String orderTerms;
 
 	private Integer status;

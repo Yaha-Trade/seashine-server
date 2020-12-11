@@ -66,20 +66,20 @@ public class OrderListItemService {
 			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterLikeByProductReference(productReference));
 		}
 
-		if (!productDescription.equals("")) {
-			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterLikeByProductDescription(productDescription));
-		}
-
-		if (!factory.equals("")) {
-			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterLikeByFactoryName(factory));
+		if (!season.equals("")) {
+			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterLikeBySeasonName(season));
 		}
 
 		if (!customer.equals("")) {
 			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterLikeByCustomerName(customer));
 		}
 
-		if (!season.equals("")) {
-			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterLikeBySeasonName(season));
+		if (!productDescription.equals("")) {
+			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterLikeByProductDescription(productDescription));
+		}
+
+		if (!factory.equals("")) {
+			orderListSpecs = orderListSpecs.and(OrderListItemSpecs.filterLikeByFactoryName(factory));
 		}
 
 		if (!order.equals("")) {

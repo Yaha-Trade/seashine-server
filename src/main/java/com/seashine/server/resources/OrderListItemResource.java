@@ -174,4 +174,9 @@ public class OrderListItemResource {
 
 		return ResponseEntity.noContent().build();
 	}
+
+	@RequestMapping(value = "{getIdProduction}/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Integer> getIdProduction(@PathVariable Integer id) {
+		return ResponseEntity.ok().body(orderListItemService.findById(id).getProduction().getId());
+	}
 }

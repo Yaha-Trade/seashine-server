@@ -30,19 +30,13 @@ public class ProductionService {
 				"Object not found! Id: " + id + ", Class: " + Production.class.getName()));
 	}
 
-	public @Valid Production insert(@Valid Production production) {
-		production.setId(null);
-		production.setStatus(ProductionStatus.PRODUCTION_STARTED.getCode());
-		production = productionRepository.save(production);
-
-		return production;
-	}
-
 	public @Valid Production update(@Valid Production production) {
 		Production productionDB = findById(production.getId());
 		productionDB.setDeliveryDate(production.getDeliveryDate());
 		productionDB.setReceveidDate(production.getReceveidDate());
-		productionDB.setStatus(production.getStatus());
+		productionDB.setQualityInspectionRequirements(production.getQualityInspectionRequirements());
+		productionDB.setOrderTerms(production.getOrderTerms());
+		productionDB.setStatus(ProductionStatus.PRODUCTION_STARTED.getCode());
 
 		return productionRepository.save(productionDB);
 	}
