@@ -97,7 +97,8 @@ public class OrderListItemService {
 	public OrderListItem insert(OrderListItem orderListItem, Integer idOrderList,
 			@RequestHeader("userId") Integer userId) {
 
-		Production production = new Production(null, null, null, null, null, ProductionStatus.WAITING_START.getCode());
+		Production production = new Production(null, null, null, null, null, ProductionStatus.WAITING_START.getCode(),
+				null);
 
 		productionRepository.save(production);
 

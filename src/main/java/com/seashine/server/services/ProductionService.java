@@ -37,6 +37,7 @@ public class ProductionService {
 		productionDB.setQualityInspectionRequirements(production.getQualityInspectionRequirements());
 		productionDB.setOrderTerms(production.getOrderTerms());
 		productionDB.setStatus(ProductionStatus.PRODUCTION_STARTED.getCode());
+		productionDB.setHistories(production.getHistories());
 
 		return productionRepository.save(productionDB);
 	}
